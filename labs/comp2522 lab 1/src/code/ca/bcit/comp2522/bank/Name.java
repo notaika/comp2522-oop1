@@ -10,6 +10,8 @@ public class Name
 {
     private static final int MAX_NAME_LEN = 45;
     private static final String ILLEGAL_NAME_ADMIN = "admin";
+    private static final int FIRST_CHAR_INDEX = 0;
+    private static final int SUBSTRING_END = 1;
 
     private final String first;
     private final String last;
@@ -41,7 +43,7 @@ public class Name
             throw new IllegalArgumentException(("ERROR: " + namePartType + " cannot be greater than 45 characters."));
         }
 
-        if (namePart.toLowerCase().contains(ILLEGAL_NAME_ADMIN))
+        if (namePart.equalsIgnoreCase(ILLEGAL_NAME_ADMIN))
         {
             throw new IllegalArgumentException("ERROR: " + namePartType + " cannot contain the word \"admin\"");
         }
@@ -77,8 +79,8 @@ public class Name
         final String lastInitial;
         final String initials;
 
-        firstInitial = first.substring(0, 1).toUpperCase();
-        lastInitial = last.substring(0, 1).toUpperCase();
+        firstInitial = first.substring(FIRST_CHAR_INDEX, SUBSTRING_END).toUpperCase();
+        lastInitial = last.substring(FIRST_CHAR_INDEX, SUBSTRING_END).toUpperCase();
 
         initials = firstInitial + "." + lastInitial +".";
 
@@ -98,9 +100,9 @@ public class Name
         final String lastRemainder;
         final String fullName;
 
-        firstInitial = first.substring(0, 1).toUpperCase();
+        firstInitial = first.substring(FIRST_CHAR_INDEX, SUBSTRING_END).toUpperCase();
         firstRemainder = first.substring(1).toLowerCase();
-        lastInitial = last.substring(0, 1).toUpperCase();
+        lastInitial = last.substring(FIRST_CHAR_INDEX, SUBSTRING_END).toUpperCase();
         lastRemainder = last.substring(1).toLowerCase();
         fullName = firstInitial + firstRemainder + " " + lastInitial + lastRemainder;
 
