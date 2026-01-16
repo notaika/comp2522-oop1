@@ -1,9 +1,13 @@
 package ca.bcit.comp2522.bank;
 
 /**
- * Represents a Bank Client.
+ * Represents a client of a bank.
+ * TODO:
+ *  - Need to add validators for constructors
+ *  - Could probably make getDetails method more readable
  *
- * @author Aika Manalo, Thor Baker - set 2C
+ * @author Aika Manalo - Set 2C
+ * @author Thor Baker - Set 2C
  */
 public class BankClient
 {
@@ -23,7 +27,15 @@ public class BankClient
      */
     private static int clientIDCounter;
 
-
+    /**
+     * Sets the current BankClient values, with death date set to null.
+     * @param name the Name of the client
+     * @param birthDate the birth date of the client
+     */
+    BankClient(final Name name, final Date birthDate, final Date signUpDate)
+    {
+        this(name, birthDate, signUpDate, null);
+    }
 
     /**
      * Sets the current BankClient values, including the death date.
@@ -51,7 +63,7 @@ public class BankClient
     {
         if (id > ID_MAX)
         {
-            throw new IllegalArgumentException("ERROR: max ID reached");
+            throw new IllegalArgumentException("ERROR: Max ID reached");
         }
 
         String formatID;
@@ -68,16 +80,6 @@ public class BankClient
         formatID += idString;
 
         return formatID;
-    }
-
-    /**
-     * Sets the current BankClient values, with death date set to null.
-     * @param name the Name of the client
-     * @param birthDate the birth date of the client
-     */
-    BankClient(final Name name, final Date birthDate, final Date signUpDate)
-    {
-        this(name, birthDate, signUpDate, null);
     }
 
     /**
