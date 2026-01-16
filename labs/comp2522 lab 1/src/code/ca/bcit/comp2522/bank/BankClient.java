@@ -7,16 +7,23 @@ package ca.bcit.comp2522.bank;
  */
 public class BankClient
 {
-    private Name name;
+    private final Name name;
     private final Date birthDate;
     private final Date signUpDate;
     private final Date deathDate;
     private final String clientID;
 
     /*
+    Maximum client ID.
+     */
+    private static final int ID_MAX = 999999;
+
+    /*
     Automatic counter for clientID.
      */
     private static int clientIDCounter;
+
+
 
     /**
      * Sets the current BankClient values, including the death date.
@@ -34,8 +41,33 @@ public class BankClient
         this.signUpDate = signUpDate;
         this.deathDate = deathDate;
 
-        clientID = "#" + clientIDCounter;
-        clientIDCounter++;
+        clientID = formatClientID(clientIDCounter++);
+    }
+
+    /*
+    Helper method to format the clientID
+     */
+    private static String formatClientID(int id)
+    {
+        if (id > ID_MAX)
+        {
+            throw new IllegalArgumentException("ERROR: max ID reached");
+        }
+
+        String formatID;
+        String idString;
+
+        formatID = "#";
+        idString = "" + id;
+
+        for (int i = 0; i < 6 - idString.length(); i++)
+        {
+            formatID += "0";
+        }
+
+        formatID += idString;
+
+        return formatID;
     }
 
     /**
@@ -48,9 +80,22 @@ public class BankClient
         this(name, birthDate, signUpDate, null);
     }
 
+    /**
+     * Getter for the client's name.
+     * @return the clients name as a Name
+     */
+    Name getName()
+    {
+        return name;
+    }
+
+    /**
+     * Returns the client details in a sentence.
+     * @return all client details as a String
+     */
     String getDetails()
     {
-        return name.getFullName + " client " + clientID + " ("
+        return name.getFullName() + " client " + clientID + " ("
                 + ((deathDate == null) ? "alive" :
                 "died " + deathDate.getDayOfTheWeek() + ", "
                         + deathDate.getMonth() + " " + deathDate.getDay()
