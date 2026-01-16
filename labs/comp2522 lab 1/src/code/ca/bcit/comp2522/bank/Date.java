@@ -116,17 +116,16 @@ public class Date
 
         dayIndex = convertDayOfTheWeek(year, month, day);
 
-        switch (dayIndex)
-        {
-            case 0 -> { return "Saturday";}
-            case 1 -> { return "Sunday";}
-            case 2 -> { return "Monday";}
-            case 3 -> { return "Tuesday";}
-            case 4 -> { return "Wednesday";}
-            case 5 -> { return "Thursday";}
-            case 6 -> { return "Friday";}
-            default -> {return "ERROR: Could not calculate day of the week.";}
-        }
+        return switch (dayIndex) {
+            case 0 -> "Saturday";
+            case 1 -> "Sunday";
+            case 2 -> "Monday";
+            case 3 -> "Tuesday";
+            case 4 -> "Wednesday";
+            case 5 -> "Thursday";
+            case 6 -> "Friday";
+            default -> "ERROR: Could not calculate day of the week.";
+        };
     }
 
 
@@ -139,7 +138,7 @@ public class Date
     private static int convertDayOfTheWeek(final int year, final int month, final int day)
     {
         final int centuryDivisor = 100;
-        final String MONTH_CODE_INDEX = "144025036146";
+        // final String MONTH_CODE_INDEX = "144025036146";
 
         final int lastTwoDigitsOfYear;
         final boolean leapYear;
@@ -171,7 +170,17 @@ public class Date
         step4 = day + step1 + step2 + step3;
 
         // step 5: add month code to sum
-        monthCode = Character.getNumericValue(MONTH_CODE_INDEX.charAt(month - 1));
+        // monthCode = Character.getNumericValue(MONTH_CODE_INDEX.charAt(month - 1));
+        monthCode = switch (month) {
+            case 1, 10 -> 1;
+            case 2, 3, 11 -> 4;
+            case 4, 7 -> 0;
+            case 5 -> 2;
+            case 6 -> 5;
+            case 8 -> 3;
+            case 9, 12 -> 6;
+            default -> 0;
+        };
         step5 = step4 + monthCode;
 
         // step 5.5 check if year is a leap year
@@ -179,9 +188,7 @@ public class Date
 
         if (leapYear && (month == 1 || month == 2))
         {
-
             sumOfSteps += LEAP_MONTH_OFFSET;
-            sumOfSteps -= 1;
         }
         // step 6: add all previous five numbers
         step6 = sumOfSteps + step5;
@@ -225,6 +232,11 @@ public class Date
         return centuryCalculation;
     }
 
+    /**
+     * Drives the program.
+     * 
+     * @param args unused
+     */
     public static void main(String[] args) {
         Date test = new Date(1977, 10, 31);
 
