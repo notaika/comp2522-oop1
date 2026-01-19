@@ -11,6 +11,9 @@ package ca.bcit.comp2522.bank;
  */
 public class BankClient
 {
+    private static final int MIN_ID_LEN = 6;
+    private static final int MAX_ID_LEN = 7;
+
     private final Name name;
     private final Date birthDate;
     private final Date signUpDate;
@@ -18,39 +21,78 @@ public class BankClient
     private final String clientID;
 
     /**
-     * Sets the current BankClient values, with death date set to null.
-     * @param name the Name of the client
-     * @param birthDate the birth date of the client
-     */
-    BankClient(final Name name, final Date birthDate, final Date signUpDate, final String clientID)
-    {
-        this(name, birthDate, signUpDate, null, clientID);
-    }
-
-    /**
      * Sets the current BankClient values, including the death date.
      * @param name the Name of the client
      * @param birthDate the birth date of the client
      * @param deathDate the death date of the client
      */
-    BankClient(final Name name, final Date birthDate, final Date signUpDate, final Date deathDate, final String clientID)
+    BankClient(final Name name,
+               final Date birthDate,
+               final Date signUpDate,
+               final Date deathDate,
+               final String clientID)
     {
+        validateName(name);
         //Name objects are immutable
         this.name = name;
 
+        validateDate(birthDate);
+        validateDate(signUpDate);
         //Date objects are immutable
         this.birthDate = birthDate;
         this.signUpDate = signUpDate;
         this.deathDate = deathDate;
 
+        validateClientID(clientID);
         this.clientID = clientID;
     }
 
+    /**
+     * Sets the current BankClient values, with death date set to null.
+     * @param name the Name of the client
+     * @param birthDate the birth date of the client
+     */
+    BankClient(final Name name,
+               final Date birthDate,
+               final Date signUpDate,
+               final String clientID)
+    {
+        this(name, birthDate, signUpDate, null, clientID);
+    }
+
+    /**
+     * Throws an error if the account number is too long (6 or 7).
+     * @param acctNumToCheck the account number to check
+     */
+    private static void validateClientID(final String acctNumToCheck)
+    {
+        if (acctNumToCheck.length() < MIN_ID_LEN || acctNumToCheck.length() > MAX_ID_LEN)
+        {
+            throw new IllegalArgumentException("ERROR: ClientID must be between 6 to 7 characters.");
+        }
+    }
+
+    /**
+     * Validator for Name objects.
+     * @param name the name being validated
+     */
     private static void validateName(Name name)
     {
         if (name == null)
         {
-            throw IllegalArgumentException("ERROR: Date is nul")
+            throw new IllegalArgumentException("ERROR: Name is null.");
+        }
+    }
+
+    /**
+     * Validator for Date objects.
+     * @param date the name being validated
+     */
+    private static void validateDate(Date date)
+    {
+        if (date == null)
+        {
+            throw new IllegalArgumentException("ERROR: Date is null.");
         }
     }
 
@@ -109,11 +151,11 @@ public class BankClient
         clientDetails = new StringBuilder();
 
         clientDetails.append(name.getFullName());
-        clientDetails.append(" client ");
+        clientDetails.append(" client #");
         clientDetails.append(clientID);
         clientDetails.append(" (");
         clientDetails.append((deathDate == null) ? "alive" : "died " + deathDate.getDateFormatted());
-        clientDetails.append(") joined the bank on");
+        clientDetails.append(") joined the bank on ");
         clientDetails.append(signUpDate.getDateFormatted());
 
         return clientDetails.toString();

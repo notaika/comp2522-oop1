@@ -175,6 +175,10 @@ public class Date
      */
     public String getYyyyMmDd()
     {
+        if (month < 10)
+        {
+            return year + "-0" + month + "-" + day;
+        }
         return year + "-" + month + "-" + day;
     }
 
@@ -309,7 +313,7 @@ public class Date
      */
     public String getDateFormatted()
     {
-        return getDayOfTheWeek() + ", " + getMonthName() + day + ", " + year;
+        return getDayOfTheWeek() + ", " + getMonthName() + " " + day + ", " + year;
     }
 
     /**
@@ -318,15 +322,13 @@ public class Date
      * @param args unused
      */
     public static void main(String[] args) {
-        Date test = new Date(1977, 10, 31);
-
-        System.out.println(test.getDay());
-//        System.out.println(test.getCentury(2026));
-//        System.out.println(test.getCenturyYear(2026));
-        System.out.println(test.getDayOfTheWeek());
-
-        System.out.println(test.getMonthName());
-        System.out.println(test.getYear());
+//        Date test = new Date(1977, 10, 31);
+//
+//        System.out.println(test.getDay());
+//        System.out.println(test.getDayOfTheWeek());
+//
+//        System.out.println(test.getMonthName());
+//        System.out.println(test.getYear());
     }
 
 

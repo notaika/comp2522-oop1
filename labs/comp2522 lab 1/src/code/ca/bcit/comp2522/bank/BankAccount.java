@@ -20,8 +20,7 @@ public class BankAccount {
      *  on Monday January 1, 1900 and closed Saturday October 14, 1950."
      */
 
-    private static final int MIN_ACCT_LEN = 6;
-    private static final int MAX_ACCT_LEN = 7;
+
     private static final int MIN_PIN_LEN = 4;
     private static final double MIN_BALANCE_USD = 0.0;
 
@@ -35,41 +34,26 @@ public class BankAccount {
 
     /**
      * Constructor for a BankAccount.
-     * @param accountNumber an account specific String ID
      * @param client this bank accounts client
      * @param balanceUsd the account's balance
      * @param pin the bank account's PIN
-     * @param accountOpened the Date the bank account was opened
      */
-    BankAccount(final String accountNumber,
-                final BankClient client,
-                final int balanceUsd,
-                final int pin,
-                final Date accountOpened)
+    BankAccount(final BankClient client,
+                final double balanceUsd,
+                final int pin)
     {
-        validateAccountNumber(accountNumber);
         validateBalanceUsd(balanceUsd);
         validateClient(client);
         validatePin(pin);
 
-        this.accountNumber = accountNumber;
+        this.accountNumber = client.getClientID();
         this.client = client;
         this.balanceUsd = balanceUsd;
         this.pin = pin;
-        this.accountOpened = accountOpened;
+        this.accountOpened = client.getSignUpDate();
     }
 
-    /**
-     * Throws an error if the account number is too long (6 or 7).
-     * @param acctNumToCheck the account number to check
-     */
-    private static void validateAccountNumber(final String acctNumToCheck)
-    {
-        if (acctNumToCheck.length() < MIN_ACCT_LEN || acctNumToCheck.length() > MAX_ACCT_LEN)
-        {
-            throw new IllegalArgumentException("ERROR: Account number must be between 6 to 7 characters.");
-        }
-    }
+
 
     /**
      * Throws an error if the balance is negative.
@@ -113,10 +97,33 @@ public class BankAccount {
     {
         if (accountClosed != null)
         {
-            System.out.println("ERROR: Account closed. Access denied.");
             return true;
         }
         return false;
+    }
+
+    public BankClient getClient() {
+        return client;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public Date getAccountOpened() {
+        return accountOpened;
+    }
+
+    public Date getAccountClosed() {
+        return accountClosed;
+    }
+
+    public double getBalanceUsd() {
+        return balanceUsd;
+    }
+
+    public int getPin() {
+        return pin;
     }
 
     /**
@@ -127,6 +134,7 @@ public class BankAccount {
     {
         if (isAccountClosed())
         {
+            System.out.println("ERROR: Account closed. Access denied.");
             return;
         }
         this.accountClosed = accountClosed;
@@ -144,8 +152,12 @@ public class BankAccount {
 
             balanceUsd += amountUsdToDeposit;
 
-            System.out.println("SUCCESS: $" + amountUsdToDeposit + " deposited to account." +
+            System.out.println("SUCCESS: $" + amountUsdToDeposit + " deposited to account. " +
                     "New account balance: $" + balanceUsd);
+        }
+        else
+        {
+            System.out.println("ERROR: Account closed. Access denied.");
         }
     }
 
@@ -162,13 +174,17 @@ public class BankAccount {
 
                 balanceUsd -= amountUsdToWithdraw;
 
-                System.out.println("SUCCESS: $" + amountUsdToWithdraw + " withdrawn from account." +
+                System.out.println("SUCCESS: $" + amountUsdToWithdraw + " withdrawn from account. " +
                         "New account balance: $" + balanceUsd);
             }
             else
             {
                 System.out.println("ERROR: Withdrawal was unsuccessful.");
             }
+        }
+        else
+        {
+            System.out.println("ERROR: Account closed. Access denied.");
         }
     }
 
@@ -198,15 +214,15 @@ public class BankAccount {
         final StringBuilder accountDetails;
         accountDetails = new StringBuilder();
 
-        accountDetails.append(client.getName());
-        accountDetails.append("had $");
+        accountDetails.append(client.getName().getFullName());
+        accountDetails.append(" had $");
         accountDetails.append(balanceUsd);
         accountDetails.append(" USD in account #");
         accountDetails.append(accountNumber);
         accountDetails.append(" which he opened on ");
         accountDetails.append(accountOpened.getDateFormatted());
 
-        if (accountClosed != null)
+        if (isAccountClosed())
         {
             accountDetails.append(" and closed on ");
             accountDetails.append(accountClosed.getDateFormatted());
