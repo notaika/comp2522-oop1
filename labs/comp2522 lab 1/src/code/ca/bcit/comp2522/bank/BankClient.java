@@ -17,24 +17,14 @@ public class BankClient
     private final Date deathDate;
     private final String clientID;
 
-    /*
-    Maximum client ID.
-     */
-    private static final int ID_MAX = 999999;
-
-    /*
-    Automatic counter for clientID.
-     */
-    private static int clientIDCounter;
-
     /**
      * Sets the current BankClient values, with death date set to null.
      * @param name the Name of the client
      * @param birthDate the birth date of the client
      */
-    BankClient(final Name name, final Date birthDate, final Date signUpDate)
+    BankClient(final Name name, final Date birthDate, final Date signUpDate, final String clientID)
     {
-        this(name, birthDate, signUpDate, null);
+        this(name, birthDate, signUpDate, null, clientID);
     }
 
     /**
@@ -43,7 +33,7 @@ public class BankClient
      * @param birthDate the birth date of the client
      * @param deathDate the death date of the client
      */
-    BankClient(final Name name, final Date birthDate, final Date signUpDate, final Date deathDate)
+    BankClient(final Name name, final Date birthDate, final Date signUpDate, final Date deathDate, final String clientID)
     {
         //Name objects are immutable
         this.name = name;
@@ -53,42 +43,60 @@ public class BankClient
         this.signUpDate = signUpDate;
         this.deathDate = deathDate;
 
-        clientID = formatClientID(clientIDCounter++);
+        this.clientID = clientID;
     }
 
-    /*
-    Helper method to format the clientID
-     */
-    private static String formatClientID(int id)
+    private static void validateName(Name name)
     {
-        if (id > ID_MAX)
+        if (name == null)
         {
-            throw new IllegalArgumentException("ERROR: Max ID reached");
+            throw IllegalArgumentException("ERROR: Date is nul")
         }
-
-        String formatID;
-        String idString;
-
-        formatID = "#";
-        idString = "" + id;
-
-        for (int i = 0; i < 6 - idString.length(); i++)
-        {
-            formatID += "0";
-        }
-
-        formatID += idString;
-
-        return formatID;
     }
 
     /**
      * Getter for the client's name.
-     * @return the clients name as a Name
+     * @return the client's name as a Name
      */
     Name getName()
     {
         return name;
+    }
+
+    /**
+     * Getter for the client's birthday.
+     * @return the client's birthday as a Date
+     */
+    Date getBirthDate()
+    {
+        return birthDate;
+    }
+
+    /**
+     * Getter for the client's sign up date.
+     * @return the client's sign up date as a Date
+     */
+    Date getSignUpDate()
+    {
+        return signUpDate;
+    }
+
+    /**
+     * Getter for the client's death date
+     * @return the client's death date as a Date
+     */
+    Date getDeathDate()
+    {
+        return deathDate;
+    }
+
+    /**
+     * Getter for the client ID.
+     * @return the client ID as a String
+     */
+    String getClientID()
+    {
+        return clientID;
     }
 
     /**
@@ -97,13 +105,17 @@ public class BankClient
      */
     String getDetails()
     {
-        return name.getFullName() + " client " + clientID + " ("
-                + ((deathDate == null) ? "alive" :
-                "died " + deathDate.getDayOfTheWeek() + ", "
-                        + deathDate.getMonth() + " " + deathDate.getDay()
-                        + ", " + deathDate.getYear())
-                + ") joined the bank on " + signUpDate.getDayOfTheWeek() + ", "
-                + signUpDate.getMonth() + " " + signUpDate.getDay()
-                + ", " + signUpDate.getYear();
+        final StringBuilder clientDetails;
+        clientDetails = new StringBuilder();
+
+        clientDetails.append(name.getFullName());
+        clientDetails.append(" client ");
+        clientDetails.append(clientID);
+        clientDetails.append(" (");
+        clientDetails.append((deathDate == null) ? "alive" : "died " + deathDate.getDateFormatted());
+        clientDetails.append(") joined the bank on");
+        clientDetails.append(signUpDate.getDateFormatted());
+
+        return clientDetails.toString();
     }
 }

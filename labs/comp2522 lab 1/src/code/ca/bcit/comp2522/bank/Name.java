@@ -117,17 +117,14 @@ public class Name
      */
     public String getReverseName()
     {
-        String fullName;
-        String reversedName;
+        final StringBuilder reversedName;
+        final String fullName;
 
-        fullName = first + " " + last;
-        reversedName = "";
+        fullName = getFullName();
 
-        for (int i = fullName.length() - 1; i >= 0; i--)
-        {
-            reversedName += fullName.charAt(i);
-        }
+        reversedName = new StringBuilder(fullName);
+        reversedName.reverse();
 
-        return reversedName;
+        return reversedName.toString();
     }
 }
