@@ -2,7 +2,6 @@ package ca.bcit.comp2522.bank;
 
 /**
  * Represents a Bank Account.
- * @formatter:on
  *
  * @author Aika Manalo - Set 2C
  * @author Thor Baker - Set 2C
@@ -34,6 +33,7 @@ public class BankAccount {
 
     /**
      * Constructor for a BankAccount.
+     *
      * @param client this bank accounts client
      * @param balanceUsd the account's balance
      * @param pin the bank account's PIN
@@ -55,32 +55,31 @@ public class BankAccount {
 
 
 
-    /**
-     * Throws an error if the balance is negative.
-     * @param balanceToCheck the balance to check
+    /*
+     * Throws an error if the balance is less than the required minimum.
      */
     private static void validateBalanceUsd(final double balanceToCheck)
     {
         if (balanceToCheck < MIN_BALANCE_USD)
         {
-            throw new IllegalArgumentException("ERROR: Balance cannot be negative.");
+            throw new IllegalArgumentException("ERROR: Balance cannot be less than" + MIN_BALANCE_USD);
         }
     }
 
-    /**
+    /*
      * Throws an error if the bank client is null.
-     * @param clientToCheck the client to check
      */
     private static void validateClient(final BankClient clientToCheck)
     {
         if (clientToCheck == null)
         {
-            throw new IllegalArgumentException("ERROR: Client cannot be null.");
+            throw new IllegalArgumentException("ERROR: Bad client entry.");
         }
     }
 
-    /**
-     * Throws an error if the pin is smaller than 4.
+    /*
+     * Throws an error if the pin is smaller than minimum pin length.
+     *
      * @param pinToCheck the PIN to check
      */
     private static void validatePin(final int pinToCheck)
@@ -89,10 +88,16 @@ public class BankAccount {
 
         if (pinToString.length() < MIN_PIN_LEN)
         {
-            throw new IllegalArgumentException("ERROR: PIN is too weak. Must be 4 or more.");
+            throw new IllegalArgumentException("ERROR: PIN is too weak, must be greater than " +
+                    MIN_PIN_LEN);
         }
     }
 
+    /**
+     * Checks if the account is closed
+     *
+     * @return true if account is closed, false otherwise
+     */
     private boolean isAccountClosed()
     {
         if (accountClosed != null)
@@ -102,32 +107,68 @@ public class BankAccount {
         return false;
     }
 
-    public BankClient getClient() {
+    /**
+     * Returns client details.
+     *
+     * @return client details
+     */
+    public BankClient getClient()
+    {
         return client;
     }
 
-    public String getAccountNumber() {
+    /**
+     * Returns account number.
+     *
+     * @return account number
+     */
+    public String getAccountNumber()
+    {
         return accountNumber;
     }
 
-    public Date getAccountOpened() {
+    /**
+     * Returns the date when the account was opened.
+     *
+     * @return date of when the account was opened
+     */
+    public Date getAccountOpened()
+    {
         return accountOpened;
     }
 
-    public Date getAccountClosed() {
+    /**
+     * Returns the date when the account was closed.
+     *
+     * @return date of when the account was closed
+     */
+    public Date getAccountClosed()
+    {
         return accountClosed;
     }
 
-    public double getBalanceUsd() {
+    /**
+     * Returns the balance in USD.
+     *
+     * @return balanceUsd
+     */
+    public double getBalanceUsd()
+    {
         return balanceUsd;
     }
 
-    public int getPin() {
+    /**
+     * Returns the PIN.
+     * @return pin
+     */
+    public int getPin()
+    {
         return pin;
     }
 
     /**
      * Closes the bank account.
+     *
      * @param accountClosed the Date the bank account is closed
      */
     public void closeAccount(final Date accountClosed)
@@ -142,6 +183,7 @@ public class BankAccount {
 
     /**
      * Deposits an amount of money to the account.
+     *
      * @param amountUsdToDeposit the amount to deposit
      */
     public void deposit(final double amountUsdToDeposit)
@@ -157,12 +199,13 @@ public class BankAccount {
         }
         else
         {
-            System.out.println("ERROR: Account closed. Access denied.");
+            System.out.println("ERROR: Access denied.");
         }
     }
 
     /**
      * Takes an amount of money from the account with no PIN needed.
+     *
      * @param amountUsdToWithdraw the amount to withdraw
      */
     public void withdraw(final double amountUsdToWithdraw)
@@ -184,16 +227,18 @@ public class BankAccount {
         }
         else
         {
-            System.out.println("ERROR: Account closed. Access denied.");
+            System.out.println("ERROR: Access denied.");
         }
     }
 
     /**
      * Takes an amount of money from the account with a required PIN.
+     *
      * @param amountUsdToWithdraw the amount
      * @param pinToMatch
      */
-    public void withdraw(final double amountUsdToWithdraw, final int pinToMatch)
+    public void withdraw(final double amountUsdToWithdraw,
+                         final int pinToMatch)
     {
         if (this.pin == pinToMatch)
         {
@@ -207,6 +252,7 @@ public class BankAccount {
 
     /**
      * Concatenates all bank account information in a formatted sentence.
+     *
      * @return client name, balance, account number and opened Date as a String
      */
     public String getDetails()

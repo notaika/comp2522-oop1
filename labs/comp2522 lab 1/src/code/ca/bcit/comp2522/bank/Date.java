@@ -2,23 +2,21 @@ package ca.bcit.comp2522.bank;
 
 /**
  * Represents a date.
- * TODO:
- *  - add comments to all `final` variables
- *  - double check naming
  *
  * @author Aika Manalo - Set 2C
  * @author Thor Baker - Set 2C
+ *
  * @version 1.0
  */
 public class Date
 {
+
     private static final int MIN_DAY = 1;
     private static final int MAX_DAY = 31;
     private static final int MAX_DAY_SMALL = 30;
     private static final int MAX_DAY_FEB_LEAP = 29;
     private static final int MAX_DAY_FEB = 28;
-    private static final int MIN_MONTH = 1;
-    private static final int MAX_MONTH = 12;
+
     private static final int MIN_YEAR = 1800;
     private static final int CURRENT_YEAR = 2026;
 
@@ -62,9 +60,13 @@ public class Date
      * @param month the date's month
      * @param day the date's day
      */
-    public Date(final int year, final int month, final int day)
+    public Date(final int year,
+                final int month,
+                final int day)
     {
-        validateDate(year, month, day);
+        validateDate(year,
+                     month,
+                     day);
 
         this.year = year;
         this.month = month;
@@ -73,33 +75,38 @@ public class Date
 
     /*
      * Validates a given Date.
+     *
+     * @param year The year of the Date
+     * @param month The month of the date
+     * @param day The day of the Date
      */
-    private static void validateDate(final int year, final int month, final int day)
+    private static void validateDate(final int year,
+                                     final int month,
+                                     final int day)
     {
         if (year < MIN_YEAR || year > CURRENT_YEAR)
         {
             throw new IllegalArgumentException("Invalid year: " + year);
         }
-        if (month < MIN_MONTH || month > MAX_MONTH)
+
+        if (month < JANUARY || month > DECEMBER)
         {
             throw new IllegalArgumentException("Invalid month: " + month);
         }
 
-        //switch statement to check the date in each month
         switch (month)
         {
-            case 2 ->
+            case FEBRUARY ->
             {
-                if (isLeapYear(year) && (day < MIN_DAY || day > MAX_DAY_FEB_LEAP))
-                {
-                    throw new IllegalArgumentException("Invalid day: " + day);
-                }
-                else if (day < MIN_DAY || day > MAX_DAY_FEB)
+                if ((isLeapYear(year) &&
+                        (day < MIN_DAY ||
+                         day > MAX_DAY_FEB_LEAP))||
+                        (day < MIN_DAY || day > MAX_DAY_FEB))
                 {
                     throw new IllegalArgumentException("Invalid day: " + day);
                 }
             }
-            case 4, 6, 9, 11 ->
+            case APRIL, JUNE, SEPTEMBER, NOVEMBER ->
             {
                 if (day < MIN_DAY || day > MAX_DAY_SMALL)
                 {
@@ -148,75 +155,66 @@ public class Date
 
     /**
      * Returns the name of the month string.
+     *
      * @return month name
      */
-    public String getMonthName() {
-        return switch (month) {
-            case JANUARY -> "January";
-            case FEBRUARY -> "February";
-            case MARCH -> "March";
-            case APRIL -> "April";
-            case MAY -> "May";
-            case JUNE -> "June";
-            case JULY -> "July";
-            case AUGUST -> "August";
-            case SEPTEMBER -> "September";
-            case OCTOBER -> "October";
-            case NOVEMBER -> "November";
-            case DECEMBER -> "December";
-            default -> "Unknown";
-        };
+    public String getMonthName()
+    {
+        final String monthName;
+
+        switch (month) {
+            case JANUARY -> monthName = "January";
+            case FEBRUARY -> monthName = "February";
+            case MARCH -> monthName = "March";
+            case APRIL -> monthName = "April";
+            case MAY -> monthName = "May";
+            case JUNE -> monthName = "June";
+            case JULY -> monthName = "July";
+            case AUGUST -> monthName = "August";
+            case SEPTEMBER -> monthName = "September";
+            case OCTOBER -> monthName = "October";
+            case NOVEMBER -> monthName = "November";
+            case DECEMBER -> monthName = "December";
+            default -> throw new IllegalArgumentException("ERROR: Month out of bounds");
+        }
+
+        return monthName;
     }
 
     /**
      * Returns the Date in format YYYY-MM-DD.
-     *
      * @return date format in YYYY-MM-DD
      */
     public String getYyyyMmDd()
     {
-        if (month < 10)
+        if (month < OCTOBER)
         {
             return year + "-0" + month + "-" + day;
         }
         return year + "-" + month + "-" + day;
     }
 
-    /**
-     * Returns the date's day of the week.
-     *
-     * @return date's day of the week as a String
-     */
-    public String getDayOfTheWeek()
-    {
-        final int dayIndex;
-
-        dayIndex = convertDayOfTheWeek(year, month, day);
-
-        return switch (dayIndex) {
-            case SATURDAY -> "Saturday";
-            case SUNDAY -> "Sunday";
-            case MONDAY -> "Monday";
-            case TUESDAY -> "Tuesday";
-            case WEDNESDAY -> "Wednesday";
-            case THURSDAY -> "Thursday";
-            case FRIDAY -> "Friday";
-            default -> "ERROR: Could not calculate day of the week.";
-        };
-    }
-
-
-    // expected full page of comments for this method
-
     /*
      * Helper method for getting the day of the week.
      * Uses an algorithm to calculate the day of the week of a given Date.
+     * Step 1: Calculate the number of 12's in the last two digits of given year
+     * Step 2: Calculate the remainder from Step 1
+     * Step 3: Calculate the number of fours in Step 2
+     * Step 4: Add the day of the month to each step above (Steps 1, 2, and 3)
+     * Step 5: Add the month code (getMonthCode(month))
+     * Step 6: Add the previous five numbers (Steps 1, 2, 3, 4, and 5)
+     * Step 7: Result is the number associated of the day of the week
+     *
+     * @param year The year of the Date
+     * @param month The month of the Date
+     * @param day The day of the Date
+     * @return the number associated of the day of the week
      */
-    private static int convertDayOfTheWeek(final int year, final int month, final int day)
+    private static int convertDayOfTheWeek(final int year,
+                                           final int month,
+                                           final int day)
     {
         final int centuryDivisor = 100;
-        // final String MONTH_CODE_INDEX = "144025036146";
-
         final int lastTwoDigitsOfYear;
         final boolean leapYear;
         final int step1;
@@ -262,16 +260,14 @@ public class Date
         // step 7: get the remainder
         step7 = step6 % NUM_DAYS_IN_WEEK;
 
-        // testing the steps
-//        System.out.printf("Steps: \n1:%d,  \n2:%d,  \n3:%d,  \n4:%d,  \n5:%d,  \nmonth code:%d,  \nleap year:%b, \n6:%d,  \n7:%d",
-//                step1, step2, step3, step4, step5, monthCode, leapYear, step6, step7);
-
         return step7;
     }
 
     /*
      * Helper method for convertDayOfTheWeek.
      * Returns the given months corresponding month code for day of the week calculation.
+     *
+     * @param the month to convert
      */
     private static int getMonthCode(final int monthToConvert)
     {
@@ -281,6 +277,9 @@ public class Date
     /*
      * Helper method for convertDayOfTheWeek.
      * Check's if the given year is a leap year.
+     *
+     * @param year The year to check
+     * @return true if the year is a leap year
      */
     private static boolean isLeapYear(int year)
     {
@@ -291,6 +290,9 @@ public class Date
 
     /*
      * Calculates the date's century [1800, 2000].
+     *
+     * @param year The year to calculate century
+     * @return the century
      */
     private static int calculateCentury(final int year)
     {
@@ -308,47 +310,39 @@ public class Date
     }
 
     /**
-     * Concatenates and formats the Date
+     * Returns the date's day of the week.
+     *
+     * @return date's day of the week as a String
+     */
+    public String getDayOfTheWeek()
+    {
+        final int dayIndex;
+
+        final String dayName;
+
+        dayIndex = convertDayOfTheWeek(year, month, day);
+
+        switch (dayIndex) {
+            case SATURDAY -> dayName = "Saturday";
+            case SUNDAY -> dayName = "Sunday";
+            case MONDAY -> dayName = "Monday";
+            case TUESDAY -> dayName = "Tuesday";
+            case WEDNESDAY -> dayName = "Wednesday";
+            case THURSDAY -> dayName = "Thursday";
+            case FRIDAY -> dayName = "Friday";
+            default -> throw new IllegalArgumentException("ERROR: Day index out of bounds");
+        }
+
+        return dayName;
+    }
+
+    /**
+     * Concatenates and formats the Date.
+     *
      * @return the day of the week, followed by month name, day and year as a String
      */
     public String getDateFormatted()
     {
         return getDayOfTheWeek() + ", " + getMonthName() + " " + day + ", " + year;
     }
-
-    /**
-     * Drives the program.
-     * 
-     * @param args unused
-     */
-    public static void main(String[] args) {
-//        Date test = new Date(1977, 10, 31);
-//
-//        System.out.println(test.getDay());
-//        System.out.println(test.getDayOfTheWeek());
-//
-//        System.out.println(test.getMonthName());
-//        System.out.println(test.getYear());
-    }
-
-
-
-
-
-
-
-    // java doc only anything that is not private
-
-    /*
-     constructor
-     range: year: 1800 - current year
-     months: 1 - 12
-     days: 1-31 (or 30, 29, 28 - leep)
-
-     methods
-     getDay
-     getMonth
-     getYear
-     getYYYYMMDD -> YYYY-MM-DD
-     */
 }

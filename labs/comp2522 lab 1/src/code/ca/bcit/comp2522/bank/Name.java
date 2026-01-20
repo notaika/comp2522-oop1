@@ -9,8 +9,8 @@ package ca.bcit.comp2522.bank;
  */
 public class Name
 {
-    private static final int MAX_NAME_LEN = 45;
-    private static final String ILLEGAL_WORD = "admin";
+    private static final int MAX_NAME_LEN = 99;
+    private static final String ILLEGAL_WORD = "jason";
     private static final int FIRST_CHAR_INDEX = 0;
     private static final int SUBSTRING_END = 1;
 
@@ -19,11 +19,11 @@ public class Name
 
     /**
      * Constructs, validates and initializes a Name object.
-     *
      * @param first first name as String
      * @param last last name as String
      */
-    public Name(final String first, final String last)
+    public Name(final String first,
+                final String last)
     {
         validateName(first, "First name");
         validateName(last, "Last name");
@@ -32,7 +32,13 @@ public class Name
         this.last = last;
     }
 
-    private static void validateName(final String namePart, final String namePartType)
+    /*
+     * Checks if the name is null, blank, or outside the range.
+     * @param namePart name part being checked for exception message
+     * @param namePartType name part to validate
+     */
+    private static void validateName(final String namePart,
+                                     final String namePartType)
     {
         if (namePart == null || namePart.isBlank())
         {
@@ -41,18 +47,18 @@ public class Name
 
         if (namePart.length() > MAX_NAME_LEN)
         {
-            throw new IllegalArgumentException(("ERROR: " + namePartType + " cannot be greater than 45 characters."));
+            throw new IllegalArgumentException(("ERROR: " + namePartType + " cannot be greater than" +
+                    MAX_NAME_LEN + " characters."));
         }
 
         if (namePart.equalsIgnoreCase(ILLEGAL_WORD))
         {
-            throw new IllegalArgumentException("ERROR: " + namePartType + " cannot contain the word \"admin\"");
+            throw new IllegalArgumentException("ERROR: " + namePartType + " cannot contain the word " + ILLEGAL_WORD);
         }
     }
 
     /**
      * Returns first Name.
-     *
      * @return first name
      */
     public String getFirst() {
@@ -61,7 +67,6 @@ public class Name
 
     /**
      * Returns last Name.
-     *
      * @return last name
      */
     public String getLast() {
@@ -71,7 +76,6 @@ public class Name
 
     /**
      * Return's the first and last initial of Name.
-     *
      * @return the initials
      */
     public String getInitials()
@@ -90,7 +94,6 @@ public class Name
 
     /**
      * Returns the full Name formatted in title case.
-     *
      * @return first and last name
      */
     public String getFullName()
@@ -111,8 +114,7 @@ public class Name
     }
 
     /**
-     * Returns the Name in reverse (e.g. "tigER wooDS" would return "SDoow REgit").
-     *
+     * Reverses name (e.g. "tigER wooDS" would return "SDoow REgit").
      * @return full name in reversed
      */
     public String getReverseName()
