@@ -228,8 +228,6 @@ public class Creature
         System.out.println("=== THE LORAX CREATURE DETAILS ===");
         testCreature.getDetails();
 
-
-
         testCreature.takeDamage(20);
 
         testCreature.takeDamage(100);

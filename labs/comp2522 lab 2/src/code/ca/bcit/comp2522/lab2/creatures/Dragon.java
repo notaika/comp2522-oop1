@@ -10,7 +10,7 @@ package ca.bcit.comp2522.lab2.creatures;
 public class Dragon extends Creature
 {
     private static final int MIN_FIREPOWER = 0;
-    private static final int LOW_FIREPOWER = 10;
+    private static final int LOW_FIREPOWER_THRESHOLD = 10;
     private static final int MAX_FIREPOWER = 100;
     private static final int FIRE_DAMAGE = 20;
 
@@ -34,7 +34,7 @@ public class Dragon extends Creature
      * @param firePower the stat to check
      * @throws IllegalArgumentException if firepower is less than 0 or greater than 100
      */
-    private void validateFirePower(int firePower)
+    private static void validateFirePower(final int firePower)
     {
         if (firePower < MIN_FIREPOWER || firePower > MAX_FIREPOWER)
         {
@@ -63,13 +63,13 @@ public class Dragon extends Creature
     public int breatheFire() throws LowFirePowerException
     {
         // Send a warning if firepower is less than 10
-        if (firePower < LOW_FIREPOWER)
+        if (firePower < LOW_FIREPOWER_THRESHOLD)
         {
             throw new LowFirePowerException("Firepower is at " + getFirePower());
         }
 
         // Reduce firepower by 10
-        firePower -= LOW_FIREPOWER;
+        firePower -= LOW_FIREPOWER_THRESHOLD;
         System.out.println(getName() + " breathed fire: " + FIRE_DAMAGE
                            + " damage points");
         System.out.println("Firepower: " + getFirePower());
