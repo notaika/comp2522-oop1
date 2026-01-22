@@ -9,8 +9,8 @@ package ca.bcit.comp2522.lab2.creatures;
  */
 public class Creature
 {
-    private final static int MIN_HEALTH = 0;
     private final static int MAX_HEALTH = 100;
+    private final static int MIN_HEALTH = 0;
 
     private final static int YEAR_UPPER_LIMIT = 2026;
     private final static int MONTH_UPPER_LIMIT = 1;
