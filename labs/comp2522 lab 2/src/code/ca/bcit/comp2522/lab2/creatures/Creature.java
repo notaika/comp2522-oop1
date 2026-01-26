@@ -9,13 +9,24 @@ package ca.bcit.comp2522.lab2.creatures;
  */
 public class Creature
 {
-    private final static int MAX_HEALTH = 100;
-    private final static int MIN_HEALTH = 0;
+    private final static int MAX_HEALTH;
+    private final static int MIN_HEALTH;
 
-    private final static int YEAR_UPPER_LIMIT = 2026;
-    private final static int MONTH_UPPER_LIMIT = 1;
-    private final static int DAY_UPPER_LIMIT = 21;
+    private final static int YEAR_UPPER_LIMIT;
+    private final static int MONTH_UPPER_LIMIT;
+    private final static int DAY_UPPER_LIMIT;
     private final static Date DATE_UPPER_LIMIT;
+
+    private final String name; // not null or empty
+    private final Date dateOfBirth; // must not be in the future
+    private int health; // must be 1 - 100
+
+    MAX_HEALTH = 100;
+    MIN_HEALTH = 0;
+
+    YEAR_UPPER_LIMIT = 2026;
+    MONTH_UPPER_LIMIT = 1;
+    DAY_UPPER_LIMIT = 27;
 
     // Initialize upper date limit??? <- is this the right way to do this???
     static
@@ -23,11 +34,13 @@ public class Creature
         DATE_UPPER_LIMIT = new Date(YEAR_UPPER_LIMIT, MONTH_UPPER_LIMIT, DAY_UPPER_LIMIT);
     }
 
-    private final String name; // not null or empty
-    private final Date dateOfBirth; // must not be in the future
-
-    private int health; // must be 1 - 100
-
+    /**
+     * Sets Creature's name, dote of birth, and health on creation.
+     *
+     * @param name The name of the Creature
+     * @param dateOfBirth The date of birth of the Creature
+     * @param health The health of the Creature
+     */
     public Creature(final String name,
                     final Date dateOfBirth,
                     final int health)
@@ -39,6 +52,55 @@ public class Creature
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.health = health;
+    }
+
+    /*
+     * Checks if health is valid.
+     * Throws IllegalArgumentException if invalid.
+     *
+     * @param healthToCheck health amount to check
+     * @throws IllegalArgumentException exception thrown if health is invalid
+     */
+    private static void validateHealth(int healthToCheck)
+    {
+        if (healthToCheck < MIN_HEALTH || healthToCheck > MAX_HEALTH)
+        {
+            throw new IllegalArgumentException("ERROR: Health must be in between " +
+                                               MIN_HEALTH + " and " + MAX_HEALTH);
+        }
+    }
+
+    /*
+     * Checks if date of birth is not in the future.
+     * Throws IllegalArgumentException if invalid.
+     *
+     * @param dateToCheck date of birth to check
+     * @throws IllegalArgumentException exception thrown if year, month or day is greater than the upper limit
+     */
+    private static void validateDOB(Date dateToCheck)
+    {
+        if  (dateToCheck.getYear() > YEAR_UPPER_LIMIT ||
+             (dateToCheck.getYear() == YEAR_UPPER_LIMIT && dateToCheck.getMonth() > MONTH_UPPER_LIMIT) ||
+             (dateToCheck.getYear() == YEAR_UPPER_LIMIT && dateToCheck.getMonth() == MONTH_UPPER_LIMIT && dateToCheck.getDay() > DAY_UPPER_LIMIT))
+        {
+            throw new IllegalArgumentException("ERROR: Birth date must be before" +
+                                               DATE_UPPER_LIMIT);
+        }
+    }
+
+    /*
+     * Checks if name is null or empty.
+     * Throw IllegalArgumentException if invalid.
+     *
+     * @param nameToCheck
+     * @throws IllegalArgumentException exception thrown if name is null or empty.
+     */
+    private static void validateName(String nameToCheck)
+    {
+        if (nameToCheck == null || nameToCheck.isEmpty())
+        {
+            throw new IllegalArgumentException("ERROR: Name cannot be null or empty.");
+        }
     }
 
     /**
@@ -71,55 +133,6 @@ public class Creature
         return health;
     }
 
-    /*
-     * Checks if health is between 0 and 100.
-     * Throws IllegalArgumentException if invalid.
-     *
-     * @param healthToCheck health amount to check
-     * @throws IllegalArgumentException exception thrown if health is less than 0 or greater than 100
-     */
-    private static void validateHealth(int healthToCheck)
-    {
-        if (healthToCheck < MIN_HEALTH || healthToCheck > MAX_HEALTH)
-        {
-            throw new IllegalArgumentException("ERROR: Health must be in between " +
-                                               MIN_HEALTH + " and " + MAX_HEALTH);
-        }
-    }
-
-    /*
-     * Checks if date of birth is not in the future.
-     * Throws IllegalArgumentException if invalid.
-     *
-     * @param dateToCheck date of birth to check
-     * @throws IllegalArgumentException exception thrown if year, month or day is greater than the upper limit
-     */
-    private static void validateDOB(Date dateToCheck)
-    {
-        if  (dateToCheck.getYear() > YEAR_UPPER_LIMIT ||
-            (dateToCheck.getYear() == YEAR_UPPER_LIMIT && dateToCheck.getMonth() > MONTH_UPPER_LIMIT) ||
-            (dateToCheck.getYear() == YEAR_UPPER_LIMIT && dateToCheck.getMonth() == MONTH_UPPER_LIMIT && dateToCheck.getDay() > DAY_UPPER_LIMIT))
-        {
-            throw new IllegalArgumentException("ERROR: Birth date must be before" +
-                                               DATE_UPPER_LIMIT);
-        }
-    }
-
-    /*
-     * Checks if name is null or empty.
-     * Throw IllegalArgumentException if invalid.
-     *
-     * @param nameToCheck
-     * @throws IllegalArgumentException exception thrown if name is null or empty.
-     */
-    private static void validateName(String nameToCheck)
-    {
-        if (nameToCheck == null || nameToCheck.isEmpty())
-        {
-            throw new IllegalArgumentException("ERROR: Name cannot be null or empty.");
-        }
-    }
-
     /**
      * Checks if creature is still alive.
      * Returns true if health is greater than 0.
@@ -133,7 +146,7 @@ public class Creature
     }
 
     /**
-     * Reduces health by damage. If health goes below 0, set it to 0.
+     * Reduces health by damage. If health goes below MIN_HEALTH, set it to MIN_HEALTH.
      * If damage is negative, throw an unchecked DamageException.
      *
      * @param damage amount of health to take away (damage), must not go below stated minimum
@@ -163,7 +176,7 @@ public class Creature
     }
 
     /**
-     * Increases health by healAmount but cannot exceed 100.
+     * Increases health by healAmount but cannot exceed MAX_HEALTH.
      * If healing amount is negative, throw an unchecked HealingException.
      *
      * @param healAmount amount of health to add (heal), must not go below minimum
@@ -214,9 +227,12 @@ public class Creature
     public void getDetails()
     {
         System.out.println("Name: " + getName() +
-                           "\nDate of Birth: " + dateOfBirth.getYyyyMmDd() +
-                           "\nAge (in years): " + getAgeYears() +
-                           "\nHealth: " + getHealth());
+                           "\nDate of Birth: " +
+                           dateOfBirth.getYyyyMmDd() +
+                           "\nAge (in years): " +
+                           getAgeYears() +
+                           "\nHealth: " +
+                           getHealth());
     }
 
     public static void main(String[] args)

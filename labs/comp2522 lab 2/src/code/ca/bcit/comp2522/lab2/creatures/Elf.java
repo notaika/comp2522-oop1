@@ -9,14 +9,26 @@ package ca.bcit.comp2522.lab2.creatures;
  */
 public class Elf extends Creature
 {
-    private static final int MIN_MANA = 0;
-    private static final int LOW_MANA_THRESHOLD = 5;
-    private static final int MAX_MANA = 50;
-    private static final int SPELL_DAMAGE = 10;
-
+    private static final int MIN_MANA;
+    private static final int LOW_MANA_THRESHOLD;
+    private static final int MAX_MANA;
+    private static final int SPELL_DAMAGE;
 
     private int mana;
 
+    MIN_MANA = 0;
+    LOW_MANA_THRESHOLD = 5;
+    MAX_MANA = 50;
+    SPELL_DAMAGE = 10;
+
+    /**
+     * Sets Elf's name, dote of birth, health and fire power on creation.
+     *
+     * @param name The name of the Elf
+     * @param dob The date of birth of the Elf
+     * @param health The health of the Elf
+     * @param mana The current mana of the Elf
+     */
     public Elf(final String name,
                final Date dob,
                final int health,
@@ -38,48 +50,61 @@ public class Elf extends Creature
     }
 
     /*
+     * Checks if the mana is between MIN_MANA and MAX_MANA.
      *
-     * @param mana
-     * @throws IllegalArgumentException
+     * @param mana The mana to check
      */
     private static void validateMana(final int mana)
     {
         if (mana < MIN_MANA || mana > MAX_MANA)
         {
             throw new IllegalArgumentException("ERROR: Mana must be in between " +
-                                               MIN_MANA + " and " + MAX_MANA);
+                                               MIN_MANA +
+                                               " and " +
+                                               MAX_MANA);
         }
     }
 
     /**
+     * Deals SPELL_DAMAGE to another Creature and reduces mana by LOW_MANA_THRESHOLD.
      *
-     *
-     * @return
-     * @throws LowManaException
+     * @return SPELL_DAMAGE
+     * @throws LowManaException if mana is below LOW_MANA_THRESHOLD
      */
     public int castSpell() throws LowManaException
     {
         // Send a warning if mana is less than 10
         if (mana < LOW_MANA_THRESHOLD)
         {
-            throw new LowManaException("Mana is at " + getMana());
+            throw new LowManaException("Mana is at " +
+                                       getMana());
         }
 
         // Reduce mana by 10
         mana -= LOW_MANA_THRESHOLD;
-        System.out.println(getName() + " breathed fire: " + SPELL_DAMAGE
-                           + " damage points");
+        System.out.println(getName() +
+                           " casted a spell: " +
+                           SPELL_DAMAGE +
+                           " damage points");
+
         System.out.println("Mana: " + getMana());
         // Deals 20 damage
         return SPELL_DAMAGE;
     }
 
+    /**
+     * Adds a specified amount to mana.
+     *
+     * @param amountToRestore The amount to add to mana
+     */
     public void restoreMana(final int amountToRestore)
     {
         if (amountToRestore < MIN_MANA)
         {
             throw new IllegalArgumentException("ERROR: Mana must be in between " +
-                                               MIN_MANA + " and " + MAX_MANA);
+                                               MIN_MANA +
+                                               " and " +
+                                               MAX_MANA);
         }
 
         mana += amountToRestore;
@@ -88,26 +113,22 @@ public class Elf extends Creature
         if (mana > MAX_MANA)
         {
             mana = MAX_MANA;
-            System.out.println("Mana restored: " + amountToRestore + " points");
+            System.out.println("Mana restored: " +
+                               amountToRestore +
+                               " points");
         }
-        System.out.println("Mana: " + getMana());
+        System.out.println("Mana: " +
+                           getMana());
     }
 
+    /**
+     * Calls Creature's getDetails() and adds mana to the list.
+     */
     @Override
     public void getDetails()
     {
         super.getDetails();
-        System.out.println("Mana: " + getMana());
+        System.out.println("Mana: " +
+                           getMana());
     }
-
-
-
-
-
-
-
-
-
-
-
 }

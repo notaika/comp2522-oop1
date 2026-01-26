@@ -9,14 +9,26 @@ package ca.bcit.comp2522.lab2.creatures;
  */
 public class Dragon extends Creature
 {
-    private static final int MIN_FIREPOWER = 0;
-    private static final int LOW_FIREPOWER_THRESHOLD = 10;
-    private static final int MAX_FIREPOWER = 100;
-    private static final int FIRE_DAMAGE = 20;
-
+    private static final int MIN_FIREPOWER;
+    private static final int LOW_FIREPOWER_THRESHOLD;
+    private static final int MAX_FIREPOWER;
+    private static final int FIRE_DAMAGE;
 
     private int firePower;
 
+    MIN_FIREPOWER = 0;
+    LOW_FIREPOWER_THRESHOLD = 10;
+    MAX_FIREPOWER = 100;
+    FIRE_DAMAGE = 20;
+
+    /**
+     * Sets Dragon's name, dote of birth, health and fire power on creation.
+     *
+     * @param name The name of the Dragon
+     * @param dateOfBirth The date of birth of the Dragon
+     * @param health The health of the Dragon
+     * @param firePower The current firePower of the Dragon
+     */
     public Dragon(final String name,
                   final Date dateOfBirth,
                   final int health,
@@ -28,18 +40,20 @@ public class Dragon extends Creature
     }
 
     /*
-     * Checks if firepower is between 0 and 100.
+     * Checks if firepower is between MIN_FIREPOWER and MAX_FIREPOWER.
      * Throws IllegalArgumentException if invalid.
      *
      * @param firePower the stat to check
-     * @throws IllegalArgumentException if firepower is less than 0 or greater than 100
+     * @throws IllegalArgumentException if firepower is invalid
      */
     private static void validateFirePower(final int firePower)
     {
         if (firePower < MIN_FIREPOWER || firePower > MAX_FIREPOWER)
         {
             throw new IllegalArgumentException("ERROR: Firepower must be in between " +
-                                               MIN_FIREPOWER + " and " + MAX_FIREPOWER);
+                                               MIN_FIREPOWER +
+                                               " and " +
+                                               MAX_FIREPOWER);
         }
     }
 
@@ -54,35 +68,47 @@ public class Dragon extends Creature
     }
 
     /**
-     * Deals 20 damage to another creature and reduces firepower by 10.
-     * Throws a warning if firepower is low.
+     * Deals FIRE_DAMAGE damage to another creature and reduces firepower by LOW_FIREPOWER_THRESHOLD.
+     * Throws a LowFirePowerException if firepower is low.
      *
-     * @return damage to execute
-     * @throws LowFirePowerException if firepower is low (< 10)
+     * @return FIRE_DAMAGE
+     * @throws LowFirePowerException if firePower is below LOW_FIREPOWER_THRESHOLD
      */
     public int breatheFire() throws LowFirePowerException
     {
-        // Send a warning if firepower is less than 10
+        // Send a warning if firepower is less than LOW_FIREPOWER_THRESHOLD
         if (firePower < LOW_FIREPOWER_THRESHOLD)
         {
-            throw new LowFirePowerException("Firepower is at " + getFirePower());
+            throw new LowFirePowerException("Firepower is at " +
+                                            getFirePower());
         }
 
-        // Reduce firepower by 10
+        // Reduce firepower by LOW_FIREPOWER_THRESHOLD
         firePower -= LOW_FIREPOWER_THRESHOLD;
-        System.out.println(getName() + " breathed fire: " + FIRE_DAMAGE
-                           + " damage points");
-        System.out.println("Firepower: " + getFirePower());
-        // Deals 20 damage
+        System.out.println(getName() +
+                           " breathed fire: " +
+                           FIRE_DAMAGE +
+                           " damage points");
+
+        System.out.println("Firepower: " +
+                           getFirePower());
+        // Deals FIRE_DAMAGE damage
         return FIRE_DAMAGE;
     }
 
+    /**
+     * Adds specified amount to firePower.
+     *
+     * @param amountToRestore The amount to add to firePower
+     */
     public void restoreFirePower(final int amountToRestore)
     {
         if (amountToRestore < MIN_FIREPOWER)
         {
             throw new IllegalArgumentException("ERROR: Firepower must be in between " +
-                                           MIN_FIREPOWER + " and " + MAX_FIREPOWER);
+                                           MIN_FIREPOWER +
+                                           " and " +
+                                           MAX_FIREPOWER);
         }
 
         firePower += amountToRestore;
@@ -91,16 +117,22 @@ public class Dragon extends Creature
         if (firePower > MAX_FIREPOWER)
         {
             firePower = MAX_FIREPOWER;
-            System.out.println("Firepower restored: " + amountToRestore + " points");
         }
-        System.out.println("Firepower: " + getFirePower());
+        System.out.println("Firepower restored: " +
+                           amountToRestore +
+                           " points");
     }
 
+    /**
+     * Calls Creature getDetails() and adds firePower to the end.
+     */
     @Override
     public void getDetails()
     {
         super.getDetails();
-        System.out.println("Firepower: " + getFirePower());
+
+        System.out.println("Firepower: " +
+                           getFirePower());
     }
 
     public static void main(String[] args)
