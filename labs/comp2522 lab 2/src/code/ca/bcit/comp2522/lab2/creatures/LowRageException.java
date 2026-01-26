@@ -1,5 +1,12 @@
 package ca.bcit.comp2522.lab2.creatures;
 
+/**
+ * Thrown to indicate that rage is low.
+ *
+ * @author Aika Manalo - Set 2C
+ * @author Thor Baker - Set 2C
+ * @version 1.0
+ */
 public class LowRageException extends RuntimeException
 {
     /**

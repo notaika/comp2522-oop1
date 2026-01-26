@@ -9,17 +9,12 @@ package ca.bcit.comp2522.lab2.creatures;
  */
 public class Elf extends Creature
 {
-    private static final int MIN_MANA;
-    private static final int LOW_MANA_THRESHOLD;
-    private static final int MAX_MANA;
-    private static final int SPELL_DAMAGE;
+    private static final int MIN_MANA = 0;
+    private static final int LOW_MANA_THRESHOLD = 5;
+    private static final int MAX_MANA = 50;
+    private static final int SPELL_DAMAGE = 10;
 
     private int mana;
-
-    MIN_MANA = 0;
-    LOW_MANA_THRESHOLD = 5;
-    MAX_MANA = 50;
-    SPELL_DAMAGE = 10;
 
     /**
      * Sets Elf's name, dote of birth, health and fire power on creation.

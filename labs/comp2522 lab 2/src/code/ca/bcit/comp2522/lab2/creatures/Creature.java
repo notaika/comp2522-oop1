@@ -9,24 +9,17 @@ package ca.bcit.comp2522.lab2.creatures;
  */
 public class Creature
 {
-    private final static int MAX_HEALTH;
-    private final static int MIN_HEALTH;
+    private final static int MAX_HEALTH = 100;
+    private final static int MIN_HEALTH = 0;
 
-    private final static int YEAR_UPPER_LIMIT;
-    private final static int MONTH_UPPER_LIMIT;
-    private final static int DAY_UPPER_LIMIT;
+    private final static int YEAR_UPPER_LIMIT = 2026;
+    private final static int MONTH_UPPER_LIMIT = 1;
+    private final static int DAY_UPPER_LIMIT = 27;
     private final static Date DATE_UPPER_LIMIT;
 
     private final String name; // not null or empty
     private final Date dateOfBirth; // must not be in the future
     private int health; // must be 1 - 100
-
-    MAX_HEALTH = 100;
-    MIN_HEALTH = 0;
-
-    YEAR_UPPER_LIMIT = 2026;
-    MONTH_UPPER_LIMIT = 1;
-    DAY_UPPER_LIMIT = 27;
 
     // Initialize upper date limit??? <- is this the right way to do this???
     static

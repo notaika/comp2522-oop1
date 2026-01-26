@@ -9,21 +9,14 @@ package ca.bcit.comp2522.lab2.creatures;
  */
 public class Orc extends Creature
 {
-    private static final int MIN_RAGE;
-    private static final int LOW_RAGE;
-    private static final int BERSERK_RAGE_THRES;
-    private static final int MAX_RAGE;
-    private static final int RAGE_INCREASE;
-    private static final int BERSERK_DAMAGE;
+    private static final int MIN_RAGE = 0;
+    private static final int LOW_RAGE = 5;
+    private static final int BERSERK_RAGE_THRESHOLD = 20;
+    private static final int MAX_RAGE = 30;
+    private static final int RAGE_INCREASE = 5;
+    private static final int BERSERK_DAMAGE = 15;
 
     private int rage;
-
-    MIN_RAGE = 0;
-    LOW_RAGE = 5;
-    BERSKER_RAGE_THRES = 20;
-    MAX_RAGE = 30;
-    RAGE_INCREASE = 5;
-    BERKSERK_DAMAGE = 15;
 
     /**
      * Sets Orc's name, dote of birth, health and rage on creation.
@@ -77,7 +70,7 @@ public class Orc extends Creature
             rage = MAX_RAGE;
         }
 
-        if (rage > BERSERK_RAGE_THRES)
+        if (rage > BERSERK_RAGE_THRESHOLD)
         {
             damageDealt *= 2;
         }

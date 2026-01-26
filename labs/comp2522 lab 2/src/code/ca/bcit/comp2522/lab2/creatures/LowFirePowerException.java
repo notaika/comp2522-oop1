@@ -1,7 +1,7 @@
 package ca.bcit.comp2522.lab2.creatures;
 
 /**
- * Thrown to indicate that the firepower is low.
+ * Thrown to indicate that firepower is low.
  *
  * @author Aika Manalo - Set 2C
  * @author Thor Baker - Set 2C

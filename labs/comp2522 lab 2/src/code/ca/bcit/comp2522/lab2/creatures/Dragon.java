@@ -9,17 +9,12 @@ package ca.bcit.comp2522.lab2.creatures;
  */
 public class Dragon extends Creature
 {
-    private static final int MIN_FIREPOWER;
-    private static final int LOW_FIREPOWER_THRESHOLD;
-    private static final int MAX_FIREPOWER;
-    private static final int FIRE_DAMAGE;
+    private static final int MIN_FIREPOWER = 0;
+    private static final int LOW_FIREPOWER_THRESHOLD = 10;
+    private static final int MAX_FIREPOWER = 100;
+    private static final int FIRE_DAMAGE = 20;
 
     private int firePower;
-
-    MIN_FIREPOWER = 0;
-    LOW_FIREPOWER_THRESHOLD = 10;
-    MAX_FIREPOWER = 100;
-    FIRE_DAMAGE = 20;
 
     /**
      * Sets Dragon's name, dote of birth, health and fire power on creation.
