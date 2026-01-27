@@ -9,7 +9,7 @@ package ca.bcit.comp2522.lab2.creatures;
  */
 public class Dragon extends Creature
 {
-    private static final int MIN_FIREPOWER = 0;
+    private static final int MIN_FIREPOWER = 1;
     private static final int LOW_FIREPOWER_THRESHOLD = 10;
     private static final int MAX_FIREPOWER = 100;
     private static final int FIRE_DAMAGE = 20;
@@ -66,29 +66,39 @@ public class Dragon extends Creature
      * Deals FIRE_DAMAGE damage to another creature and reduces firepower by LOW_FIREPOWER_THRESHOLD.
      * Throws a LowFirePowerException if firepower is low.
      *
-     * @return FIRE_DAMAGE
+     * @param creatureToAttack
      * @throws LowFirePowerException if firePower is below LOW_FIREPOWER_THRESHOLD
      */
-    public int breatheFire() throws LowFirePowerException
+    public void breatheFire(final Creature creatureToAttack) throws LowFirePowerException
     {
-        // Send a warning if firepower is less than LOW_FIREPOWER_THRESHOLD
-        if (firePower < LOW_FIREPOWER_THRESHOLD)
+        if (isPassedOut())
         {
-            throw new LowFirePowerException("Firepower is at " +
-                                            getFirePower());
+            System.out.println(getName() + " is passed out. Attack failed!");
+            return;
+        }
+
+        // If firepower is at 0, send error.
+        if (firePower < MIN_FIREPOWER)
+        {
+            throw new LowFirePowerException("ERROR: " + getName() + " doesn't have enough firepower " +
+                                            " - Attack failed.");
         }
 
         // Reduce firepower by LOW_FIREPOWER_THRESHOLD
         firePower -= LOW_FIREPOWER_THRESHOLD;
         System.out.println(getName() +
-                           " breathed fire: " +
+                           " breathed fire: inflicted +" +
                            FIRE_DAMAGE +
-                           " damage points");
+                           " fire damage | Firepower left: " + getFirePower());
 
-        System.out.println("Firepower: " +
-                           getFirePower());
-        // Deals FIRE_DAMAGE damage
-        return FIRE_DAMAGE;
+        // Inflict damage onto creature
+        creatureToAttack.takeDamage(FIRE_DAMAGE);
+
+        // Send a warning if firepower is less than LOW_FIREPOWER_THRESHOLD
+        if (firePower < LOW_FIREPOWER_THRESHOLD)
+        {
+            throw new LowFirePowerException("WARNING: " + getName() + " firepower is critically low!");
+        }
     }
 
     /**
@@ -113,9 +123,7 @@ public class Dragon extends Creature
         {
             firePower = MAX_FIREPOWER;
         }
-        System.out.println("Firepower restored: " +
-                           amountToRestore +
-                           " points");
+        System.out.println(getName() + " restored " + amountToRestore + " firepower.");
     }
 
     /**
@@ -129,37 +137,5 @@ public class Dragon extends Creature
         System.out.println("Firepower: " +
                            getFirePower());
     }
-
-    public static void main(String[] args)
-    {
-        final Date testDOB = new Date(2000, 8, 31);
-        final Dragon testDragon = new Dragon("Toothless", testDOB, 100, 40);
-
-        testDragon.getDetails();
-
-        try
-        {
-            testDragon.breatheFire();
-            testDragon.breatheFire();
-            testDragon.breatheFire();
-            testDragon.breatheFire();
-            testDragon.breatheFire();
-            testDragon.breatheFire();
-        }
-        catch (LowFirePowerException e)
-        {
-            System.out.println("ERROR: " + e.getMessage());
-        }
-    }
-
-
-
-
-
-
-
-
-
-
 
 }

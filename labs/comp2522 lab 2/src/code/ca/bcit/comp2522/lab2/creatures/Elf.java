@@ -9,7 +9,7 @@ package ca.bcit.comp2522.lab2.creatures;
  */
 public class Elf extends Creature
 {
-    private static final int MIN_MANA = 0;
+    private static final int MIN_MANA = 1;
     private static final int LOW_MANA_THRESHOLD = 5;
     private static final int MAX_MANA = 50;
     private static final int SPELL_DAMAGE = 10;
@@ -63,28 +63,38 @@ public class Elf extends Creature
     /**
      * Deals SPELL_DAMAGE to another Creature and reduces mana by LOW_MANA_THRESHOLD.
      *
-     * @return SPELL_DAMAGE
+     * @param creatureToAttack
      * @throws LowManaException if mana is below LOW_MANA_THRESHOLD
      */
-    public int castSpell() throws LowManaException
+    public void castSpell(final Creature creatureToAttack) throws LowManaException
     {
-        // Send a warning if mana is less than 10
-        if (mana < LOW_MANA_THRESHOLD)
+        if (isPassedOut())
         {
-            throw new LowManaException("Mana is at " +
-                                       getMana());
+            System.out.println(getName() + " is passed out. Attack failed!");
+            return;
         }
+
+        if (mana < MIN_MANA)
+        {
+            throw new LowManaException("ERROR: " + getName() + " doesn't have enough mana " +
+                                       " - Attack failed.");
+        }
+
+        // Inflict damage onto creature
+        creatureToAttack.takeDamage(SPELL_DAMAGE);
 
         // Reduce mana by 10
         mana -= LOW_MANA_THRESHOLD;
         System.out.println(getName() +
-                           " casted a spell: " +
+                           " casted a spell: inflicted +" +
                            SPELL_DAMAGE +
-                           " damage points");
+                           " spell damage | Mana left: " + getMana());
 
-        System.out.println("Mana: " + getMana());
-        // Deals 20 damage
-        return SPELL_DAMAGE;
+        // Send a warning if mana is less than 10
+        if (mana < LOW_MANA_THRESHOLD)
+        {
+            throw new LowManaException("WARNING: " + getName() + " mana is critically low!");
+        }
     }
 
     /**
@@ -108,12 +118,11 @@ public class Elf extends Creature
         if (mana > MAX_MANA)
         {
             mana = MAX_MANA;
-            System.out.println("Mana restored: " +
+            System.out.print("mana restored: " +
                                amountToRestore +
                                " points");
         }
-        System.out.println("Mana: " +
-                           getMana());
+        System.out.println(" | Mana left:" + getMana());
     }
 
     /**
@@ -123,7 +132,6 @@ public class Elf extends Creature
     public void getDetails()
     {
         super.getDetails();
-        System.out.println("Mana: " +
-                           getMana());
+        System.out.println("Mana: " + getMana());
     }
 }

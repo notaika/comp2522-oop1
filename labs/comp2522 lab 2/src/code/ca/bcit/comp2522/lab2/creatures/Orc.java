@@ -9,12 +9,13 @@ package ca.bcit.comp2522.lab2.creatures;
  */
 public class Orc extends Creature
 {
-    private static final int MIN_RAGE = 0;
-    private static final int LOW_RAGE = 5;
+    private static final int MIN_RAGE = 1;
+    private static final int RAGE_FACTOR = 5;
+    private static final int RESET_RAGE = 0;
     private static final int BERSERK_RAGE_THRESHOLD = 20;
     private static final int MAX_RAGE = 30;
-    private static final int RAGE_INCREASE = 5;
     private static final int BERSERK_DAMAGE = 15;
+    private static final int RAGE_DAMAGE_MULTIPLIER = 2;
 
     private int rage;
 
@@ -55,44 +56,48 @@ public class Orc extends Creature
 
     /**
      * Increases Rage by RAGE_INCREASE and deals damage depending on resulting rage.
-     * @return BERSERK_DAMAGE if rage is below BERKERK_RAGE_THRES and double that if it's above
+     * If rage is above BERSERK_RAGE_THRES then reset it to LOW_RAGE;
+     *
+     * @param creatureToAttack
      */
-    public int berserk()
+    public void berserk(final Creature creatureToAttack)
     {
-        int damageDealt;
 
-        damageDealt = BERSERK_DAMAGE;
-
-        rage += RAGE_INCREASE;
-
-        if (rage > MAX_RAGE)
+        final int damageInflicted;
+        if (rage < MIN_RAGE)
         {
-            rage = MAX_RAGE;
+            throw new LowRageException("ERROR: " + getName() + " doesn't have enough rage " +
+                                        " - Attack failed.");
         }
 
-        if (rage > BERSERK_RAGE_THRESHOLD)
+        // If rage > berserk threshold, double damage inflicted
+        if (rage >= BERSERK_RAGE_THRESHOLD)
         {
-            damageDealt *= 2;
+            damageInflicted = BERSERK_DAMAGE * RAGE_DAMAGE_MULTIPLIER;
+
+            // Reset rage
+            rage = RESET_RAGE;
+        } else
+        {
+            damageInflicted = BERSERK_DAMAGE;
+
+            // Increased rage by given factor
+            rage += RAGE_FACTOR;
         }
 
-        if (rage < LOW_RAGE)
+        creatureToAttack.takeDamage(damageInflicted);
+
+        if (rage < RAGE_FACTOR)
         {
-            throw new LowRageException("ERROR: rage is below" +
-                                       LOW_RAGE);
+            throw new LowRageException("WARNING: " + getName() + " rage is critically low!");
         }
-
-        System.out.println(getName() +
-                           " went Berserk: " +
-                           damageDealt +
-                           "damage points");
-
-        return damageDealt;
     }
 
     /**
      * Calls Creature's getDetails() and adds rage to the list.
      */
-    @Override public void getDetails()
+    @Override
+    public void getDetails()
     {
         super.getDetails();
         System.out.println("Rage: " +

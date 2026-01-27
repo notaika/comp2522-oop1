@@ -10,7 +10,8 @@ package ca.bcit.comp2522.lab2.creatures;
 public class Creature
 {
     private final static int MAX_HEALTH = 100;
-    private final static int MIN_HEALTH = 0;
+    private final static int MIN_HEALTH = 1;
+    private final static int PASSED_OUT_HEALTH = 0;
 
     private final static int YEAR_UPPER_LIMIT = 2026;
     private final static int MONTH_UPPER_LIMIT = 1;
@@ -20,6 +21,7 @@ public class Creature
     private final String name; // not null or empty
     private final Date dateOfBirth; // must not be in the future
     private int health; // must be 1 - 100
+    private boolean passedOut;
 
     // Initialize upper date limit??? <- is this the right way to do this???
     static
@@ -45,6 +47,7 @@ public class Creature
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.health = health;
+        this.passedOut = false;
     }
 
     /*
@@ -54,7 +57,7 @@ public class Creature
      * @param healthToCheck health amount to check
      * @throws IllegalArgumentException exception thrown if health is invalid
      */
-    private static void validateHealth(int healthToCheck)
+    private static void validateHealth(final int healthToCheck)
     {
         if (healthToCheck < MIN_HEALTH || healthToCheck > MAX_HEALTH)
         {
@@ -70,7 +73,7 @@ public class Creature
      * @param dateToCheck date of birth to check
      * @throws IllegalArgumentException exception thrown if year, month or day is greater than the upper limit
      */
-    private static void validateDOB(Date dateToCheck)
+    private static void validateDOB(final Date dateToCheck)
     {
         if  (dateToCheck.getYear() > YEAR_UPPER_LIMIT ||
              (dateToCheck.getYear() == YEAR_UPPER_LIMIT && dateToCheck.getMonth() > MONTH_UPPER_LIMIT) ||
@@ -88,7 +91,7 @@ public class Creature
      * @param nameToCheck
      * @throws IllegalArgumentException exception thrown if name is null or empty.
      */
-    private static void validateName(String nameToCheck)
+    private static void validateName(final String nameToCheck)
     {
         if (nameToCheck == null || nameToCheck.isEmpty())
         {
@@ -127,15 +130,13 @@ public class Creature
     }
 
     /**
-     * Checks if creature is still alive.
-     * Returns true if health is greater than 0.
+     * Checks if the creature is passed out or not.
      *
-     * @param healthToCheck health to check
-     * @return true if healthToCheck is greater than min health
+     * @return true if health < minimum health, false otherwise
      */
-    public boolean isAlive(final int healthToCheck)
+    public boolean isPassedOut()
     {
-        return healthToCheck > MIN_HEALTH;
+        return passedOut;
     }
 
     /**
@@ -147,6 +148,11 @@ public class Creature
      */
     public void takeDamage(final int damage)
     {
+        if (this.isPassedOut())
+        {
+            throw new DamageException(getName() + " is already out of the battle. Damage taken " + PASSED_OUT_HEALTH);
+        }
+
         if (damage < MIN_HEALTH)
         {
             throw new DamageException("ERROR: Damage cannot be lower than " + MIN_HEALTH);
@@ -154,17 +160,19 @@ public class Creature
 
         health -= damage;
 
-        System.out.println("Damage taken: " + damage + " points");
+        System.out.println(getName() + " took " + damage + " damage.");
 
         // If health goes below min allowed, reset it to min.
-        if (health < MIN_HEALTH)
+        if (health <= PASSED_OUT_HEALTH)
         {
-            health = MIN_HEALTH;
-            System.out.println("Health: " + getHealth());
-            System.out.println(getName() + " is dead.");
-        } else
+            passedOut = true;
+            health = PASSED_OUT_HEALTH;
+            System.out.println(getName() + " health: " + getHealth() + ". " +
+                               getName() + " passed out.");
+        }
+        else
         {
-            System.out.println("Health: " + getHealth());
+            System.out.println(getName() + " health: " + getHealth());
         }
     }
 
@@ -175,7 +183,7 @@ public class Creature
      * @param healAmount amount of health to add (heal), must not go below minimum
      * @throws HealingException exception throw if heal amount is below the allowed minimum
      */
-    public void heal(int healAmount)
+    public void heal(final int healAmount)
     {
         if (healAmount < MIN_HEALTH)
         {
@@ -184,17 +192,17 @@ public class Creature
 
         health += healAmount;
 
-        System.out.println("Healed for: " + healAmount + " points");
+        System.out.println(getName() + " restored " + healAmount + " points points.");
 
         // If health goes below max allowed, reset it to max.
         if (health > MAX_HEALTH)
         {
             health = MAX_HEALTH;
-            System.out.println("Health: " + getHealth());
+            System.out.println(getName() + " health: " + getHealth());
             System.out.println("Cannot heal above " + MAX_HEALTH);
         } else
         {
-            System.out.println("Health: " + getHealth());
+            System.out.println(getName() + " health: " + getHealth());
         }
     }
 
@@ -219,7 +227,8 @@ public class Creature
      */
     public void getDetails()
     {
-        System.out.println("Name: " + getName() +
+        System.out.println("\n=== CREATURE DETAILS ===" +
+                           "\nName: " + getName() +
                            "\nDate of Birth: " +
                            dateOfBirth.getYyyyMmDd() +
                            "\nAge (in years): " +
@@ -227,34 +236,4 @@ public class Creature
                            "\nHealth: " +
                            getHealth());
     }
-
-    public static void main(String[] args)
-    {
-        final Date testDOB = new Date(2007, 10, 7);
-
-        final Creature testCreature = new Creature("Mischa", testDOB, 99);
-
-        System.out.println("=== THE LORAX CREATURE DETAILS ===");
-        testCreature.getDetails();
-
-        testCreature.takeDamage(20);
-
-        testCreature.takeDamage(100);
-    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
