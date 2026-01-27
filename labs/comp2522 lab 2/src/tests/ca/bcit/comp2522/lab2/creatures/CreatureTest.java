@@ -76,7 +76,7 @@ public class CreatureTest
 
         toothless = new Dragon("Toothless", toothlessDOB, 100, 30);
         legolas = new Elf("Legolas", legolasDOB, 20, 10);
-        shrek = new Orc("Shrek", shrekDOB, 100, 25);
+        shrek = new Orc("Shrek", shrekDOB, 100, 15);
 
         toothless.getDetails();
         System.out.println();
@@ -92,6 +92,8 @@ public class CreatureTest
         testAttack(shrek, toothless);
         System.out.println();
         testAttack(toothless, legolas);
+        testAttack(shrek, toothless);
+        System.out.println();
 
         System.out.println("\n====\n");
     }

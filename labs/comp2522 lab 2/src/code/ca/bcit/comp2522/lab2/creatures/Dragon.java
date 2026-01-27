@@ -17,7 +17,7 @@ public class Dragon extends Creature
     private int firePower;
 
     /**
-     * Sets Dragon's name, dote of birth, health and fire power on creation.
+     * Constructs and initializes a Dragon's name, date of birth, health and firepower.
      *
      * @param name The name of the Dragon
      * @param dateOfBirth The date of birth of the Dragon
@@ -66,7 +66,7 @@ public class Dragon extends Creature
      * Deals FIRE_DAMAGE damage to another creature and reduces firepower by LOW_FIREPOWER_THRESHOLD.
      * Throws a LowFirePowerException if firepower is low.
      *
-     * @param creatureToAttack
+     * @param creatureToAttack the creature to inflict damage on
      * @throws LowFirePowerException if firePower is below LOW_FIREPOWER_THRESHOLD
      */
     public void breatheFire(final Creature creatureToAttack) throws LowFirePowerException
@@ -127,7 +127,7 @@ public class Dragon extends Creature
     }
 
     /**
-     * Calls Creature getDetails() and adds firePower to the end.
+     * Prints details about the Orc - name, date of birth, age (in years), health and firepower.
      */
     @Override
     public void getDetails()

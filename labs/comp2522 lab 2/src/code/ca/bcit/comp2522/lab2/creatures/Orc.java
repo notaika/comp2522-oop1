@@ -11,7 +11,6 @@ public class Orc extends Creature
 {
     private static final int MIN_RAGE = 1;
     private static final int RAGE_FACTOR = 5;
-    private static final int RESET_RAGE = 0;
     private static final int BERSERK_RAGE_THRESHOLD = 20;
     private static final int MAX_RAGE = 30;
     private static final int BERSERK_DAMAGE = 15;
@@ -20,7 +19,7 @@ public class Orc extends Creature
     private int rage;
 
     /**
-     * Sets Orc's name, dote of birth, health and rage on creation.
+     * Constructs and initializes Orc's name, date of birth, health and rage.
      *
      * @param name The name of the Orc
      * @param dateOfBirth The date of birth of the Orc
@@ -55,15 +54,25 @@ public class Orc extends Creature
     }
 
     /**
+     * Returns the Orc's rage stat
+     *
+     * @return Orc's rage stat
+     */
+    public int getRage()
+    {
+        return rage;
+    }
+
+    /**
      * Increases Rage by RAGE_INCREASE and deals damage depending on resulting rage.
      * If rage is above BERSERK_RAGE_THRES then reset it to LOW_RAGE;
      *
-     * @param creatureToAttack
+     * @param creatureToAttack the creature to inflict damage on
      */
     public void berserk(final Creature creatureToAttack)
     {
-
         final int damageInflicted;
+
         if (rage < MIN_RAGE)
         {
             throw new LowRageException("ERROR: " + getName() + " doesn't have enough rage " +
@@ -74,18 +83,31 @@ public class Orc extends Creature
         if (rage >= BERSERK_RAGE_THRESHOLD)
         {
             damageInflicted = BERSERK_DAMAGE * RAGE_DAMAGE_MULTIPLIER;
-
-            // Reset rage
-            rage = RESET_RAGE;
+            System.out.println(getName() + " is raging! Damage increased from "
+                               + BERSERK_DAMAGE + " to " + MAX_RAGE);
         } else
         {
             damageInflicted = BERSERK_DAMAGE;
-
-            // Increased rage by given factor
-            rage += RAGE_FACTOR;
         }
 
+        System.out.println(getName() +
+                           " goes berserk: inflicted +" +
+                           damageInflicted +
+                           " damage | Rage left: " + getRage());
+
         creatureToAttack.takeDamage(damageInflicted);
+
+        // Reset rage when max limit is hit (calms down)
+        if (rage >= MAX_RAGE)
+        {
+            rage = RAGE_FACTOR;
+            System.out.println(getName() + " overheated and is calming down. | Rage: " + getRage());
+        } else
+        {
+            // Increased rage by given factor
+            rage += RAGE_FACTOR;
+            System.out.println(getName() + " gained " + RAGE_FACTOR + " rage | Rage: " + getRage());
+        }
 
         if (rage < RAGE_FACTOR)
         {
@@ -94,7 +116,7 @@ public class Orc extends Creature
     }
 
     /**
-     * Calls Creature's getDetails() and adds rage to the list.
+     * Prints details about the Orc - name, date of birth, age (in years), health and rage.
      */
     @Override
     public void getDetails()

@@ -17,7 +17,7 @@ public class Elf extends Creature
     private int mana;
 
     /**
-     * Sets Elf's name, dote of birth, health and fire power on creation.
+     * Constructs and initializes Elf's name, date of birth, health and mana.
      *
      * @param name The name of the Elf
      * @param dob The date of birth of the Elf
@@ -63,7 +63,7 @@ public class Elf extends Creature
     /**
      * Deals SPELL_DAMAGE to another Creature and reduces mana by LOW_MANA_THRESHOLD.
      *
-     * @param creatureToAttack
+     * @param creatureToAttack the creature to inflict damage on
      * @throws LowManaException if mana is below LOW_MANA_THRESHOLD
      */
     public void castSpell(final Creature creatureToAttack) throws LowManaException
@@ -118,15 +118,12 @@ public class Elf extends Creature
         if (mana > MAX_MANA)
         {
             mana = MAX_MANA;
-            System.out.print("mana restored: " +
-                               amountToRestore +
-                               " points");
         }
-        System.out.println(" | Mana left:" + getMana());
+        System.out.println(getName() + " restored " + amountToRestore + " mana.");
     }
 
     /**
-     * Calls Creature's getDetails() and adds mana to the list.
+     * Prints details about the Orc - name, date of birth, age (in years), health and mana.
      */
     @Override
     public void getDetails()

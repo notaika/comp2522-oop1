@@ -24,13 +24,14 @@ public class Creature
     private boolean passedOut;
 
     // Initialize upper date limit??? <- is this the right way to do this???
+    // Assuming eventually the upper limits are automatically calculated and changed daily
     static
     {
         DATE_UPPER_LIMIT = new Date(YEAR_UPPER_LIMIT, MONTH_UPPER_LIMIT, DAY_UPPER_LIMIT);
     }
 
     /**
-     * Sets Creature's name, dote of birth, and health on creation.
+     * Constructs and initializes Creature's name, date of birth, and health.
      *
      * @param name The name of the Creature
      * @param dateOfBirth The date of birth of the Creature
@@ -223,7 +224,7 @@ public class Creature
     }
 
     /**
-     * Prints the creature's name, dateOfBirth, age in years, and health.
+     * Prints details about the Creature - name, date of birth, age (in years) and health.
      */
     public void getDetails()
     {
