@@ -25,7 +25,7 @@ public abstract class IDevice
     }
 
     // prints all child classes instance variables
-    public abstract String printDetails();
+    public abstract void printDetails();
 
     @Override
     public String toString()

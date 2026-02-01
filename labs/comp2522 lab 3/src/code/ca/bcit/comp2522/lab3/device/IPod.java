@@ -99,10 +99,10 @@ public class IPod extends IDevice
         }
     }
 
-    public String printDetails()
+    public void printDetails()
     {
-        return "\nNumber of Songs Stored: " + getNumSongsStored() +
-               "\nMax Volume: " + getMaxVolumeDb();
+        System.out.println("\nNumber of Songs Stored: " + getNumSongsStored() +
+                           "\nMax Volume: " + getMaxVolumeDb());
     }
 
     @Override

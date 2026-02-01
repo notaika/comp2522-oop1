@@ -68,10 +68,11 @@ public class IPad extends IDevice
     }
 
 
-    @Override public String printDetails()
+    @Override
+    public void printDetails()
     {
-        return "\nHas case: " + getHasCase() +
-               "\nOS Version: " + getiPadOSVersion();
+        System.out.println( "\nHas case: " + getHasCase() +
+                                  "\nOS Version: " + getiPadOSVersion());
     }
 
     @Override
@@ -86,8 +87,6 @@ public class IPad extends IDevice
         builder.append(this.iPadOSVersion);
         return builder.toString();
     }
-
-
 
     @Override
     public boolean equals(final Object other)
