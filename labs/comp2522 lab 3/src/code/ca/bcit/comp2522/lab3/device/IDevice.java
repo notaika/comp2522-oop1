@@ -6,6 +6,8 @@ import java.util.Objects;
  * Represents an iDevice.
  *
  * @author Aika Manalo - 2C
+ * @author Julia Ziebart - 2C
+ *
  * @version 1.0
  */
 public abstract class IDevice
@@ -23,7 +25,7 @@ public abstract class IDevice
     }
 
     // prints all child classes instance variables
-    public abstract String printDetails();
+    public abstract void printDetails();
 
     @Override
     public String toString()
@@ -34,12 +36,25 @@ public abstract class IDevice
     @Override
     public boolean equals(final Object o)
     {
-        return (o instanceof IDevice);
+        if (this == o)
+        {
+            return true;
+        }
+
+        if (!(o instanceof IDevice))
+        {
+            return false;
+        }
+
+        final IDevice that;
+        that = (IDevice) o;
+
+        return Objects.equals(purpose, that.purpose);
     }
 
     @Override
     public int hashCode()
     {
-        return Objects.hashCode(this.getClass());
+        return Objects.hash(purpose);
     }
 }

@@ -6,12 +6,14 @@ import java.util.Objects;
  * Represents an iPod.
  *
  * @author Aika Manalo - 2C
+ * @author Julia Ziebart - 2C
+ *
  * @version 1.0
  */
 public class IPod extends IDevice
 {
-    private static final int MAX_VOLUME_DB = 100;
-    private static final int MIN_VOLUME_DB = 0;
+    private static final double MAX_VOLUME_DB = 100.0;
+    private static final double MIN_VOLUME_DB = 0.0;
     private static final int MIN_NUM_SONGS = 1;
 
     private final double maxVolumeDb;
@@ -97,10 +99,10 @@ public class IPod extends IDevice
         }
     }
 
-    public String printDetails()
+    public void printDetails()
     {
-        return "\nNumber of Songs Stored: " + getNumSongsStored() +
-               "\nMax Volume: " + getMaxVolumeDb();
+        System.out.println("\nNumber of Songs Stored: " + getNumSongsStored() +
+                           "\nMax Volume: " + getMaxVolumeDb());
     }
 
     @Override
@@ -114,6 +116,11 @@ public class IPod extends IDevice
     @Override
     public boolean equals(final Object o)
     {
+        if (this == o)
+        {
+            return true;
+        }
+
         if (!(o instanceof IPod))
         {
             return false;
