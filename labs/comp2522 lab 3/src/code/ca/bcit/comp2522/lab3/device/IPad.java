@@ -80,10 +80,10 @@ public class IPad extends IDevice
         final StringBuilder builder;
         builder = new StringBuilder();
         builder.append(super.toString());
-        builder.append("Has a case: ");
+        builder.append("\nHas a case: ");
         builder.append(this.hasCase);
-        builder.append(" Current iPadOS Version: ");
-        builder.append(" + this.iPadOSVersion");
+        builder.append("\nCurrent iPadOS Version: ");
+        builder.append(this.iPadOSVersion);
         return builder.toString();
     }
 
@@ -127,5 +127,7 @@ public class IPad extends IDevice
         System.out.println(ipadM1.getiPadOSVersion());
         System.out.println(ipadM1.equals(ipadM2));
         System.out.println(ipadM2.equals(ipadM3));
+        System.out.println(ipadM3.toString());
+        ipadM2.printDetails();
     }
 }

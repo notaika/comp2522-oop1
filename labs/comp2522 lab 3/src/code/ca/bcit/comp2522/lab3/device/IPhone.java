@@ -12,4 +12,15 @@ public class IPhone extends IDevice
 {
     private String carrier;
     private double remainingPlanTimeMin;
+
+    public IPhone(String purpose)
+    {
+        super(purpose);
+    }
+
+
+    @Override public String printDetails()
+    {
+        return "";
+    }
 }

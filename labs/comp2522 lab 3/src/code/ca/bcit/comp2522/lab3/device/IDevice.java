@@ -6,6 +6,8 @@ import java.util.Objects;
  * Represents an iDevice.
  *
  * @author Aika Manalo - 2C
+ * @author Julia Ziebart - 2C
+ *
  * @version 1.0
  */
 public abstract class IDevice
