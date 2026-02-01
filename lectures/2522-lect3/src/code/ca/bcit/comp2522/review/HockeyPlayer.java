@@ -47,6 +47,7 @@ class HockeyPlayer
 //        {
 //            return false;
 //        }
+
         final HockeyPlayer h;
         h = (HockeyPlayer) o;
 
