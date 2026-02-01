@@ -1,4 +1,7 @@
-package PACKAGE_NAME;
+// would do a second interface called Lockable
 
-public interface Openable {
+public interface Openable
+{
+    void open();
+    void close();
 }

@@ -1,4 +1,9 @@
-package PACKAGE_NAME;
+public class Vehicle
+{
+    private final String colour;
 
-public class Vehicle {
+    public Vehicle(String colour)
+    {
+        this.colour = colour;
+    }
 }

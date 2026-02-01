@@ -1,4 +1,15 @@
-package PACKAGE_NAME;
+public class App
+    implements Openable
+{
+    @Override
+    public void open()
+    {
+        System.out.println("swipe, user face id");
+    }
 
-public class App {
+    @Override
+    public void close()
+    {
+        System.out.println("tap X button");
+    }
 }
