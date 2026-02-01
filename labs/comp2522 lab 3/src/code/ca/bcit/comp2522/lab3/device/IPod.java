@@ -116,6 +116,11 @@ public class IPod extends IDevice
     @Override
     public boolean equals(final Object o)
     {
+        if (this == o)
+        {
+            return true;
+        }
+
         if (!(o instanceof IPod))
         {
             return false;

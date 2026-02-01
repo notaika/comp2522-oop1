@@ -36,12 +36,25 @@ public abstract class IDevice
     @Override
     public boolean equals(final Object o)
     {
-        return (o instanceof IDevice);
+        if (this == o)
+        {
+            return true;
+        }
+
+        if (!(o instanceof IDevice))
+        {
+            return false;
+        }
+
+        final IDevice that;
+        that = (IDevice) o;
+
+        return Objects.equals(purpose, that.purpose);
     }
 
     @Override
     public int hashCode()
     {
-        return Objects.hashCode(this.getClass());
+        return Objects.hash(purpose);
     }
 }
