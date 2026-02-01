@@ -1,5 +1,7 @@
 package ca.bcit.comp2522.lab3.device;
 
+import java.util.Objects;
+
 /**
  * Represents an iDevice.
  *
@@ -26,6 +28,18 @@ public abstract class IDevice
     @Override
     public String toString()
     {
-        return "iDevice Specifications: " + getPurpose();
+        return getPurpose();
+    }
+
+    @Override
+    public boolean equals(final Object o)
+    {
+        return (o instanceof IDevice);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hashCode(this.getClass());
     }
 }

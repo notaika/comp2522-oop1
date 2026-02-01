@@ -1,5 +1,7 @@
 package ca.bcit.comp2522.lab3.device;
 
+import java.util.Objects;
+
 /**
  * Represents an iPod.
  *
@@ -19,18 +21,26 @@ public class IPod extends IDevice
      * Constructs and initializes an iPod device with its purpose, max volume in db,
      * and the number of songs currently stored.
      *
-     * @param purpose purpose of the device
      * @param maxVolumeDb the max volume (in db) the iPod can play
      * @param numSongsStored the number of songs stored in the iPod storage
      */
-    public IPod( final String purpose,
-            final double maxVolumeDb,
+    public IPod(final double maxVolumeDb,
             final int numSongsStored)
     {
-        super(purpose);
+        super("music");
         validateMaxVolumeDb(maxVolumeDb);
         validateSongsStored(numSongsStored);
         this.maxVolumeDb = maxVolumeDb;
+        this.numSongsStored = numSongsStored;
+    }
+
+    /**
+     * Sets number of songs stored in the iPod.
+     *
+     * @param numSongsStored the number of songs to store
+     */
+    public void setNumSongsStored(int numSongsStored)
+    {
         this.numSongsStored = numSongsStored;
     }
 
@@ -45,7 +55,7 @@ public class IPod extends IDevice
     }
 
     /**
-     * Retunrns the max volume (in db) the iPod can allow.
+     * Returns the max volume (in db) the iPod can allow.
      *
      * @return the max volume (in db)
      */
@@ -72,7 +82,7 @@ public class IPod extends IDevice
 
     /*
      * Validates the number of songs that can be stored in an iPod.
-     * Must be greater than MIN_NUM_SONGS
+     * Must be greater than MIN_NUM_SONGS.
      *
      * @param numSongsToStore the maximum volume to validate
      * @throws IllegalArguementException if the number to store is < MIN_NUM_SONGS
@@ -89,14 +99,44 @@ public class IPod extends IDevice
 
     public String printDetails()
     {
-        return getMaxVolumeDb() + "\n" +
-               getNumSongsStored();
+        return "\nNumber of Songs Stored: " + getNumSongsStored() +
+               "\nMax Volume: " + getMaxVolumeDb();
     }
 
     @Override
     public String toString()
     {
-        return "iPod Specs: " + super.toString() + );
+        return super.toString() +
+               "\nModel: iPod\nSongs: " + getNumSongsStored() +
+               "\nMax Volume (dB): " + getMaxVolumeDb();
+    }
+
+    @Override
+    public boolean equals(final Object o)
+    {
+        if (!(o instanceof IPod))
+        {
+            return false;
+        }
+
+        final IPod that;
+        that = (IPod) o;
+
+        return this.numSongsStored == that.numSongsStored;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hashCode(this.numSongsStored);
+    }
+
+    public static void main(String[] args)
+    {
+        final IPod ipodNano = new IPod(20.0, 25);
+        final IPod ipodMini = new IPod(100.0, 25);
+
+        System.out.println(ipodNano.equals(ipodMini));
     }
 }
 

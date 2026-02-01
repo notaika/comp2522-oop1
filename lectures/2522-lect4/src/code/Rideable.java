@@ -1,4 +1,9 @@
-package PACKAGE_NAME;
+public interface Rideable
+{
+    default void crash()
+    {
+        System.out.println("oof");
+    }
 
-public class Rideable {
+    void ride();
 }
