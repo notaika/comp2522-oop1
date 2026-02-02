@@ -26,12 +26,14 @@ public class IPod extends IDevice
      * @param maxVolumeDb the max volume (in db) the iPod can play
      * @param numSongsStored the number of songs stored in the iPod storage
      */
-    public IPod(final double maxVolumeDb,
-            final int numSongsStored)
+    public IPod(final int numSongsStored,
+                final double maxVolumeDb)
     {
         super("music");
+
         validateMaxVolumeDb(maxVolumeDb);
         validateSongsStored(numSongsStored);
+
         this.maxVolumeDb = maxVolumeDb;
         this.numSongsStored = numSongsStored;
     }
@@ -99,20 +101,46 @@ public class IPod extends IDevice
         }
     }
 
-    public void printDetails()
-    {
-        System.out.println("\nNumber of Songs Stored: " + getNumSongsStored() +
-                           "\nMax Volume: " + getMaxVolumeDb());
+    /*
+     * Gets the instance variables of this class and returns them as a string
+     *
+     * @return instance variables as a String
+     */
+    @Override
+    protected String getLocalDetails() {
+        return "Number of Songs Stored: " + getNumSongsStored() +
+               "\nMax Volume: " + getMaxVolumeDb();
     }
 
+    /**
+     * Prints the instance variables of this class (but not its parent's)
+     */
+    public void printDetails()
+    {
+        System.out.println(getLocalDetails());
+    }
+
+    /**
+     * Returns a string representation of this object,
+     * comprising the parent's instance data as well as its own.
+     *
+     * @return the data as a String
+     */
     @Override
     public String toString()
     {
-        return super.toString() +
-               "\nModel: iPod\nSongs: " + getNumSongsStored() +
-               "\nMax Volume (dB): " + getMaxVolumeDb();
+        return super.toString() + "\n" +
+               getLocalDetails();
     }
 
+    /**
+     * Compares this iPod to the specified object.
+     * If the other object is not an iPod, they are not equal.
+     * Otherwise, if this has the same number of songs stored as the reference object, they are equal.
+     *
+     * @param o   the reference object with which to compare.
+     * @return The equality.
+     */
     @Override
     public boolean equals(final Object o)
     {
@@ -132,19 +160,17 @@ public class IPod extends IDevice
         return this.numSongsStored == that.numSongsStored;
     }
 
+    /**
+     * Returns a hashcode for this object, determined with the number of songs stored.
+     *
+     * @return the hash code
+     */
     @Override
     public int hashCode()
     {
         return Objects.hashCode(this.numSongsStored);
     }
 
-    public static void main(String[] args)
-    {
-        final IPod ipodNano = new IPod(20.0, 25);
-        final IPod ipodMini = new IPod(100.0, 25);
-
-        System.out.println(ipodNano.equals(ipodMini));
-    }
 }
 
 

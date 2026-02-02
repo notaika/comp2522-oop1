@@ -12,68 +12,125 @@ import java.util.Objects;
  */
 public class IPhone extends IDevice
 {
-    public static final double MIN_TIME_MINS = 0.1;
+    public static final double MIN_PLAN_TIME_MINS = 0.1;
 
     private String phonePlanCarrier;
     private double phonePlanTimeMins;
 
-    // constructor
-    public IPhone(final String purpose,
-                  final String phonePlanCarrier,
-                  final double phonePlanTimeMins)
+    /**
+     * Creates and initializes an iPhone with the carrier and the amount of time on its plan
+     *
+     * @param phonePlanCarrier The carrier
+     * @param phonePlanTimeMins The amount of time on its plan, in minutes
+     */
+    public IPhone(final double phonePlanTimeMins,
+            final String phonePlanCarrier )
     {
-        super(purpose);
+        super("talking");
+
         validatePhonePlanTime(phonePlanTimeMins);
+
         this.phonePlanCarrier = phonePlanCarrier;
         this.phonePlanTimeMins = phonePlanTimeMins;
     }
 
-    // validation
+    // validates the phone plan time
     private static void validatePhonePlanTime(final double timeMinsToCheck)
     {
-        if (timeMinsToCheck < MIN_TIME_MINS)
+        if (timeMinsToCheck < MIN_PLAN_TIME_MINS)
         {
             throw new IllegalArgumentException("ERROR: Phone Plan Time cannot be less than " +
-                                               MIN_TIME_MINS + " mins");
+                                               MIN_PLAN_TIME_MINS + " mins");
         }
     }
 
-    // getters and setters
+    /**
+     * Gets the amount of time left on this phone's plan
+     *
+     * @return the time in minutes
+     */
     public double getPhonePlanTimeMins()
     {
         return phonePlanTimeMins;
     }
 
+    /**
+     * Sets the phone's plan time to a specified number of minutes.
+     *
+     * @param phonePlanTimeMins The amount of time this phone should have
+     */
     public void setPhonePlanTimeMins(double phonePlanTimeMins)
     {
+        validatePhonePlanTime(phonePlanTimeMins);
         this.phonePlanTimeMins = phonePlanTimeMins;
     }
 
+    /**
+     * Gets the carrier that provides this phone's data plan.
+     *
+     * @return The carrier
+     */
     public String getPhonePlanCarrier()
     {
         return phonePlanCarrier;
     }
 
+    /**
+     * Changes this phone's carrier.
+     *
+     * @param phonePlanCarrier the carrier to change the plan to
+     */
     public void setPhonePlanCarrier(String phonePlanCarrier)
     {
         this.phonePlanCarrier = phonePlanCarrier;
     }
 
+    /*
+     * Gets the instance variables of this class and returns them as a string
+     *
+     * @return instance variables as a String
+     */
     @Override
-    public void printDetails()
-    {
-        System.out.println("\nPhone Plan Carrier: " + getPhonePlanCarrier() +
-                           "\nPhone Plan Time Remaining (Mins): " + getPhonePlanTimeMins());
-    }
-
-    @Override
-    public String toString()
-    {
-        return super.toString() +
-               "\nPhone Plan Carrier: " + getPhonePlanCarrier() +
+    protected String getLocalDetails() {
+        return "Phone Plan Carrier: " + getPhonePlanCarrier() +
                "\nPhone Plan Time Remaining (Mins): " + getPhonePlanTimeMins();
     }
 
+    /**
+     * Prints the instance variables of this class (but not its parent's).
+     */
+    @Override
+    public void printDetails()
+    {
+        System.out.println(getLocalDetails());
+    }
+
+    /**
+     * Returns a string representation of this object,
+     * comprising the parent's instance data as well as its own.
+     *
+     * @return the data as a String
+     */
+    @Override
+    public String toString()
+    {
+        final StringBuilder builder;
+        builder = new StringBuilder();
+        builder.append(super.toString());
+        builder.append("\n");
+        builder.append(getLocalDetails());
+        return builder.toString();
+    }
+
+    /**
+     * Compares this iPhone to the specified object.
+     * If the other object is not an iPhone, they are not equal.
+     * Otherwise, if this has the same number of minuts on its plan
+     * as the reference object, they are equal.
+     *
+     * @param o   the reference object with which to compare.
+     * @return The equality.
+     */
     @Override
     public boolean equals(final Object o)
     {
@@ -93,6 +150,11 @@ public class IPhone extends IDevice
         return this.phonePlanTimeMins == that.phonePlanTimeMins;
     }
 
+    /**
+     * Returns a hashcode for this object, determined with the amount of time left on its plan.
+     *
+     * @return the hash code
+     */
     @Override
     public int hashCode()
     {

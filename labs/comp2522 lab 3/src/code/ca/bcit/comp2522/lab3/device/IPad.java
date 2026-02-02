@@ -1,10 +1,12 @@
 package ca.bcit.comp2522.lab3.device;
 
+import java.util.Objects;
+
 /**
  * A class that models an iPad.
  *
  * @author Julia Ziebart - 2C
- * @author Aika Manalo - @C
+ * @author Aika Manalo - 2C
  *
  * @version 1.0
  */
@@ -16,78 +18,109 @@ public class IPad extends IDevice
     private boolean hasCase;
     private String iPadOSVersion;
 
-    // overloaded constructors; can start with case or no case
+    /**
+     * Constructor. Initializes an iPad with the specified data.
+     * @param hasCase whether it has a case
+     * @param ipadOsVersion the OS version this iPad is on
+     */
     public IPad(final boolean hasCase,
-            final double ipadOsVersion)
+            final String ipadOsVersion)
     {
         super("learning");
-        validateIpadOSVersion(ipadOsVersion);
 
         this.hasCase = hasCase;
-        this.iPadOSVersion = "iPadOS v" + ipadOsVersion;
+        this.iPadOSVersion = ipadOsVersion;
     }
 
-    public IPad(final double ipadOsVersion)
+    /**
+     * Constructor. Assumes that the created iPad has no case.
+     *
+     * @param ipadOsVersion the version of the created iPad.
+     */
+    public IPad(final String ipadOsVersion)
     {
-        super("learning");
-        validateIpadOSVersion(ipadOsVersion);
-
-        this.hasCase = false;
-        this.iPadOSVersion = "iPadOS v" + ipadOsVersion;
+        this(false, ipadOsVersion);
     }
 
-    // validator methods
-    private static void validateIpadOSVersion(final double ipadOsVersionToCheck)
-    {
-        if (ipadOsVersionToCheck < MIN_IPADOS_VERSION || ipadOsVersionToCheck > LATEST_IPADOS_VERSION)
-        {
-            throw new IllegalArgumentException("ERROR: iPad only supports OS versions " +
-                                               MIN_IPADOS_VERSION + " to " + LATEST_IPADOS_VERSION);
-        }
-    }
-
-    // getters and setters
-    public String getiPadOSVersion()
+    /**
+     * Returns the version of this iPad.
+     * @return The version
+     */
+    public String getIPadOSVersion()
     {
         return iPadOSVersion;
     }
 
+    /**
+     * Returns whether this iPad has a case.
+     * @return whether it has a case.
+     */
     public boolean getHasCase()
     {
         return hasCase;
     }
 
+    /**
+     * Puts on or takes off a case.
+     * @param hasCase whether the iPad should have a case
+     */
     public void setHasCase(boolean hasCase)
     {
         this.hasCase = hasCase;
     }
 
-    public void setiPadOSVersion(String iPadOSVersion)
+    /**
+     * Sets the version of this iPad.
+     *
+     * @param iPadOSVersion the version to set
+     */
+    public void setIPadOSVersion(String iPadOSVersion)
     {
         this.iPadOSVersion = iPadOSVersion;
     }
 
+    /*
+     * Gets the instance variables of this device and returns them as a string
+     */
+    @Override
+    protected String getLocalDetails() {
+        return "Has case: " + getHasCase() +
+               "\nOS Version: " + getIPadOSVersion();
+    }
 
+    /**
+     * Prints the details of this specific device (and not its parent's)
+     */
     @Override
     public void printDetails()
     {
-        System.out.println( "\nHas case: " + getHasCase() +
-                                  "\nOS Version: " + getiPadOSVersion());
+        System.out.println(getLocalDetails());
     }
 
+    /**
+     * Returns the instance variables of this device as well as data from its parent class.
+     *
+     * @return The details, as a string.
+     */
     @Override
     public String toString()
     {
         final StringBuilder builder;
         builder = new StringBuilder();
         builder.append(super.toString());
-        builder.append("\nHas a case: ");
-        builder.append(this.hasCase);
-        builder.append("\nCurrent iPadOS Version: ");
-        builder.append(this.iPadOSVersion);
+        builder.append("\n");
+        builder.append(getLocalDetails());
         return builder.toString();
     }
 
+    /**
+     * Compares this iPad to the specified object.
+     * If the other object is not an iPad, they are not equal.
+     * Otherwise, if this has the same version as the reference object, they are equal.
+     *
+     * @param other   the reference object with which to compare.
+     * @return The equality.
+     */
     @Override
     public boolean equals(final Object other)
     {
@@ -103,30 +136,16 @@ public class IPad extends IDevice
 
         IPad otherIPad = (IPad) other;
 
-        return getiPadOSVersion().equals(otherIPad.getiPadOSVersion());
-
-        // removed this line because only ipad's with same operating sys
-        // versions are considered equal
-               //&& hasCase == otherIPad.getHasCase();
+        return getIPadOSVersion().equals(otherIPad.getIPadOSVersion());
     }
 
+    /**
+     * Returns a hashcode for this object, determined with its version.
+     *
+     * @return the hash code
+     */
     @Override
     public int hashCode() {
-        //placeholder til we decide on better values
-        return 0;
-    }
-
-    // testing.. delete later
-    public static void main(String[] args)
-    {
-        final IPad ipadM1 = new IPad(true, 18.2);
-        final IPad ipadM2 = new IPad(false, 26.2);
-        final IPad ipadM3 = new IPad(26.2);
-
-        System.out.println(ipadM1.getiPadOSVersion());
-        System.out.println(ipadM1.equals(ipadM2));
-        System.out.println(ipadM2.equals(ipadM3));
-        System.out.println(ipadM3.toString());
-        ipadM2.printDetails();
+        return Objects.hash(this.iPadOSVersion);
     }
 }
