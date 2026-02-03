@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.lecture4.review;
 
+
 public class Comp2522Test
     implements Quiz
 {

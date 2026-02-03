@@ -6,7 +6,7 @@ package ca.bcit.comp2522.lecture4.interfaces;
 
 // interfaces already imply that they are abstract
 // adding abstract is redundant
-public interface Flyable1
+public interface Flyables
 {
     // not a functional interface
     // functional interfaces can only have one METHOD
