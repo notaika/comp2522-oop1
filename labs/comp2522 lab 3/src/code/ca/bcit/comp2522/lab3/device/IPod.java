@@ -38,36 +38,6 @@ public class IPod extends IDevice
         this.numSongsStored = numSongsStored;
     }
 
-    /**
-     * Sets number of songs stored in the iPod.
-     *
-     * @param numSongsStored the number of songs to store
-     */
-    public void setNumSongsStored(int numSongsStored)
-    {
-        this.numSongsStored = numSongsStored;
-    }
-
-    /**
-     * Returns the number of songs stored in the iPod.
-     *
-     * @return number of songs stored
-     */
-    public int getNumSongsStored()
-    {
-        return numSongsStored;
-    }
-
-    /**
-     * Returns the max volume (in db) the iPod can allow.
-     *
-     * @return the max volume (in db)
-     */
-    public double getMaxVolumeDb()
-    {
-        return maxVolumeDb;
-    }
-
     /*
      * Validates the max volume an iPod device can have.
      * Must be in between [MIN_VOLUME_DB, MAX_VOLUME_DB]
@@ -99,6 +69,36 @@ public class IPod extends IDevice
                                                MIN_NUM_SONGS +
                                                " of songs");
         }
+    }
+
+    /**
+     * Sets number of songs stored in the iPod.
+     *
+     * @param numSongsStored the number of songs to store
+     */
+    public void setNumSongsStored(int numSongsStored)
+    {
+        this.numSongsStored = numSongsStored;
+    }
+
+    /**
+     * Returns the number of songs stored in the iPod.
+     *
+     * @return number of songs stored
+     */
+    public int getNumSongsStored()
+    {
+        return numSongsStored;
+    }
+
+    /**
+     * Returns the max volume (in db) the iPod can allow.
+     *
+     * @return the max volume (in db)
+     */
+    public double getMaxVolumeDb()
+    {
+        return maxVolumeDb;
     }
 
     /*
@@ -138,7 +138,7 @@ public class IPod extends IDevice
      * If the other object is not an iPod, they are not equal.
      * Otherwise, if this has the same number of songs stored as the reference object, they are equal.
      *
-     * @param o   the reference object with which to compare.
+     * @param o the reference object with which to compare.
      * @return The equality.
      */
     @Override

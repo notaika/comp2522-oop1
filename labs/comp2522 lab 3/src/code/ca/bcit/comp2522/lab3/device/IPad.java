@@ -44,6 +44,7 @@ public class IPad extends IDevice
 
     /**
      * Returns the version of this iPad.
+     *
      * @return The version
      */
     public String getIPadOSVersion()
@@ -53,6 +54,7 @@ public class IPad extends IDevice
 
     /**
      * Returns whether this iPad has a case.
+     *
      * @return whether it has a case.
      */
     public boolean getHasCase()
@@ -62,6 +64,7 @@ public class IPad extends IDevice
 
     /**
      * Puts on or takes off a case.
+     *
      * @param hasCase whether the iPad should have a case
      */
     public void setHasCase(boolean hasCase)

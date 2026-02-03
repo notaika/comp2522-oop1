@@ -18,7 +18,7 @@ public class IPhone extends IDevice
     private double phonePlanTimeMins;
 
     /**
-     * Creates and initializes an iPhone with the carrier and the amount of time on its plan
+     * Constructs and initializes an iPhone with the carrier and the amount of time on its plan
      *
      * @param phonePlanCarrier The carrier
      * @param phonePlanTimeMins The amount of time on its plan, in minutes
@@ -151,9 +151,9 @@ public class IPhone extends IDevice
     }
 
     /**
-     * Returns a hashcode for this object, determined with the amount of time left on its plan.
+     * Generates a hashcode for the iPhone, determined with the amount of time left on its plan.
      *
-     * @return the hash code
+     * @return the hash code as an int
      */
     @Override
     public int hashCode()
