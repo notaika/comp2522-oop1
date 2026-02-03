@@ -1,4 +1,4 @@
-package ca.bcit.comp2522.lab2.creatures;
+package ca.bcit.comp2522.lab2.creature;
 
 /**
  * Test files for Creature class.

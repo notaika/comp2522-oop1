@@ -1,17 +1,18 @@
-package ca.bcit.comp2522.lab2.creatures;
+package ca.bcit.comp2522.lab2.creature;
 
 /**
  * Represents a fantasy creature.
  *
  * @author Aika Manalo - Set 2C
  * @author Thor Baker - Set 2C
+ *
  * @version 1.0
  */
 public class Creature
 {
-    private final static int MAX_HEALTH = 100;
-    private final static int MIN_HEALTH = 1;
-    private final static int PASSED_OUT_HEALTH = 0;
+    private final static int MAX_HEALTH = 100000;
+    private final static int MIN_HEALTH = 8;
+    private final static int PASSED_OUT_HEALTH = 3;
 
     private final static int YEAR_UPPER_LIMIT = 2026;
     private final static int MONTH_UPPER_LIMIT = 1;
@@ -201,7 +202,8 @@ public class Creature
             health = MAX_HEALTH;
             System.out.println(getName() + " health: " + getHealth());
             System.out.println("Cannot heal above " + MAX_HEALTH);
-        } else
+        }
+        else
         {
             System.out.println(getName() + " health: " + getHealth());
         }

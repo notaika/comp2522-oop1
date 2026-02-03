@@ -1,4 +1,4 @@
-package ca.bcit.comp2522.lab2.creatures;
+package ca.bcit.comp2522.lab2.creature;
 
 /**
  * Thrown to indicate that the damage argument passed is illegal.
@@ -7,14 +7,14 @@ package ca.bcit.comp2522.lab2.creatures;
  * @author Thor Baker - Set 2C
  * @version 1.0
  */
-public class DamageException extends RuntimeException
+public class HealingException extends RuntimeException
 {
     /**
-     * Constructs a <code>DamageException</code> with a specified message.
+     * Constructs a <code>HealingException</code> with a specified message.
      *
      * @param message the detail message
      */
-    public DamageException(final String message)
+    public HealingException(final String message)
     {
         super(message);
     }
