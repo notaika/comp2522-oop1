@@ -77,7 +77,7 @@ public class Dragon extends Creature
             return;
         }
 
-        // If firepower is at 0, send error.
+        // If firepower is below min allowed, send error.
         if (firePower < MIN_FIREPOWER)
         {
             throw new LowFirePowerException("ERROR: " + getName() + " doesn't have enough firepower " +

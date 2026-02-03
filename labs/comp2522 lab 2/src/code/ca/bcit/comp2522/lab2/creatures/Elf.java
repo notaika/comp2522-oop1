@@ -114,7 +114,7 @@ public class Elf extends Creature
 
         mana += amountToRestore;
 
-        // Mana capped at 100
+        // Mana capped at MAX_MANA
         if (mana > MAX_MANA)
         {
             mana = MAX_MANA;

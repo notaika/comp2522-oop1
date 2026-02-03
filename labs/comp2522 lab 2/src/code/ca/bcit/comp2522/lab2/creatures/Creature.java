@@ -18,9 +18,9 @@ public class Creature
     private final static int DAY_UPPER_LIMIT = 27;
     private final static Date DATE_UPPER_LIMIT;
 
-    private final String name; // not null or empty
-    private final Date dateOfBirth; // must not be in the future
-    private int health; // must be 1 - 100
+    private final String name;
+    private final Date dateOfBirth;
+    private int health;
     private boolean passedOut;
 
     // Initialize upper date limit??? <- is this the right way to do this???
