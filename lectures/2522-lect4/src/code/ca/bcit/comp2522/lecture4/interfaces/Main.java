@@ -57,6 +57,6 @@ public class Main
         o2.open();
         o2.close();
 
-        System.out.println(o1.compareTo(o2));
+        //System.out.println(o1.compareTo(o2));
     }
 }
