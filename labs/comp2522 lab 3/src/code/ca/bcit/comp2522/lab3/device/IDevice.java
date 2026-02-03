@@ -14,11 +14,21 @@ public abstract class IDevice
 {
     private final String purpose;
 
+    /**
+     * Constructs and initializes an iDevice with a given purpose.
+     *
+     * @param purpose the purpose of the iDevice as a String
+     */
     public IDevice(final String purpose)
     {
         this.purpose = purpose;
     }
 
+    /**
+     * Returns the purpose of an iDevice.
+     *
+     * @return the purpose of an iDevice as a String
+     */
     public String getPurpose()
     {
         return "The purpose of this iDevice is " + purpose;
@@ -50,11 +60,11 @@ public abstract class IDevice
 
     /**
      * Compares this device to the specified object.
-     * If the other object is not an iPad, they are not equal.
+     * If the other object is not an iDevice, they are not equal.
      * Otherwise, if this has the same version as the reference object, they are equal.
      *
      * @param o the reference object with which to compare.
-     * @return The equality.
+     * @return true of 'this' is 'o', or 'this' purpose equals 'that' purpose
      */
     @Override
     public boolean equals(final Object o)

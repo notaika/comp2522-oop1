@@ -3,7 +3,7 @@ package ca.bcit.comp2522.lab3.device;
 import java.util.Objects;
 
 /**
- * A class that models an iPad.
+ * Represents an iPad.
  *
  * @author Julia Ziebart - 2C
  * @author Aika Manalo - 2C
@@ -12,23 +12,21 @@ import java.util.Objects;
  */
 public class IPad extends IDevice
 {
-    private static final double MIN_IPADOS_VERSION = 18.0;
-    private static final double LATEST_IPADOS_VERSION = 26.2;
-
-    private boolean hasCase;
+    private boolean encased;
     private String iPadOSVersion;
 
     /**
      * Constructor. Initializes an iPad with the specified data.
-     * @param hasCase whether it has a case
+     *
+     * @param encased whether it has a case
      * @param ipadOsVersion the OS version this iPad is on
      */
-    public IPad(final boolean hasCase,
+    public IPad(final boolean encased,
             final String ipadOsVersion)
     {
         super("learning");
 
-        this.hasCase = hasCase;
+        this.encased = encased;
         this.iPadOSVersion = ipadOsVersion;
     }
 
@@ -57,19 +55,19 @@ public class IPad extends IDevice
      *
      * @return whether it has a case.
      */
-    public boolean getHasCase()
+    public boolean hasCase()
     {
-        return hasCase;
+        return encased;
     }
 
     /**
      * Puts on or takes off a case.
      *
-     * @param hasCase whether the iPad should have a case
+     * @param encased whether the iPad has a case or not
      */
-    public void setHasCase(boolean hasCase)
+    public void isEncased(final boolean encased)
     {
-        this.hasCase = hasCase;
+        this.encased = encased;
     }
 
     /**
@@ -77,7 +75,7 @@ public class IPad extends IDevice
      *
      * @param iPadOSVersion the version to set
      */
-    public void setIPadOSVersion(String iPadOSVersion)
+    public void setIPadOSVersion(final String iPadOSVersion)
     {
         this.iPadOSVersion = iPadOSVersion;
     }
@@ -87,7 +85,7 @@ public class IPad extends IDevice
      */
     @Override
     protected String getLocalDetails() {
-        return "Has case: " + getHasCase() +
+        return "Has case: " + hasCase() +
                "\nOS Version: " + getIPadOSVersion();
     }
 
@@ -121,7 +119,7 @@ public class IPad extends IDevice
      * If the other object is not an iPad, they are not equal.
      * Otherwise, if this has the same version as the reference object, they are equal.
      *
-     * @param other   the reference object with which to compare.
+     * @param other the reference object with which to compare.
      * @return The equality.
      */
     @Override
@@ -137,7 +135,8 @@ public class IPad extends IDevice
             return false;
         }
 
-        IPad otherIPad = (IPad) other;
+        final IPad otherIPad;
+        otherIPad = (IPad) other;
 
         return getIPadOSVersion().equals(otherIPad.getIPadOSVersion());
     }

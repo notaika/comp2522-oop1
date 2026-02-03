@@ -3,7 +3,7 @@ package ca.bcit.comp2522.lab3.device;
 import java.util.Objects;
 
 /**
- * A class that models an iPhone.
+ * Represents an iPhone.
  *
  * @author Julia Ziebart
  * @author Aika Manalo
@@ -34,7 +34,12 @@ public class IPhone extends IDevice
         this.phonePlanTimeMins = phonePlanTimeMins;
     }
 
-    // validates the phone plan time
+    /*
+     * Validates that the phone plan time cannot be initialized to less than MIN_PLAN_TIME_MINS.
+     *
+     * @param timeMinsToCheck the phone time in minutes to validate
+     * @throws IllegalArgumentException if time in mins is < MIN_PLAN_TIME_MINS
+     */
     private static void validatePhonePlanTime(final double timeMinsToCheck)
     {
         if (timeMinsToCheck < MIN_PLAN_TIME_MINS)
@@ -80,12 +85,12 @@ public class IPhone extends IDevice
      *
      * @param phonePlanCarrier the carrier to change the plan to
      */
-    public void setPhonePlanCarrier(String phonePlanCarrier)
+    public void setPhonePlanCarrier(final String phonePlanCarrier)
     {
         this.phonePlanCarrier = phonePlanCarrier;
     }
 
-    /*
+    /**
      * Gets the instance variables of this class and returns them as a string
      *
      * @return instance variables as a String

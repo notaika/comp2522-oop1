@@ -6,7 +6,7 @@ import java.util.Objects;
  * Represents a seventeenth generation iPhone.
  *
  * @author Julia Ziebart - 2C
- * @author Aika Manalo - @C
+ * @author Aika Manalo -2C
  *
  * @version 1.0
  */
@@ -16,16 +16,16 @@ public class IPhone17 extends IPhone
     private static final int MAX_STOCK_MEMORY_GB = 2000;
 
     public final boolean highResCam;
-    public final int memoryGb;
+    public final int memoryGB;
 
     /**
      * Constructs and initializes an iPhone 17 with the carrier, the amount of time on its plan,
      * states if it has a high resolution camera and the amount of memory it has.
      *
-     * @param phonePlanCarrier The carrier
+     * @param phonePlanCarrier The phone plan carrier
      * @param phonePlanTimeMins The amount of time on its plan, in minutes
      * @param highResCam true if the iPhone 17 has a high resolution camera
-     * @param memoryGb The amount of memory in GB it can store
+     * @param memoryGB The amount of memory in GB it can store
      */
     public IPhone17(final double phonePlanTimeMins,
                     final String phonePlanCarrier,
@@ -38,7 +38,7 @@ public class IPhone17 extends IPhone
         validateMemoryGB(memoryGb);
 
         this.highResCam = highResCam;
-        this.memoryGb = memoryGb;
+        this.memoryGB = memoryGb;
     }
 
     /*
@@ -67,9 +67,25 @@ public class IPhone17 extends IPhone
         return highResCam;
     }
 
-    public int getMemoryGb()
+    /**
+     * Returns the amount of memory (in GB) of an iPhone 17.
+     *
+     * @return memory in GB
+     */
+    public int getMemoryGB()
     {
-        return memoryGb;
+        return memoryGB;
+    }
+
+    /**
+     * Gets the instance variables of this class and returns them as a string
+     *
+     * @return instance variables as a String
+     */
+    @Override
+    protected String getLocalDetails() {
+        return "High-resolution camera: " + isHighResCam() +
+               "\nMemory (GB): " + getMemoryGB();
     }
 
     /**
@@ -79,8 +95,7 @@ public class IPhone17 extends IPhone
     public void printDetails()
     {
         super.printDetails();
-        System.out.println("High-resolution camera: " + isHighResCam() +
-                           "\nMemory (GB): " + getMemoryGb());
+        System.out.println(getLocalDetails());
     }
 
     /**
@@ -91,9 +106,8 @@ public class IPhone17 extends IPhone
     @Override
     public String toString()
     {
-        return super.toString() +
-               "\nHigh-resolution camera: " + isHighResCam() +
-               "\nMemory (GB): " + getMemoryGb();
+        return super.toString() + "\n" +
+               getLocalDetails();
     }
 
     /**

@@ -76,7 +76,7 @@ public class IPod extends IDevice
      *
      * @param numSongsStored the number of songs to store
      */
-    public void setNumSongsStored(int numSongsStored)
+    public void setNumSongsStored(final int numSongsStored)
     {
         this.numSongsStored = numSongsStored;
     }
@@ -101,7 +101,7 @@ public class IPod extends IDevice
         return maxVolumeDb;
     }
 
-    /*
+    /**
      * Gets the instance variables of this class and returns them as a string
      *
      * @return instance variables as a String

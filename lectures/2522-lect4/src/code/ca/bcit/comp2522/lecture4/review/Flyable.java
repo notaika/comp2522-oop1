@@ -1,6 +1,6 @@
 package ca.bcit.comp2522.lecture4.review;
 
-public interface Flyable
+public interface FlyableJ
 {
     void fly();
     void land();
