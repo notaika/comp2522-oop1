@@ -1,3 +1,5 @@
+package ca.bcit.comp2522.lecture4.interfaces;
+
 public class Airplane
         extends Vehicle
         implements Flyable, Rideable
@@ -26,7 +28,7 @@ public class Airplane
 
     // Q: what if a class implements interfaces with the same abstract method
     // same default method signatures? how will we know which one it will pick?
-    // e.g. Flyable and Rideable have the same default method `crash()`
+    // e.g. ca.bcit.comp2522.lecture4.interfaces.Flyable and Rideable have the same default method `crash()`
     @Override
     public void crash()
     {

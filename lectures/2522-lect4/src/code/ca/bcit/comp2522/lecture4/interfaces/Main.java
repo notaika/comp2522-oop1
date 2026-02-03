@@ -1,3 +1,5 @@
+package ca.bcit.comp2522.lecture4.interfaces;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,7 +32,7 @@ public class Main
         mammals = new ArrayList<>();
         mammals.add(new Bat(2020, "bat"));
         mammals.add(new Bat(2011, "bat"));
-        mammals.add(new Dog(2020, "Rocky", "Dog"));
+        mammals.add(new Dog(2020, "Rocky", "ca.bcit.comp2522.lecture4.interfaces.Dog"));
         mammals.add(new Bat(2009, "bat"));
 
         Collections.sort(mammals);

@@ -1,3 +1,5 @@
+package ca.bcit.comp2522.lecture4.interfaces;
+
 public class Dog
     extends Mammal
 {

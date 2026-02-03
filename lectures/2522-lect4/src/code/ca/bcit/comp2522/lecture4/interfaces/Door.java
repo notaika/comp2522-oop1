@@ -1,3 +1,5 @@
+package ca.bcit.comp2522.lecture4.interfaces;
+
 /**
  * Let's say higher doors are bigger.. how to?
  * comparable

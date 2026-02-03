@@ -1,3 +1,5 @@
+package ca.bcit.comp2522.lecture4.interfaces;
+
 public abstract class Mammal
     implements Comparable<Mammal> // im comparing mammals to mammals
 {
