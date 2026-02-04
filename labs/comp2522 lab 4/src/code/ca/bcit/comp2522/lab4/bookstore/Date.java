@@ -1,15 +1,19 @@
 package ca.bcit.comp2522.lab4.bookstore;
 
 /**
- * Represents a date (YYYY, MM, DD).
- * This class was copied from comp2522 lab 1 project.
+ * Represents a specific calendar date consisting of a year, month, and day.
+ * <p>
+ * Includes validation for valid calendar dates and implements the
+ * {@link Printable} interface to display date in standard output format.
+ * The Date implementation is adapted from the Lab 1 project.
+ * </p>
  *
  * @author Aika Manalo - Set 2C
  * @author Devan Lam - Set 2C
  *
  * @version 1.0
  */
-public class Date
+public class Date implements Printable
 {
 
     private static final int MIN_DAY = 1;
@@ -290,7 +294,7 @@ public class Date
     }
 
     /*
-     * Calculates the date's century [1800, 2000].
+     * Calculates the date's century in range [1800, 2000].
      *
      * @param year The year to calculate century
      * @return the century
@@ -308,6 +312,21 @@ public class Date
             centuryCalculation += MIN_CENTURY_OFFSET;
         }
         return centuryCalculation;
+    }
+
+    /**
+     * Prints the date attributes to the standard output.
+     * <p>
+     * Standard output: day of the week, month name day, year
+     * e.g. "Tuesday, February 3, 2026".
+     * </p>
+     *
+     * @see Printable#display()
+     */
+    @Override
+    public void display()
+    {
+        System.out.println(getDateFormatted());
     }
 
     /**
@@ -338,7 +357,7 @@ public class Date
     }
 
     /**
-     * Concatenates and formats the Date.
+     * Concatenates and formats the Date to a standard output.
      *
      * @return the day of the week, followed by month name, day and year as a String
      */
