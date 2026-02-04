@@ -357,12 +357,22 @@ public class Date implements Printable
     }
 
     /**
-     * Concatenates and formats the Date to a standard output.
+     * Concatenates and formats the Date to a format (day of week, MM, DD YYYY).
      *
      * @return the day of the week, followed by month name, day and year as a String
      */
     public String getDateFormatted()
     {
         return getDayOfTheWeek() + ", " + getMonthName() + " " + day + ", " + year;
+    }
+
+    /**
+     * Concatenates and formates date to format (MM DD, YYYY).
+     *
+     * @return the date in format MM DD, YYYY
+     */
+    public String toString()
+    {
+        return getMonthName() + " " + day + ", " + year;
     }
 }
