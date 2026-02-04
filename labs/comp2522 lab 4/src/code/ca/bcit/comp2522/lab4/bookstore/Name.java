@@ -70,7 +70,17 @@ public class Name implements Printable
     @Override
     public void display()
     {
-        System.out.println("First Name: " + getFirstName() +
-                           "\nLast Name: " + getLastName());
+        System.out.println(this);
+    }
+
+    /**
+     *
+     *
+     * @return
+     */
+    @Override
+    public String toString()
+    {
+        return firstName + " " + lastName;
     }
 }
