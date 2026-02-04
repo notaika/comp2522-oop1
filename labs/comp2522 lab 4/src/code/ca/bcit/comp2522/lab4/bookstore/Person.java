@@ -1,5 +1,7 @@
 package ca.bcit.comp2522.lab4.bookstore;
 
+import java.util.Objects;
+
 /**
  * Represents a human being with a name and lifespan.
  * <p>
@@ -134,6 +136,7 @@ public class Person
         if (dateToCompare.getMonth() != dateReference.getMonth()) {
             return dateToCompare.getMonth() - dateReference.getMonth();
         }
+
         return dateToCompare.getDay() - dateReference.getDay();
     }
 
@@ -231,5 +234,50 @@ public class Person
     public int compareTo(final Person other)
     {
         return compareDates(other.dateOfBirth, this.dateOfBirth);
+    }
+
+    /**
+     * Checks if this person is equal to another object.
+     * <p>
+     * this Person object is equal to another Person object if they
+     * are the same age (same birthdate).
+     * </p>
+     *
+     * @param o the reference object with which to compare
+     * @return true if both Person objects have the same birthdate, false otherwise
+     */
+    @Override
+    public boolean equals(final Object o)
+    {
+        if (this == o)
+        {
+            return false;
+        }
+
+        if (o == null || this.getClass() != o.getClass())
+        {
+            return false;
+        }
+
+        final Person otherPerson;
+        otherPerson = (Person) o;
+
+        return compareDates(this.dateOfBirth, otherPerson.dateOfBirth) == 0;
+    }
+
+    /**
+     * Returns a hash code value for the person.
+     * <p>
+     * Hash is generated based on the birthday only.
+     * </p>
+     *
+     * @return the hash code
+     */
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(dateOfBirth.getYear(),
+                            dateOfBirth.getMonth(),
+                            dateOfBirth.getDay());
     }
 }
