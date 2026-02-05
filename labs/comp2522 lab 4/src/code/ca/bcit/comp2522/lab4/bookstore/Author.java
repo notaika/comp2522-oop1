@@ -77,4 +77,11 @@ public class Author
             System.out.println("They are a known author in " + genre + " genre.");
         }
     }
+
+    @Override
+    public String toString()
+    {
+        return super.getFullName() + ", an author known in the " +
+               genre + " genre";
+    }
 }
