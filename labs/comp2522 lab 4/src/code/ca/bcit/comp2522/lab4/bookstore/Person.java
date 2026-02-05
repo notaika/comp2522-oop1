@@ -170,6 +170,11 @@ public class Person
         return fullName;
     }
 
+    protected String getPersonType()
+    {
+        return "person";
+    }
+
     /**
      * Sets the person's date of death.
      *
@@ -190,17 +195,18 @@ public class Person
     @Override
     public void display()
     {
+        final String personType;
+        personType = getPersonType();
+
         if (dateOfDeath != null)
         {
-            System.out.println("This person's full name is " + fullName +
-                               ", born on " + dateOfBirth +
-                               " and died on " + dateOfDeath);
+            System.out.println(fullName + ", born on " + dateOfBirth +
+                               " and died on " + dateOfDeath + ".");
         }
         else
         {
-            System.out.println("This person's full name is " + fullName +
-                               ", born on " + dateOfBirth +
-                               " and is still alive as of " + DATE_TODAY);
+            System.out.println(fullName + ", born on " + dateOfBirth +
+                               " and is still alive as of " + DATE_TODAY + ".");
         }
     }
 
@@ -251,7 +257,7 @@ public class Person
     {
         if (this == o)
         {
-            return false;
+            return true;
         }
 
         if (o == null || this.getClass() != o.getClass())

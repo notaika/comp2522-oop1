@@ -22,7 +22,7 @@ public class Date implements Printable
     private static final int MAX_DAY_FEB_LEAP = 29;
     private static final int MAX_DAY_FEB = 28;
 
-    private static final int MIN_YEAR = 1800;
+    private static final int MIN_YEAR = 1;
     private static final int CURRENT_YEAR = 2026;
 
     private static final int SATURDAY = 0;

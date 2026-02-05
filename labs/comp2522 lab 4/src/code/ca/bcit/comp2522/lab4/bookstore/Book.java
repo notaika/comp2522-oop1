@@ -1,5 +1,7 @@
 package ca.bcit.comp2522.lab4.bookstore;
 
+import java.util.Objects;
+
 /**
  *
  */
@@ -63,12 +65,27 @@ public class Book
         }
     }
 
+    public String getTitle()
+    {
+        return title;
+    }
+
+    public int getYearPublished()
+    {
+        return yearPublished;
+    }
+
+    public Author getAuthor()
+    {
+        return author;
+    }
+
     @Override
     public void display()
     {
-        System.out.println("This book is " + title +
-                           ", written by " + author +
-                           " and was published in " + yearPublished);
+        System.out.println("This book is \"" + title +
+                           "\", written by " + author +
+                           " and was published in " + yearPublished + ".");
     }
 
     @Override
@@ -83,8 +100,34 @@ public class Book
     }
 
     @Override
-    public int compareTo(Book otherBook)
+    public int compareTo(final Book otherBook)
     {
         return otherBook.yearPublished - this.yearPublished;
+    }
+
+    @Override
+    public boolean equals(final Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+
+        if (!this.getClass()
+                 .equals(o.getClass()))
+        {
+            return false;
+        }
+
+        final Book otherBook;
+        otherBook = (Book) o;
+
+        return Objects.equals(this.yearPublished, otherBook.yearPublished);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hashCode(yearPublished);
     }
 }
