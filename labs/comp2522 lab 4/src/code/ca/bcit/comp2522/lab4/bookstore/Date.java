@@ -13,7 +13,8 @@ package ca.bcit.comp2522.lab4.bookstore;
  *
  * @version 1.0
  */
-public class Date implements Printable
+public class Date
+        implements Printable
 {
 
     private static final int MIN_DAY = 1;

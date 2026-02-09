@@ -9,6 +9,8 @@ package ca.bcit.comp2522.lab4.bookstore;
  *
  * @author Aika Manalo - 2C
  * @author Devan Lam - 2C
+ *
+ * @version 1.0
  */
 public class Name implements Printable
 {
@@ -17,6 +19,17 @@ public class Name implements Printable
     private final String firstName;
     private final String lastName;
 
+    /**
+     * Constructs a Name object with the specified first and last names.
+     * <p>
+     * Validates that both names are not null, not blank, and do not exceed
+     * the maximum character limit.
+     * </p>
+     *
+     * @param firstName the first name
+     * @param lastName  the last name
+     * @throws IllegalArgumentException if either name is null, blank, or exceeds MAX_NUM_CHARACTERS
+     */
     public Name(final String firstName,
                 final String lastName)
     {
@@ -27,11 +40,13 @@ public class Name implements Printable
         this.lastName = lastName;
     }
 
-    /**
-     * not null, blank, < 50 chars
+    /*
+     * Validates a name part string.
+     * Checks if the name is null, blank, or exceeds the character limit.
      *
-     * @param nameToCheck
-     * @param namePartForFeedback
+     * @param nameToCheck         the name string to validate
+     * @param namePartForFeedback the label (e.g., "First name") to use in the error message
+     * @throws IllegalArgumentException if the name is invalid
      */
     private static void validateName(final String nameToCheck,
                                      final String namePartForFeedback)
@@ -47,8 +62,9 @@ public class Name implements Printable
     }
 
     /**
+     * Returns the first name.
      *
-     * @return
+     * @return the first name
      */
     public String getFirstName()
     {
@@ -56,8 +72,9 @@ public class Name implements Printable
     }
 
     /**
+     * Returns the last name.
      *
-     * @return
+     * @return the last name
      */
     public String getLastName()
     {
@@ -65,7 +82,10 @@ public class Name implements Printable
     }
 
     /**
-     *
+     * Displays the full name to the standard output.
+     * <p>
+     * Prints the string representation of this Name object.
+     * </p>
      */
     @Override
     public void display()
@@ -74,9 +94,12 @@ public class Name implements Printable
     }
 
     /**
+     * Returns the full name as a String.
+     * <p>
+     * The format is "firstName lastName" (separated by a single space).
+     * </p>
      *
-     *
-     * @return
+     * @return the full name
      */
     @Override
     public String toString()
