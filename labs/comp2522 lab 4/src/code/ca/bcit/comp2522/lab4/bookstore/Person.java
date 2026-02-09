@@ -5,20 +5,25 @@ import java.util.Objects;
 /**
  * Represents a human being with a name and lifespan.
  * <p>
- * Includes validation for Dates and Name (cannot be null). It implements
- * {@link Comparable} interface to define a natural ordering that uses a person's
- * birthdate to determine their age; older individuals are considered "larger".
- * </p>
- * <p>
- * Also implements {@link Printable} interface to print all attributes in
- * a sentence and {@link Reversible} to print the full name backwards.
+ * A Person has a name, a date of birth, and an optional date of death.
+ * This class implements:
+ * <ul>
+ * <li>{@code Printable} to display their details.</li>
+ * <li>{@code Reversible} to display their name backward.</li>
+ * <li>{@code Comparable<Person>} to define a natural ordering based on age.</li>
+ * </ul>
+ * Older individuals are considered "larger" in the natural ordering.
  * </p>
  *
  * @author Aika Manalo - 2C
  * @author Devan Lam - 2C
+ *
+ * @version 1.0
  */
 public class Person
-    implements Printable, Reversible, Comparable<Person>
+        implements Printable,
+                   Reversible,
+                   Comparable<Person>
 {
     private final static int YEAR_UPPER_LIMIT = 2026;
     private final static int MONTH_UPPER_LIMIT = 2;
@@ -170,11 +175,6 @@ public class Person
         return fullName;
     }
 
-    protected String getPersonType()
-    {
-        return "person";
-    }
-
     /**
      * Sets the person's date of death.
      *
@@ -186,28 +186,40 @@ public class Person
     }
 
     /**
-     * Prints the details of this person to standard output.
+     * Displays the person's details to the standard output.
      * <p>
-     * The output is a single sentence that states the name, birthdate,
-     * and death date (if applicable).
+     * This method prints the string representation of the Person object,
+     * including their name and lifespan, as defined by the {@code toString()} method.
      * </p>
      */
     @Override
     public void display()
     {
-        final String personType;
-        personType = getPersonType();
+        System.out.println(this);
+    }
 
+    /**
+     * Returns a string representation of the Person.
+     * <p>
+     * The returned string contains the person's full name followed by their life span.
+     * If the person is deceased, the format is "(DateOfBirth - DateOfDeath)".
+     * If the person is currently alive, the format is "(DateOfBirth - Present)".
+     * </p>
+     *
+     * @return a formatted string containing the person's name and dates
+     */
+    @Override
+    public String toString()
+    {
         if (dateOfDeath != null)
         {
-            System.out.println(fullName + ", born on " + dateOfBirth +
-                               " and died on " + dateOfDeath + ".");
+            return fullName + " (" + dateOfBirth +
+                               " - " + dateOfDeath + ").";
         }
-        else
-        {
-            System.out.println(fullName + ", born on " + dateOfBirth +
-                               " and is still alive as of " + DATE_TODAY + ".");
-        }
+
+            return fullName + " (" + dateOfBirth +
+                               " - Present).";
+
     }
 
     /**

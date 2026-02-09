@@ -19,6 +19,16 @@ public class Author
 
     private String genre;
 
+    /**
+     * Constructs an Author with a full name, date of birth, date of death, and genre.
+     * Validates that the genre does not exceed the maximum character limit.
+     *
+     * @param fullName    the author's full name
+     * @param dateOfBirth the author's date of birth
+     * @param dateOfDeath the author's date of death (can be null if alive)
+     * @param genre       the genre the author is known for
+     * @throws IllegalArgumentException if the genre length exceeds MAX_NUM_CHARACTERS
+     */
     public Author(final Name fullName,
                   final Date dateOfBirth,
                   final Date dateOfDeath,
@@ -31,6 +41,15 @@ public class Author
         this.genre = genre;
     }
 
+    /**
+     * Constructs a living Author with a full name, date of birth, and genre.
+     * The date of death is set to null.
+     *
+     * @param fullName    the author's full name
+     * @param dateOfBirth the author's date of birth
+     * @param genre       the genre the author is known for
+     * @throws IllegalArgumentException if the genre length exceeds MAX_NUM_CHARACTERS
+     */
     public Author(final Name fullName,
                    final Date dateOfBirth,
                    final String genre)
@@ -38,6 +57,12 @@ public class Author
         this(fullName, dateOfBirth, null, genre);
     }
 
+    /*
+     * Validates the length of the genre string.
+     *
+     * @param genreStrToCheck the genre string to validate
+     * @throws IllegalArgumentException if the string exceeds MAX_NUM_CHARACTERS
+     */
     private static void validateGenreLen(final String genreStrToCheck)
     {
         if (genreStrToCheck.length() > MAX_NUM_CHARACTERS)
@@ -47,41 +72,34 @@ public class Author
         }
     }
 
+    /**
+     * Returns the genre associated with this author.
+     *
+     * @return the author's genre
+     */
     public String getGenre()
     {
         return genre;
     }
 
+    /**
+     * Sets the genre for this author.
+     *
+     * @param genre the new genre to set
+     */
     public void setGenre(final String genre)
     {
         this.genre = genre;
     }
 
-    @Override
-    protected String getPersonType()
-    {
-        return "author";
-    }
-
-    @Override
-    public void display()
-    {
-        super.display();
-
-        if (this.getDateOfDeath() != null)
-        {
-            System.out.println("They were a known author in " + genre + " genre.");
-        }
-        else
-        {
-            System.out.println("They are a known author in " + genre + " genre.");
-        }
-    }
-
+    /**
+     * Returns a string representation of the Author.
+     *
+     * @return a formatted string containing the author's name and genre
+     */
     @Override
     public String toString()
     {
-        return super.getFullName() + ", an author known in the " +
-               genre + " genre";
+        return super.toString() + " " + genre + ".";
     }
 }
