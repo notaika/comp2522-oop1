@@ -19,14 +19,13 @@ public class Main
     public static void main(final String[] args)
     {
         // 1. Setup Authors and Subjects
-        // ---------------------------------------------------------------------
-        // George Orwell (Deceased)
+        // George Orwell (Dead)
         final Name nameOrwell = new Name("George", "Orwell");
         final Date dobOrwell = new Date(1903, 6, 25);
         final Date dodOrwell = new Date(1950, 1, 21);
         final Author authorOrwell = new Author(nameOrwell, dobOrwell, dodOrwell, "Dystopian");
 
-        // Walter Isaacson (Living)
+        // Walter Isaacson (Alive)
         final Name nameIsaacson = new Name("Walter", "Isaacson");
         final Date dobIsaacson = new Date(1952, 5, 20);
         final Author authorIsaacson = new Author(nameIsaacson, dobIsaacson, "Biography");
@@ -43,7 +42,6 @@ public class Main
                                               new Date(2011, 10, 5));
 
         // 2. Create Book Objects
-        // ---------------------------------------------------------------------
         // Standard Book
         final Book book1984;
         book1984 = new Book("1984", 1949, authorOrwell);
@@ -56,8 +54,7 @@ public class Main
         final Autobiography autoFrank;
         autoFrank = new Autobiography("The Diary of a Young Girl", 1947, authorFrank);
 
-        // 3. Test Printable Interface
-        // ---------------------------------------------------------------------
+        // 3. display Test
         System.out.println("=== TEST 1: PRINTABLE ===");
         System.out.print("BOOK: ");
         book1984.display();
@@ -67,8 +64,7 @@ public class Main
         autoFrank.display();
         System.out.println();
 
-        // 4. Test Reversible Interface (backward)
-        // ---------------------------------------------------------------------
+        // 4. backward Test
         System.out.println("=== TEST 2: REVERSIBLE ===");
         System.out.print("Reversing Book Title '1984': ");
         book1984.backward();
@@ -77,8 +73,7 @@ public class Main
         authorOrwell.backward();
         System.out.println();
 
-        // 5. Test Comparable Interface (compareTo)
-        // ---------------------------------------------------------------------
+        // 5. compareTo Test
         System.out.println("=== TEST 3: COMPARABLE ===");
         final int comparison = book1984.compareTo(bioJobs);
         System.out.println("Comparing '1984' (1949) to 'Steve Jobs' (2011): " + comparison);
@@ -93,14 +88,13 @@ public class Main
         }
         System.out.println();
 
-        // 6. Test Equality (.equals)
-        // ---------------------------------------------------------------------
+        // 6. equals( Test
         System.out.println("=== TEST 4: EQUALITY ===");
 
         final Biography anotherJobsBio;
         anotherJobsBio = new Biography("Becoming Steve Jobs", 2015, authorOrwell, subjectJobs);
 
-        // Compare two biographies about Steve Jobs
+        // Compare two biographies about Steve Jobs (should be true)
         System.out.println("Comparing two different books about Steve Jobs:");
         if (bioJobs.equals(anotherJobsBio))
         {
@@ -111,7 +105,7 @@ public class Main
             System.out.println("FAIL: The biographies are NOT equal.");
         }
 
-        // Compare Book to Biography (Should be false)
+        // Compare Book to Biography (should be false)
         System.out.println("Comparing '1984' to 'Steve Jobs': ");
         if (!book1984.equals(bioJobs))
         {

@@ -44,10 +44,10 @@ public class Biography
     }
 
     /*
-     * Validates that the subject of the biography is not null.
+     * Validates that the subject of the biography.
      *
      * @param subjectToValidate the Person object to check
-     * @throws IllegalArgumentException if the subject is null
+     * @throws IllegalArgumentException if the subject is invalid
      */
     private static void validateSubject(final Person subjectToValidate)
     {
