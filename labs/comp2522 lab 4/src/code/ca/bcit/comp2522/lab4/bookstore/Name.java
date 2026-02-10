@@ -21,14 +21,10 @@ public class Name implements Printable
 
     /**
      * Constructs a Name object with the specified first and last names.
-     * <p>
-     * Validates that both names are not null, not blank, and do not exceed
-     * the maximum character limit.
-     * </p>
      *
      * @param firstName the first name
      * @param lastName  the last name
-     * @throws IllegalArgumentException if either name is null, blank, or exceeds MAX_NUM_CHARACTERS
+     * @throws IllegalArgumentException if invalid
      */
     public Name(final String firstName,
                 final String lastName)
@@ -42,7 +38,7 @@ public class Name implements Printable
 
     /*
      * Validates a name part string.
-     * Checks if the name is null, blank, or exceeds the character limit.
+     * Checks if the name is valid.
      *
      * @param nameToCheck         the name string to validate
      * @param namePartForFeedback the label (e.g., "First name") to use in the error message

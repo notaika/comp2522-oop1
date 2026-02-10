@@ -24,7 +24,7 @@ public class Autobiography
      *
      * @param title         the title of the autobiography
      * @param yearPublished the year the autobiography was published
-     * @param author        the author (who is also the subject) of the book
+     * @param author        the author (also the subject) of the book
      */
     public Autobiography(final String title,
                          final int yearPublished,
@@ -36,11 +36,10 @@ public class Autobiography
               author);
     }
 
-
     /**
      * Returns a string representation of the Autobiography.
      *
-     * @return a formatted string containing the title, author (where the subject is himself), and year published
+     * @return a formatted string containing the title, author (also the subject), and year published
      */
     @Override
     public String toString()

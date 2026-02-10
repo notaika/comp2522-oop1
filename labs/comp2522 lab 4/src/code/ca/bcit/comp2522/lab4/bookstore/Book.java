@@ -26,7 +26,7 @@ public class Book
                Reversible,
                Comparable<Book>
 {
-    private static final int MAX_NUM_CHARACTERS = 100;
+    private static final int MAX_NUM_CHARACTERS = 100000;
     private static final int MIN_VALID_YEAR = 1;
     private static final int MAX_VALID_YEAR;
 
@@ -44,16 +44,11 @@ public class Book
 
     /**
      * Constructs a Book with the specified title, year of publication, and author.
-     * <p>
-     * Validates that the title is not null, blank, or too long.
-     * Validates that the year is within the acceptable range (1 to current year).
-     * Validates that the author is not null.
-     * </p>
      *
      * @param title         the title of the book
      * @param yearPublished the year the book was published
      * @param author        the author of the book
-     * @throws IllegalArgumentException if the title is invalid, year is out of range, or author is null
+     * @throws IllegalArgumentException if any validation rules are violated
      */
     public Book(final String title,
                 final int yearPublished,
@@ -72,7 +67,7 @@ public class Book
      * Validates the book title.
      *
      * @param titleToValidate the title string to check
-     * @throws IllegalArgumentException if null, blank, or exceeds MAX_NUM_CHARACTERS
+     * @throws IllegalArgumentException if invalid
      */
     private static void validateTitle(final String titleToValidate)
     {
@@ -89,7 +84,7 @@ public class Book
      * Validates the publication year.
      *
      * @param yearToValidate the year to check
-     * @throws IllegalArgumentException if year is before MIN_VALID_YEAR or in the future
+     * @throws IllegalArgumentException if invalid
      */
     private static void validateYear(final int yearToValidate)
     {
@@ -101,10 +96,10 @@ public class Book
     }
 
     /*
-     * Validates that the author object is not null.
+     * Validates that the author object is valid.
      *
      * @param authorToValidate the Author object to check
-     * @throws IllegalArgumentException if author is null
+     * @throws IllegalArgumentException if author is invalid
      */
     private static void validateAuthorExistence(final Author authorToValidate)
     {

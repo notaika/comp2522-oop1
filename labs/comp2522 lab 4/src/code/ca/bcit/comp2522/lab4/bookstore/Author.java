@@ -19,14 +19,13 @@ public class Author
     private final String genre;
 
     /**
-     * Constructs an Author with a full name, date of birth, date of death, and genre.
-     * Validates that the genre does not exceed the maximum character limit.
+     * Constructs and validates an Author with a full name, date of birth, date of death, and genre.
      *
      * @param fullName    the author's full name
      * @param dateOfBirth the author's date of birth
-     * @param dateOfDeath the author's date of death (can be null if alive)
-     * @param genre       the genre the author is known for
-     * @throws IllegalArgumentException if the genre length exceeds MAX_NUM_CHARACTERS
+     * @param dateOfDeath the author's date of death
+     * @param genre       the author's genre
+     * @throws IllegalArgumentException if invalid
      */
     public Author(final Name fullName,
                   final Date dateOfBirth,
@@ -46,8 +45,8 @@ public class Author
      *
      * @param fullName    the author's full name
      * @param dateOfBirth the author's date of birth
-     * @param genre       the genre the author is known for
-     * @throws IllegalArgumentException if the genre length exceeds MAX_NUM_CHARACTERS
+     * @param genre       the author's genre
+     * @throws IllegalArgumentException if invalid
      */
     public Author(final Name fullName,
                    final Date dateOfBirth,
@@ -60,7 +59,7 @@ public class Author
      * Validates the length of the genre string.
      *
      * @param genreStrToCheck the genre string to validate
-     * @throws IllegalArgumentException if the string exceeds MAX_NUM_CHARACTERS
+     * @throws IllegalArgumentException if invalid
      */
     private static void validateGenreLen(final String genreStrToCheck)
     {

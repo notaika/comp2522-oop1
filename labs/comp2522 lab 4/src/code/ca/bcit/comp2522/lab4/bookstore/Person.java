@@ -27,25 +27,26 @@ public class Person
 {
     private final static int YEAR_UPPER_LIMIT = 2026;
     private final static int MONTH_UPPER_LIMIT = 2;
-    private final static int DAY_UPPER_LIMIT = 3;
-    private final static Date DATE_TODAY;
+    private final static int DAY_UPPER_LIMIT = 10;
+    private final static int VALID_DATE_THRESHOLD = 0;
+    private final static Date MAX_VALID_DATE;
 
     // Assuming eventually the upper limits are automatically calculated and changed daily
     static
     {
-        DATE_TODAY = new Date(YEAR_UPPER_LIMIT, MONTH_UPPER_LIMIT, DAY_UPPER_LIMIT);
+        MAX_VALID_DATE = new Date(YEAR_UPPER_LIMIT, MONTH_UPPER_LIMIT, DAY_UPPER_LIMIT);
     }
 
     private final Date dateOfBirth;
     private Date dateOfDeath;
-    private Name fullName;
+    private final Name fullName;
 
     /**
      * Constructs a Person with a specified death date.
      *
-     * @param fullName    the person's full name, cannot be null
-     * @param dateOfBirth the person's birthdate, cannot be null or in the future
-     * @param dateOfDeath the person's death date, can be null but cannot be before birthdate
+     * @param fullName    the person's full name
+     * @param dateOfBirth the person's birthdate
+     * @param dateOfDeath the person's death date
      *
      * @throws IllegalArgumentException if any validation rules are violated
      */
@@ -53,7 +54,7 @@ public class Person
                   final Date dateOfBirth,
                   final Date dateOfDeath)
     {
-        validateNameNotNull(fullName);
+        validateName(fullName);
         validateBirthDate(dateOfBirth);
         validateDeathDate(dateOfDeath, dateOfBirth);
 
@@ -65,8 +66,8 @@ public class Person
     /**
      * Constructs a living Person (no death date).
      *
-     * @param fullName    the person's full name, cannot be null
-     * @param dateOfBirth the person's birthdate, cannot be null or in the future
+     * @param fullName    the person's full name
+     * @param dateOfBirth the person's birthdate
      * @throws IllegalArgumentException if any validation rules are violated
      */
     public Person(final Name fullName,
@@ -79,47 +80,46 @@ public class Person
      * Validates that the Name object is not null.
      *
      * @param nameToCheck Name object to validate
-     * @throws IllegalArgumentException thrown if name is null
+     * @throws IllegalArgumentException if invalid
      */
-    private static void validateNameNotNull(final Object nameToCheck)
+    private static void validateName(final Object nameToCheck)
     {
         if (nameToCheck == null)
         {
-            throw new IllegalArgumentException("ERROR: Name cannot cannot be null.");
+            throw new IllegalArgumentException("ERROR: Name cannot be null.");
         }
     }
 
     /*
-     * Checks if date of birth is null or is set in the future.
+     * Checks if date of birth is valid.
      *
      * @param dobToCheck date of birth to check
-     * @throws IllegalArgumentException exception thrown if year, month or day is greater than the upper limit
+     * @throws IllegalArgumentException exception thrown if invalid
      */
     private static void validateBirthDate(final Date dobToCheck)
     {
-        if (dobToCheck == null || compareDates(dobToCheck, DATE_TODAY) > 0) {
-            throw new IllegalArgumentException("ERROR: Birth date cannot be in the future.");
+        if (dobToCheck == null ||
+            compareDates(dobToCheck, MAX_VALID_DATE) > VALID_DATE_THRESHOLD)
+        {
+            throw new IllegalArgumentException("ERROR: Birth date cannot be null, or more than max valid date.");
         }
     }
 
     /*
-     * Checks if date of death is set before the date of birth.
+     * Checks if date of death is valid.
      * If date is null, return from validation (person is alive)
      *
      * @param deathDate the date of death to check
      * @param birthDate the date of birth to compare against
-     * @throws IllegalArgumentException thrown if deathdate comes before the birthdate
+     * @throws IllegalArgumentException thrown if deathdate invalid.
      */
     private static void validateDeathDate(final Date deathDate,
                                           final Date birthDate)
     {
-        if (deathDate == null)
+        if (deathDate != null &&
+            (compareDates(deathDate, birthDate) < VALID_DATE_THRESHOLD))
         {
-            return;
-        }
-
-        if (compareDates(deathDate, birthDate) < 0) {
-            throw new IllegalArgumentException("ERROR: Death date cannot be before " + birthDate);
+                throw new IllegalArgumentException("ERROR: Death date cannot come " + birthDate);
         }
     }
 
@@ -133,12 +133,16 @@ public class Person
      *         negative integer if dateToCompare is before dateReference
      *         zero if they are equal
      */
-    private static int compareDates(final Date dateToCompare, final Date dateReference)
+    private static int compareDates(final Date dateToCompare,
+                                    final Date dateReference)
     {
-        if (dateToCompare.getYear() != dateReference.getYear()) {
+        if (dateToCompare.getYear() != dateReference.getYear())
+        {
             return dateToCompare.getYear() - dateReference.getYear();
         }
-        if (dateToCompare.getMonth() != dateReference.getMonth()) {
+
+        if (dateToCompare.getMonth() != dateReference.getMonth())
+        {
             return dateToCompare.getMonth() - dateReference.getMonth();
         }
 
@@ -176,15 +180,6 @@ public class Person
     }
 
     /**
-     * Sets the person's full name.
-     *
-     */
-    public void setFullName(Name fullName)
-    {
-        this.fullName = fullName;
-    }
-
-    /**
      * Sets the person's date of death.
      *
      * @param dateOfDeath the new date of death (can be null)
@@ -211,8 +206,6 @@ public class Person
      * Returns a string representation of the Person.
      * <p>
      * The returned string contains the person's full name followed by their life span.
-     * If the person is deceased, the format is "(DateOfBirth - DateOfDeath)".
-     * If the person is currently alive, the format is "(DateOfBirth - Present)".
      * </p>
      *
      * @return a formatted string containing the person's name and dates
@@ -226,9 +219,8 @@ public class Person
                                " - " + dateOfDeath + ").";
         }
 
-            return fullName + " (" + dateOfBirth +
-                               " - Present).";
-
+        return fullName + " (" + dateOfBirth +
+                           " - Present).";
     }
 
     /**
@@ -260,7 +252,8 @@ public class Person
     @Override
     public int compareTo(final Person other)
     {
-        return compareDates(other.dateOfBirth, this.dateOfBirth);
+        return compareDates(other.dateOfBirth,
+                            this.dateOfBirth);
     }
 
     /**
@@ -289,7 +282,8 @@ public class Person
         final Person otherPerson;
         otherPerson = (Person) o;
 
-        return compareDates(this.dateOfBirth, otherPerson.dateOfBirth) == 0;
+        return compareDates(this.dateOfBirth,
+                            otherPerson.dateOfBirth) == 0;
     }
 
     /**
