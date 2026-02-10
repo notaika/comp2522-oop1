@@ -1,3 +1,5 @@
+package ca.bcit.comp2522.lect5.lecture;
+
 /**
  *
  */
@@ -26,7 +28,7 @@ public class Student
 
     @Override public String toString()
     {
-        return "Student{" +
+        return "ca.bcit.comp2522.lect5.lecture.Student{" +
                "id='" + id + '\'' +
                ", firstName='" + firstName + '\'' +
                '}';
