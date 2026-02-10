@@ -38,7 +38,7 @@ public class Person
 
     private final Date dateOfBirth;
     private Date dateOfDeath;
-    private final Name fullName;
+    private Name fullName;
 
     /**
      * Constructs a Person with a specified death date.
@@ -173,6 +173,15 @@ public class Person
     public Name getFullName()
     {
         return fullName;
+    }
+
+    /**
+     * Sets the person's full name.
+     *
+     */
+    public void setFullName(Name fullName)
+    {
+        this.fullName = fullName;
     }
 
     /**

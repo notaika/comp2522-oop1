@@ -13,11 +13,10 @@ package ca.bcit.comp2522.lab4.bookstore;
  */
 public class Author
         extends Person
-        implements Printable
 {
     private static final int MAX_NUM_CHARACTERS = 30;
 
-    private String genre;
+    private final String genre;
 
     /**
      * Constructs an Author with a full name, date of birth, date of death, and genre.
@@ -65,9 +64,11 @@ public class Author
      */
     private static void validateGenreLen(final String genreStrToCheck)
     {
-        if (genreStrToCheck.length() > MAX_NUM_CHARACTERS)
+        if (genreStrToCheck == null ||
+            genreStrToCheck.isBlank() ||
+            genreStrToCheck.length() > MAX_NUM_CHARACTERS)
         {
-            throw new IllegalArgumentException("ERROR: Genre length cannot exceed " +
+            throw new IllegalArgumentException("ERROR: Genre length cannot be null, blank or exceed " +
                                                MAX_NUM_CHARACTERS + " characters");
         }
     }
@@ -80,16 +81,6 @@ public class Author
     public String getGenre()
     {
         return genre;
-    }
-
-    /**
-     * Sets the genre for this author.
-     *
-     * @param genre the new genre to set
-     */
-    public void setGenre(final String genre)
-    {
-        this.genre = genre;
     }
 
     /**
