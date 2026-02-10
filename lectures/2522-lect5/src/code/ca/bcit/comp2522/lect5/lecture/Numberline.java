@@ -1,3 +1,5 @@
+package ca.bcit.comp2522.lect5.lecture;
+
 import java.util.HashMap;
 import java.util.Map;
 

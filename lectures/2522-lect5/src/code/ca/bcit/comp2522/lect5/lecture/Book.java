@@ -1,3 +1,5 @@
+package ca.bcit.comp2522.lect5.lecture;
+
 public class Book
 {
     private final String title;

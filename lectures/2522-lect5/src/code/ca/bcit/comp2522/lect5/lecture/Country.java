@@ -1,3 +1,5 @@
+package ca.bcit.comp2522.lect5.lecture;
+
 /**
  * Map 2.0
  */
@@ -25,7 +27,7 @@ public class Country
 
     @Override public String toString()
     {
-        return "Country{" +
+        return "ca.bcit.comp2522.lect5.lecture.Country{" +
                "code='" + code + '\'' +
                ", name='" + name + '\'' +
                '}';
