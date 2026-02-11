@@ -67,4 +67,12 @@ public class Novel
     {
         return this.title.compareToIgnoreCase(o.getTitle());
     }
+
+    @Override
+    public String toString()
+    {
+        return "\"" + title + "\"" +
+               " by " + authorName +
+               ", " + yearPublished;
+    }
 }
