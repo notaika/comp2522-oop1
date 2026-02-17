@@ -2,12 +2,28 @@ package ca.bcit.comp2522.lab5.bookstore;
 
 import java.util.*;
 
+/**
+ * Represents a Bookshop containing a collection of Novels.
+ * Provides functionality to print, filter and sort the inventory.
+ *
+ * @author Aika Manalo - Set 2C
+ * @author Maeve Le - Set 2C
+ *
+ * @version 1.0
+ */
 public class Bookshop
 {
     private final String bookshopName;
     private final Map<String, Novel> novelDictionary;
     private final Set<String>        novelKeySet;
 
+    /**
+     * Constructs a new Bookshop with the specified name.
+     * Initializes the dictionary and seeds it with a default collection of Novels.
+     *
+     * @param bookshopName the name of the Bookshop
+     * @throws IllegalArgumentException if provided Bookshop name is invalid
+     */
     public Bookshop(final String bookshopName)
     {
         validateBookshopName(bookshopName);
@@ -20,6 +36,12 @@ public class Bookshop
         novelKeySet = novelDictionary.keySet();
     }
 
+    /*
+     * Validates that the provided Bookshop name is not null or empty.
+     *
+     * @param nameToCheck the Bookstore given name to check
+     * @throw IllegalArgumentException if provided Bookshop name is invalid
+     */
     private static void validateBookshopName(final String nameToCheck)
     {
         if (nameToCheck == null || nameToCheck.isEmpty())
@@ -28,6 +50,9 @@ public class Bookshop
         }
     }
 
+    /*
+     * Populates the Novel dictionary with a predefined list of Novels.
+     */
     private void seedDictionary()
     {
         addReference("The Adventures of Augie March", "Saul Bellow", 1953);
@@ -132,6 +157,13 @@ public class Bookshop
         addReference("Wide Sargasso Sea", "Jean Rhys", 1966);
     }
 
+    /*
+     * Creates a new Novel instance and adds it onto the Bookshop's dictionary.
+     *
+     * @param title the Novel title
+     * @param authorName the Novel author
+     * @param yearPublished the year the Novel was published
+     */
     private void addReference(final String title,
                               final String authorName,
                               final int yearPublished)
@@ -142,21 +174,39 @@ public class Bookshop
         novelDictionary.put(novel.getTitle(), novel);
     }
 
+    /**
+     * Getter method for Bookshop name.
+     *
+     * @return the Bookshop's name
+     */
     public String getBookshopName()
     {
         return bookshopName;
     }
 
+    /**
+     * Getter method for the Novel dictionary that contains all novels in the Bookshop.
+     *
+     * @return a Map where the key is the Novel title and value is the Novel
+     */
     public Map<String, Novel> getNovelDictionary()
     {
         return novelDictionary;
     }
 
+    /**
+     * Getter method for the set of keys (Novel titles) that currently exist in the bookshop's dictionary.
+     *
+     * @return a Set of String keys representing the Novel titles
+     */
     public Set<String> getNovelKeySet()
     {
         return novelKeySet;
     }
 
+    /**
+     * Iterates through the bookshop's dictionary and prints each novel to the standard output.
+     */
     public void printBooks()
     {
         final Iterator<String> it;
@@ -174,6 +224,11 @@ public class Bookshop
         }
     }
 
+    /**
+     * Iterates through a provided list of keys and prints the corresponding novels.
+     *
+     * @param keySet a List of novel titles (keys) to print
+     */
     public void printBooks(final List<String> keySet)
     {
         final Iterator<String> it;
@@ -191,6 +246,12 @@ public class Bookshop
         }
     }
 
+    /**
+     * Filters the Bookshop's dictionary by removing any novel whose title
+     * contains the specified word (case-insensitive).
+     *
+     * @param wordToRemove the substring to search for and remove
+     */
     public void filterBooks(final String wordToRemove)
     {
         final Iterator<String> it;
@@ -216,6 +277,11 @@ public class Bookshop
         }
     }
 
+    /**
+     * Sorts the keys (novel titles) of the current dictionary alphabetically.
+     *
+     * @return a sorted List of strings containing the novel titles
+     */
     public List<String> sortKeys()
     {
         final List<String> keyList;
@@ -226,6 +292,13 @@ public class Bookshop
         return keyList;
     }
 
+    /**
+     * The main entry point for the application.
+     * Demonstrates creating a Bookshop, printing the collection, filtering out
+     * specific titles, and printing a sorted list.
+     *
+     * @param args unused
+     */
     public static void main(String[] args)
     {
         final Bookshop bookShop;

@@ -2,26 +2,46 @@ package ca.bcit.comp2522.lab5.bookstore;
 
 import java.util.*;
 
+/**
+ * Represents a Bookstore containing a library of Novels.
+ * Provides various methods to search, filter, and analyze the collection.
+ *
+ * @author Aika Manalo - Set 2C
+ * @author Maeve Le - Set 2C
+ *
+ * @version 1.0
+ */
 public class Bookstore
 {
     private static final int NUM_YEARS_END_DECADE = 9;
     private static final int PERCENTAGE_MULTIPLIER = 100;
 
     private final String             bookstoreName;
-    private final List<Novel>        novelList;
+    private final List<Novel>        library;
 
-
+    /**
+     * Constructs and initializes a Bookstore with a given name and a library that contains a list of Novels.
+     * The library is also seeded with a list of Novels.
+     *
+     * @param bookstoreName the name of the Bookstore
+     */
     public Bookstore(String bookstoreName)
     {
         validateBookstoreName(bookstoreName);
         this.bookstoreName   = bookstoreName;
 
-        novelList = new ArrayList<>();
+        library = new ArrayList<>();
 
         seedLibrary();
 
     }
 
+    /*
+     * Validates the Bookstore name is not null or empty.
+     *
+     * @param nameToCheck the Bookstore name to check
+     * @throws IllegalArgumentException if Bookstore name is invalid
+     */
     private static void validateBookstoreName(final String nameToCheck)
     {
         if (nameToCheck == null || nameToCheck.isEmpty())
@@ -30,16 +50,9 @@ public class Bookstore
         }
     }
 
-    public String getBookstoreName()
-    {
-        return bookstoreName;
-    }
-
-    public List<Novel> getNovelList()
-    {
-        return novelList;
-    }
-
+    /*
+     * Helper method to that seeds the library.
+     */
     private void seedLibrary()
     {
         addReference("The Adventures of Augie March", "Saul Bellow", 1953);
@@ -144,18 +157,48 @@ public class Bookstore
         addReference("Wide Sargasso Sea", "Jean Rhys", 1966);
     }
 
+    /*
+     * Creates a new Novel instance and adds it onto the Bookstore's library (list of Novels).
+     *
+     * @param title the Novel title
+     * @param authorName the Novel author
+     * @param yearPublished the year the Novel was published
+     */
     private void addReference(final String title,
                                  final String authorName,
                                  final int yearPublished)
     {
         final Novel novel;
         novel = new Novel(title, authorName,yearPublished);
-        novelList.add(novel);
+        library.add(novel);
     }
 
+    /**
+     * Getter method for Bookstore name.
+     *
+     * @return the Bookstore name
+     */
+    public String getBookstoreName()
+    {
+        return bookstoreName;
+    }
+
+    /**
+     * Getter method for the library (list of Novels)
+     *
+     * @return the library (list of Novels)
+     */
+    public List<Novel> getLibrary()
+    {
+        return library;
+    }
+
+    /**
+     * Prints all Novel titles in the library.
+     */
     public void printAllTitles()
     {
-        for (final Novel novel : novelList)
+        for (final Novel novel : library)
         {
             if (novel != null)
             {
@@ -167,9 +210,14 @@ public class Bookstore
         }
     }
 
+    /**
+     * Prints all Novel titles specified in the parameter within the library.
+     *
+     * @param title the Novel title
+     */
     public void printBookTitle(final String title)
     {
-        for (final Novel novel : novelList)
+        for (final Novel novel : library)
         {
             if (novel != null)
             {
@@ -192,12 +240,15 @@ public class Bookstore
 
     }
 
+    /**
+     * Prints all Novel titles within the library in alphabetical order (A-Z).
+     */
     public void printTitlesInAlphaOrder()
     {
         final List<Novel> alphaSortedList;
-        if (novelList != null)
+        if (library != null)
         {
-            alphaSortedList = new ArrayList<>(novelList);
+            alphaSortedList = new ArrayList<>(library);
 
             alphaSortedList.sort(null);
 
@@ -211,12 +262,18 @@ public class Bookstore
         }
     }
 
+    /**
+     * Prints all Novels for the specified decade.
+     * i.e. 2000 -> prints all book titles from 2000 - 2009
+     *
+     * @param decade the decade range to check
+     */
     public void printGroupByDecade(final int decade)
     {
         final int endDecade;
         endDecade = decade + NUM_YEARS_END_DECADE;
 
-        for (final Novel novel : novelList)
+        for (final Novel novel : library)
         {
             if (novel != null)
             {
@@ -231,12 +288,17 @@ public class Bookstore
         }
     }
 
+    /**
+     * Finds the longest title in the Bookstore within the library.
+     *
+     * @return the Novel with the longest title
+     */
     public String getLongest()
     {
         String longestTitle;
         longestTitle = "";
 
-        for (final Novel novel : novelList)
+        for (final Novel novel : library)
         {
             if (novel != null)
             {
@@ -249,13 +311,18 @@ public class Bookstore
                 }
             }
         }
-
         return longestTitle;
     }
 
+    /**
+     * Checks if there is a Novel published in a given year.
+     *
+     * @param year the year to check if a Novel was published
+     * @return true if a Novel was published in specified year, false otherwise
+     */
     public boolean isThereABookWrittenIn(final int year)
     {
-        for (final Novel novel : novelList)
+        for (final Novel novel : library)
         {
             if (novel != null &&
                 novel.getYearPublished() == year)
@@ -266,12 +333,18 @@ public class Bookstore
         return false;
     }
 
+    /**
+     * Returns the amount of Novels that contain a given word in their title (case-insensitive).
+     *
+     * @param word the word to look for in the Novel title
+     * @return count of Novels that contain the given word
+     */
     public int howManyBooksContain(final String word)
     {
         int count;
         count = 0;
 
-        for (final Novel novel : novelList)
+        for (final Novel novel : library)
         {
             if (novel != null)
             {
@@ -287,16 +360,23 @@ public class Bookstore
         return count;
     }
 
+    /**
+     * Returns the percentage of Novels that were written between two given years (inclusive).
+     *
+     * @param first the lower year bound to check
+     * @param last the upper year bound to check
+     * @return the percentage of Novels written between the lower and upper bound
+     */
     public double whichPercentWrittenBetween(int first,
                                              int last)
     {
         final int referencesSize;
         int count;
 
-        referencesSize = novelList.size();
+        referencesSize = library.size();
         count = 0;
 
-        for (final Novel novel : novelList)
+        for (final Novel novel : library)
         {
             if (novel != null)
             {
@@ -307,41 +387,59 @@ public class Bookstore
                 }
             }
         }
-
         return ((double) count / referencesSize) * PERCENTAGE_MULTIPLIER;
     }
 
-    // EDIT THIS
+    /**
+     * Returns the oldest Novel in the Bookstore's library collection.
+     * If two of the oldest Novels were published in the same year, returns the first Novel found.
+     *
+     * @return the oldest Novel in the Bookstore's library, null if library is empty
+     */
     public Novel getOldestBook()
     {
         Novel oldestBook;
         oldestBook = null;
 
-        for (final Novel novel : novelList)
+        for (final Novel novel : library)
         {
             if (novel != null)
             {
-                final int currentYear;
-                int tempYear;
-
-                currentYear = novel.getYearPublished();
-                tempYear = 0;
-
-                if (currentYear > tempYear)
+                // Set first book as initial oldest to start.
+                if (oldestBook == null)
                 {
                     oldestBook = novel;
                 }
+                else
+                {
+                    final int currentYear;
+                    final int oldestYear;
+
+                    currentYear = novel.getYearPublished();
+                    oldestYear = oldestBook.getYearPublished();
+
+                    // If the current book is older than the current stored, reassign it.
+                    if (currentYear < oldestYear)
+                    {
+                        oldestBook = novel;
+                    }
+                }
             }
         }
-
         return oldestBook;
     }
 
+    /**
+     * Returns a List of Novels whose title matches the given length.
+     *
+     * @param titleLength the title length to check and match
+     * @return a list of Novels that match the given title length
+     */
     public List<Novel> getBooksThisLength(final int titleLength)
     {   final List<Novel> filteredBooks;
         filteredBooks = new ArrayList<>();
 
-        for (final Novel novel : novelList)
+        for (final Novel novel : library)
         {
             if (novel != null)
             {
@@ -359,29 +457,75 @@ public class Bookstore
             System.out.println("No books whose title is length is " + titleLength +
                                " was found.");
         }
-
         return filteredBooks;
     }
 
+    /**
+     * The main entry point for the application.
+     * Demonstrates creating a Bookshop, printing the collection, filtering out
+     * specific titles, and printing a sorted list.
+     *
+     * @param args unused
+     */
     public static void main(final String[] args)
     {
-        final Bookstore bookStore;
-        bookStore = new Bookstore("Flourish and Botts");
+        // Variables
+        final Bookstore bookstore;
+        final List<Novel> fifteenCharTitles;
 
-        // bookStore.printAllTitles();
-        // bookStore.printBookTitle("the");
-        // bookStore.printTitlesInAlphaOrder();
-        // System.out.println(bookStore.getLongest());
-         System.out.println(bookStore.isThereABookWrittenIn(2000));
-         bookStore.printGroupByDecade(2000);
-         System.out.println(bookStore.howManyBooksContain("heart"));
-        // Novel n1 = new Novel("aaa", "aaa", 123);
-        // bookStore.getNovelReferences().add(n1);
-        System.out.println(bookStore.whichPercentWrittenBetween(1940, 1950) + "%");
-        final List<Novel> filtered;
-        filtered = bookStore.getBooksThisLength(15);
+        // Initialize Bookstore
+        bookstore = new Bookstore("Flourish and Botts");
 
-        for (final Novel novel : filtered)
+        // Print out all titles
+        System.out.println("All Titles in UPPERCASE:");
+        bookstore.printAllTitles();
+        System.out.println();
+
+        // Filter books by word
+        System.out.println("Book Titles Containing 'the':");
+        bookstore.printBookTitle("the");
+        System.out.println();
+
+        // Sort books alphabetically
+        System.out.println("All Titles in Alphabetical Order:");
+        bookstore.printTitlesInAlphaOrder();
+        System.out.println();
+
+        // Group by decade
+        System.out.println("Books from the 2000s:");
+        bookstore.printGroupByDecade(2000);
+        System.out.println();
+
+        // Find the longest title
+        System.out.println("Longest Book Title:");
+        System.out.println(bookstore.getLongest());
+        System.out.println();
+
+        // Check for Novels published in specified year
+        System.out.println("Is there a book written in 1950?");
+        System.out.println(bookstore.isThereABookWrittenIn(1950));
+        System.out.println();
+
+        // Count of Novels by given word
+        System.out.println("How many books contain 'heart'?");
+        System.out.println(bookstore.howManyBooksContain("heart"));
+        System.out.println();
+
+        // Calculate the percentage of books written between lower and upper bound
+        System.out.println("Percentage of books written between 1940 and 1950:");
+        System.out.println(bookstore.whichPercentWrittenBetween(1940, 1950) + "%");
+        System.out.println();
+
+        // Find the oldest book in the collection
+        System.out.println("Oldest book:");
+        System.out.println(bookstore.getOldestBook());
+        System.out.println();
+
+        // Filter the title by length
+        System.out.println("Books with titles 15 characters long:");
+        fifteenCharTitles = bookstore.getBooksThisLength(15);
+
+        for (Novel novel : fifteenCharTitles)
         {
             System.out.println(novel.getTitle());
         }
