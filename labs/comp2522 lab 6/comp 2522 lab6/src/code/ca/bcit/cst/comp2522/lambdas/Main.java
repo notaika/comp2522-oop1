@@ -1,10 +1,10 @@
 package ca.bcit.cst.comp2522.lambdas;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 /**
  * Main entry to the program.
@@ -19,6 +19,7 @@ public class Main
      *
      * @param args unsed
      */
+    
     public static void main(String[] args)
     {
         final HockeyTeam team;
@@ -85,5 +86,57 @@ public class Main
 
 
         System.out.println(playerLabel.apply(p1));
+        System.out.println();
+
+        // Print player name
+        final Consumer<HockeyPlayer> printPlayerName;
+        printPlayerName = p-> System.out.println(p.getName());
+
+        for (final HockeyPlayer player : teamRoster)
+        {
+            printPlayerName.accept(player);
+        }
+
+        System.out.println();
+
+        // Uppercase Names
+        final UnaryOperator<String> toUpper;
+        toUpper = s->s.toUpperCase();
+
+        for (final HockeyPlayer player : teamRoster)
+        {
+            System.out.println(toUpper.apply(player.getName()));;
+        }
+
+        // Sorts players by goal descending
+        final Comparator<HockeyPlayer> goalsDesc;
+        goalsDesc = (pl1, pl2)->Integer.compare(pl2.getGoals(), pl1.getGoals());
+
+        Collections.sort(teamRoster, goalsDesc);
+        System.out.println(teamRoster);
+
+        // Aggregation
+        int count = 0;
+
+        for (final HockeyPlayer player : teamRoster)
+        {
+            count += player.getGoals();
+        }
+
+        System.out.println(count);
+
+        // Custom Functional Interface
+        final EligibilityRule isEligible;
+        isEligible = (player, minAge, minGoals, year)->{
+            final int age;
+            age = year - player.getYearOfBirth();
+
+            return (age > minAge && player.getGoals() > minGoals);
+        };
+
+        for (final HockeyPlayer player : teamRoster)
+        {
+            System.out.println(isEligible.test(player, 20, 10, 2026));
+        }
     }
 }
