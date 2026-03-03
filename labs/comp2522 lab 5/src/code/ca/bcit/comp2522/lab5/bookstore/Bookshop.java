@@ -1,6 +1,12 @@
 package ca.bcit.comp2522.lab5.bookstore;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Represents a Bookshop containing a collection of Novels.
@@ -13,7 +19,7 @@ import java.util.*;
  */
 public class Bookshop
 {
-    private final String bookshopName;
+    private final String             bookshopName;
     private final Map<String, Novel> novelDictionary;
     private final Set<String>        novelKeySet;
 

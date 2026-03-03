@@ -1,6 +1,7 @@
 package ca.bcit.comp2522.lab5.bookstore;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a Bookstore containing a library of Novels.
@@ -16,8 +17,8 @@ public class Bookstore
     private static final int NUM_YEARS_END_DECADE = 9;
     private static final int PERCENTAGE_MULTIPLIER = 100;
 
-    private final String             bookstoreName;
-    private final List<Novel>        library;
+    private final String      bookstoreName;
+    private final List<Novel> library;
 
     /**
      * Constructs and initializes a Bookstore with a given name and a library that contains a list of Novels.
@@ -33,7 +34,6 @@ public class Bookstore
         library = new ArrayList<>();
 
         seedLibrary();
-
     }
 
     /*
@@ -246,6 +246,7 @@ public class Bookstore
     public void printTitlesInAlphaOrder()
     {
         final List<Novel> alphaSortedList;
+
         if (library != null)
         {
             alphaSortedList = new ArrayList<>(library);

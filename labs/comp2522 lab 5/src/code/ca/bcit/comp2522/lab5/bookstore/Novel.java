@@ -132,7 +132,7 @@ public class Novel
             return true;
         }
 
-        if (this.getClass() != o.getClass())
+        if (!this.getClass().equals(o.getClass()))
         {
             return false;
         }
