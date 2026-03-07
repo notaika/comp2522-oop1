@@ -1,1 +1,21 @@
-*.DS_Store
+# --- IntelliJ / JetBrains ---
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# --- Compiled Java Files ---
+*.class
+*.jar
+*.war
+*.ear
+
+# --- Build Tools (Nested) ---
+# This ignores 'target' (Maven) or 'build' (Gradle) folders everywhere
+**/target/
+**/build/
+**/bin/
+
+# --- macOS Junk ---
+.DS_Store
