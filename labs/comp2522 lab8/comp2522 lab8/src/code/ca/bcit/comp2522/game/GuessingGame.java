@@ -14,7 +14,7 @@ import java.util.Scanner;
  *
  * @version 1.0
  */
-public class GuessingGame extends Game
+class GuessingGame extends Game
 {
     private static final int LOWER_BOUND = 1;
     private static final int UPPER_BOUND = 6;
@@ -31,14 +31,14 @@ public class GuessingGame extends Game
 
     }
 
-    public GuessingGame(final String gameName,
+    private GuessingGame(final String gameName,
                         final Player player,
                         final Scanner input) // Added to match updated Game constructor
     {
         super(gameName, player, input);
     }
 
-    public GuessingGame(final String gameName,
+    private GuessingGame(final String gameName,
                         final Player player,
                         final File fileName) throws FileNotFoundException
     {
@@ -47,6 +47,10 @@ public class GuessingGame extends Game
 
     private char getUserChoice()
     {
+        System.out.printf("Enter a number between %d and %d\n",
+                          LOWER_BOUND,
+                          UPPER_BOUND);
+
 
         return 'a';
     }
@@ -67,10 +71,8 @@ public class GuessingGame extends Game
     }
 
     @Override
-    public void start()
+    private void start()
     {
-        // welcome screen
-        // select a game
         // loop here
         // computer generates a number
         // get user input
@@ -81,6 +83,11 @@ public class GuessingGame extends Game
         // user input = game input
         // prompt to play again or exit
 
+        getComputerChoice();
+        boolean gameRunning = true;
+
+
+
         System.out.println("game started :)");
     }
 
@@ -89,7 +96,7 @@ public class GuessingGame extends Game
      *
      * @param args unused
      */
-    public static void main(String[] args)
+    private static void main(String[] args)
     {
 
     }

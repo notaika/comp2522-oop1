@@ -8,12 +8,12 @@ package ca.bcit.comp2522.game;
  *
  * @version 1.0
  */
-public class Player
+class Player
 {
     private final String name;
     private int numGamesPlayed;
 
-    public Player(final String name)
+    private Player(final String name)
     {
         this.name           = name;
         this.numGamesPlayed = 0;
@@ -28,17 +28,17 @@ public class Player
         }
     }
 
-    public String getName()
+    private String getName()
     {
         return name;
     }
 
-    public int getNumGamesPlayed()
+    private int getNumGamesPlayed()
     {
         return numGamesPlayed;
     }
 
-    public void setNumGamesPlayed(int numGamesPlayed)
+    private void setNumGamesPlayed(int numGamesPlayed)
     {
         this.numGamesPlayed = numGamesPlayed;
     }

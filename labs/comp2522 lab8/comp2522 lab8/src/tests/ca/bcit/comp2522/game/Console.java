@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.function.Function;
 
 /**
  *
@@ -16,6 +17,8 @@ public class Console
     private final Set<Integer>       gameIds;
     private final Scanner            keyboardScanner;
 
+    // private static final Function<String, Integer> getInput;
+
     public Console()
     {
         this.games = new HashMap<>();
@@ -25,7 +28,7 @@ public class Console
 
     public void addGame(final Game game)
     {
-        games.put(game.getGameId(), game);
+        // games.put(game.getGameId(), game);
     }
 
     public void selectGame(final int gameNumber)
@@ -44,7 +47,45 @@ public class Console
         {
             System.out.printf("%d - %s\n", id, games.get(id));
         }
+
+        System.out.print("\nX - Exit\n> ");
     }
+
+    public int getInput(final String prompt)
+    {
+        String userInput;
+        int userInputInt = -1;
+
+        System.out.println(prompt);
+        printGames();
+
+        userInput = keyboardScanner.next();
+
+        return -1;
+    }
+
+    public int parseInput(final String input)
+    {
+        int userInputInt = -1;
+
+        if (input.equalsIgnoreCase(EXIT_CHAR))
+        {
+            System.out.println("Goodbye.");
+            return userInputInt;
+        }
+
+        try
+        {
+            userInputInt = Integer.parseInt(input);
+        }
+        catch (final NumberFormatException e)
+        {
+            System.out.println("Invalid input! Please enter a number or '" + EXIT_CHAR + "'.");
+        }
+
+        return userInputInt;
+    }
+
 
     public void start()
     {
@@ -61,49 +102,39 @@ public class Console
         // prompt to play again or exit
 
         System.out.println("== Welcome ==");
-        System.out.println("Select a Game: ");
+        final String message = "\nSelect a Game (or type '" + EXIT_CHAR + "' to quit):";
+        int userChoice;
 
         boolean isRunning = true;
 
-        while (isRunning) {
-            System.out.println("\nSelect a Game (or type '" + EXIT_CHAR + "' to quit):");
-            printGames();
+        while (isRunning)
+        {
+            userChoice = getInput(message);
 
-            final String userInput = keyboardScanner.next();
-
-            if (userInput.equalsIgnoreCase(EXIT_CHAR)) {
-                System.out.println("Goodbye.");
-                isRunning = false;
+            if (games.containsKey(userChoice)) {
+                selectGame(userChoice);
             } else {
-                try {
-                    int userChoice = Integer.parseInt(userInput);
-
-                    if (games.containsKey(userChoice)) {
-                        selectGame(userChoice);
-                    } else {
-                        System.out.println("Error: No game found with ID " + userChoice);
-                    }
-                } catch (final NumberFormatException e) {
-                    System.out.println("Invalid input! Please enter a number or '" + EXIT_CHAR + "'.");
-                }
+                System.out.println("Error: No game found with ID " + userChoice);
             }
         }
+
     }
 
     public static void main(String[] args)
     {
-        final Console console = new Console();
-        final Player player = new Player("Lano");
+//        final Console console = new Console();
+//        final Player player = new Player("Lano");
 
         // Pass the console's scanner to the games
-        final Game guessingGame = new GuessingGame("Guessing Game", player, console.keyboardScanner);
-        final Game guessingGame2 = new GuessingGame("Guessing Game2", player, console.keyboardScanner);
-        final Game guessingGame3 = new GuessingGame("Guessing Game3", player, console.keyboardScanner);
+//        final Game guessingGame = new GuessingGame("Guessing Game", player, console.keyboardScanner);
+//        final Game guessingGame2 = new GuessingGame("Guessing Game2", player, console.keyboardScanner);
+//        final Game guessingGame3 = new GuessingGame("Guessing Game3", player, console.keyboardScanner);
 
-        console.addGame(guessingGame);
-        console.addGame(guessingGame2);
-        console.addGame(guessingGame3);
+//        console.addGame(guessingGame);
+//        console.addGame(guessingGame2);
+//        console.addGame(guessingGame3);
 
-        console.start();
+        // console.start();
+
     }
 }

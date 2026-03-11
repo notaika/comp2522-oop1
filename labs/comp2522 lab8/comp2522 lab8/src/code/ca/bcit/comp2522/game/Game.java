@@ -12,7 +12,7 @@ import java.util.Scanner;
  *
  * @version 1.0
  */
-public abstract class Game
+abstract class Game
 {
     private static final String EXIT_CHAR = "x";
 
@@ -35,7 +35,7 @@ public abstract class Game
      * Initializes and instantiates a Game that takes in keyboard input
      * from the user.
      */
-    public Game(final String gameName,
+    private Game(final String gameName,
                 final Player player,
                 final Scanner input) { // Accepts scanner from Console
         this.gameName = gameName;
@@ -51,7 +51,7 @@ public abstract class Game
      * @param fileName the name of the file
      * @throws FileNotFoundException if file is not found
      */
-    public Game(final String gameName,
+    private Game(final String gameName,
                 final File fileName,
                 final Player player) throws FileNotFoundException
     {
@@ -66,12 +66,12 @@ public abstract class Game
      *
      * @return total play count
      */
-    public int getPlayCount()
+    private int getPlayCount()
     {
         return playCount;
     }
 
-    public int getGameId()
+    private int getGameId()
     {
         return gameId;
     }
@@ -81,7 +81,7 @@ public abstract class Game
      *
      * @return the computer score
      */
-    public int getComputerScore()
+    private int getComputerScore()
     {
         return computerScore;
     }
@@ -91,7 +91,7 @@ public abstract class Game
      *
      * @param computerScore the computer score
      */
-    public void setComputerScore(int computerScore)
+    private void setComputerScore(int computerScore)
     {
         this.computerScore = computerScore;
     }
@@ -101,7 +101,7 @@ public abstract class Game
      *
      * @param playCount the play count
      */
-    public void setPlayCount(int playCount)
+    private void setPlayCount(int playCount)
     {
         this.playCount = playCount;
     }
@@ -109,12 +109,12 @@ public abstract class Game
     /**
      * Starts the Game.
      */
-    public abstract void start();
+    abstract void start();
 
     /**
      * Exits the game.
      */
-    public void exit()
+    private void exit()
     {
         // Removed input.close() so Console stays alive
         System.out.println("Game Over.");
@@ -154,14 +154,4 @@ public abstract class Game
      * - if user guess is right, they get congrats and prompt them to play again
      * - print the amount of guesses it took
      */
-
-    /**
-     * Drives the Game program.
-     *
-     * @param args unused
-     */
-    public static void main(String[] args)
-    {
-
-    }
 }
