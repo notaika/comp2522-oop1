@@ -1,0 +1,34 @@
+CLI game that picks a random country name from a
+text file and has the player guess it
+
+After each guess:
+- Wrong length (X). Need Y.
+or
+- N letter(s) correct (right position)
+or
+- Correct!
+
+States:
+- track attempts
+- save best (fewest) attempts to a high-score file
+- log each session's guesses
+
+To implement:
+1. Game loop
+- on start, load all country names from
+data/countries.txt
+- choose one country uniformly at random
+- print
+    - Title Line: LUCKY VAULT - COUNTRY MODE. Type QUIT to exit
+    - Secret word length: <number>
+    - Current best: -- or <N> attempts (read from high score file;)
+- Repeatedly prompt: Your guess
+
+Commands:
+- QUIT -> exit immediately (no crash)
+- Any other input -> treat as guess (trim;
+case insensitive)
+
+- Length differs
+
+- Exact match

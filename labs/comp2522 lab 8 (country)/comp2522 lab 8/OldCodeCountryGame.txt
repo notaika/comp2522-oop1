@@ -1,0 +1,99 @@
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+/**
+ * Represents a Country guessing game.
+ *
+ * @author Aika Manalo - 2C
+ * @version 1.0
+ */
+public class CountryGame
+{
+    private static final String  EXIT_CODE = "quit";
+    private static final int MIN_ATTEMPTS = 0;
+    private static final Charset CHARSET;
+    private static final String PARENT_DIR = "data";
+
+    static
+    {
+        CHARSET = StandardCharsets.UTF_8;
+    }
+
+    private final Path countriesListPath;
+    private final Path highscorePath;
+    private final Path logsPath;
+
+    private int bestAttempt;
+
+    private String userGuess;
+    private String computerGuess;
+
+    public CountryGame()
+    {
+        this.countriesListPath = createPath("countries.txt");
+        this.highscorePath = createPath("highscore.txt");
+        this.logsPath = createPath("logs");
+    }
+
+
+    /*
+     * Validates best attempt.
+     * Checks if it's an int and if it's above the minimum number of attempts.
+     *
+     * @param dataToCheck the data to validate.
+     */
+    private static void validateBestAttempt(final String dataToCheck)
+    {
+        int validInt = 0;
+
+        try
+        {
+            validInt = Integer.parseInt(dataToCheck);
+        }
+        catch (final NumberFormatException e)
+        {
+            throw new NumberFormatException("Invalid format: " + e.getMessage());
+        }
+
+        if (validInt < MIN_ATTEMPTS)
+        {
+            throw new IllegalArgumentException("Invalid attempt count.");
+        }
+    }
+
+    private static Path createPath(final String pathStr)
+    {
+        return Path.of(PARENT_DIR, pathStr);
+    }
+
+
+    public int getBestAttempt()
+    {
+        // Goes to highscore.txt path
+        // Reads it:
+            // If empty = "no best"
+            // If exists, validate and return it
+
+
+        return bestAttempt;
+    }
+
+    public String getUserGuess()
+    {
+        return userGuess;
+    }
+
+    public String getComputerGuess()
+    {
+        return computerGuess;
+    }
+
+    public static void main(String[] args)
+    {
+        System.out.println("test");
+    }
+}
