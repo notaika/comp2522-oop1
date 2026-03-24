@@ -6,56 +6,92 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 /**
- * Loads countries.
+ * Represents a list of words.
  *
  * @author Aika Manalo - Set 2C
  * @version 1.0
  */
 public class WordList
 {
-    private static final Charset utf8 = StandardCharsets.UTF_8;
+    private static final Charset CHARSET = StandardCharsets.UTF_8;
 
-    private final int upperBound;
-    private final List<String> countries;
-    private final Random       random;
+    private final List<String>    words;
+    private final RandomGenerator random;
 
     public WordList(final Path path) throws IOException
     {
-        this.countries = new ArrayList<>();
-        this.random    = new Random();
-        loadCountries(path);
-
-        this.upperBound = countries.size();
+        this.words = new ArrayList<>();
+        this.random    = RandomGenerator.getDefault();
+        validatePath(path);
+        loadWords(path);
     }
 
-    private void loadCountries(final Path path) throws IOException
+    /**
+     * Validates that the file path containing the word list is not empty.
+     *
+     * @param path path to check
+     * @throws IllegalArgumentException if path is empty
+     */
+    private static void validatePath(final Path path)
     {
-        try (BufferedReader reader = Files.newBufferedReader(path, utf8))
+        if (path == null)
+        {
+            throw new IllegalArgumentException("Invalid path.");
+        }
+    }
+
+    /**
+     * Reads from a given path that contains a list of words and adds them
+     * all to a list.
+     *
+     * @param path path to read from
+     * @throws IOException if there was an error in the stream
+     */
+    private void loadWords(final Path path) throws IOException
+    {
+        try (BufferedReader reader = Files.newBufferedReader(path, CHARSET))
         {
             String line;
             while ((line = reader.readLine()) != null)
             {
                 if (!line.trim().isEmpty())
                 {
-                    this.countries.add(line.trim());
+                    this.words.add(line.trim());
                 }
             }
         }
     }
 
-    public List<String> getCountries()
+    /**
+     * Returns a list of words.
+     *
+     * @return words in a list
+     */
+    public List<String> getWords()
     {
-        return countries;
+        return words;
     }
 
-    public Random getRandom()
+    /**
+     * Gets a random word from the list.
+     *
+     * @return random word
+     */
+    public String getRandomWord()
     {
-        return random;
+        final int randomIndex = random.nextInt(words.size());
+
+        return words.get(randomIndex);
     }
 
+    /**
+     * Tests.
+     *
+     * @param args unused
+     */
     public static void main(String[] args)
     {
         Path path = Path.of("src", "data", "countries.txt");
@@ -72,10 +108,12 @@ public class WordList
 
         if (list != null)
         {
-            for (final String country : list.getCountries())
+            for (final String word : list.getWords())
             {
-                System.out.println(country);
+                // System.out.println(word);
             }
+
+            System.out.println(list.getRandomWord());
         }
     }
 }

@@ -1,6 +1,12 @@
 CLI game that picks a random country name from a
 text file and has the player guess it
 
+Classes: 
+- WordList (load countries)
+- HighScoreService (read/write best)
+- LoggerService (open/write session log)
+- Game (loop and rules)
+
 After each guess:
 - Wrong length (X). Need Y.
 or
