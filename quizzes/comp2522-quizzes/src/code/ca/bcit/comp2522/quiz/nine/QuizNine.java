@@ -1,4 +1,11 @@
-package ca.bcit.comp2522.quiz;
+package ca.bcit.comp2522.quiz.nine;
 
-public class QuizNine {
+import java.util.Objects;
+
+public class QuizNine
+{
+    public static void main(String[] args)
+    {
+        Objects::nonNull;
+    }
 }
