@@ -16,19 +16,23 @@ import java.util.Random;
  * Handles loading data from text files and randomizes entries.
  *
  * @author Aika Manalo - Set 2C
- * @version 1.0
+ * @version 2.1
  */
 public final class World
 {
     private static final String DIR_SRC = "src";
-    private static final String DIR_DATA = "data";
+    private static final String DIR_DATA = "res/numbergame";
     private static final String FILE_EXTENSION = ".txt";
+
     private static final char ALPHABET_START = 'a';
     private static final char ALPHABET_END = 'z';
+    private static final char VALUE_DELIMITER = ':';
+
     private static final int START_INDEX = 0;
     private static final int NUM_FACTS = 3;
     private static final int COLON_INDEX_OFFSET = 1;
     private static final int FACT_LINE_OFFSET = 1;
+    private static final int INDEX_NOT_FOUND = -1;
 
     private final Map<String, Country> countries;
     private final Random random;
@@ -44,7 +48,7 @@ public final class World
     }
 
     /*
-     * Iterates through files a.txt to z.txt and loads game.
+     * Iterates through files a.txt to z.txt and loads game data.
      */
     private void loadAllCountries()
     {
@@ -56,8 +60,10 @@ public final class World
         }
     }
 
-    /**
+    /*
      * Parses a single text file and populates the countries map.
+     *
+     * @param filename the file to load
      */
     private void loadFile(final String filename)
     {
@@ -80,7 +86,6 @@ public final class World
             {
                 allLines.add(line);
             }
-
             parseLines(allLines);
         }
         catch (final IOException e)
@@ -90,7 +95,9 @@ public final class World
     }
 
     /*
-     * Parses the list of strings into Country objects.
+     * Parses the list of strings into Country objects without using break/continue.
+     *
+     * @param lines the raw text lines from the file
      */
     private void parseLines(final List<String> lines)
     {
@@ -99,36 +106,35 @@ public final class World
             final String line;
             line = lines.get(i).trim();
 
-            if (line.isEmpty())
+            if (!line.isEmpty())
             {
-                continue;
-            }
+                final int colonIndex;
+                colonIndex = line.indexOf(VALUE_DELIMITER);
 
-            final String countryName;
-            final String capitalName;
-            final String[] facts;
-            final int colonIndex;
-
-            colonIndex = line.indexOf(':');
-            if (colonIndex == -1)
-            {
-                continue;
-            }
-
-            countryName = line.substring(START_INDEX, colonIndex).trim();
-            capitalName = line.substring(colonIndex + COLON_INDEX_OFFSET).trim();
-            facts = new String[NUM_FACTS];
-
-            for (int f = 0; f < NUM_FACTS; f++)
-            {
-                if (i + FACT_LINE_OFFSET + f < lines.size())
+                if (colonIndex != INDEX_NOT_FOUND)
                 {
-                    facts[f] = lines.get(i + FACT_LINE_OFFSET + f).trim();
+                    final String countryName;
+                    final String capitalName;
+                    final String[] facts;
+
+                    countryName = line.substring(START_INDEX, colonIndex).trim();
+                    capitalName = line.substring(colonIndex + COLON_INDEX_OFFSET).trim();
+
+                    facts = new String[NUM_FACTS];
+
+                    for (int f = 0; f < NUM_FACTS; f++)
+                    {
+                        if (i + FACT_LINE_OFFSET + f < lines.size())
+                        {
+                            facts[f] = lines.get(i + FACT_LINE_OFFSET + f).trim();
+                        }
+                    }
+
+                    countries.put(countryName, new Country(countryName, capitalName, facts));
+
+                    i += NUM_FACTS;
                 }
             }
-
-            countries.put(countryName, new Country(countryName, capitalName, facts));
-            i += NUM_FACTS;
         }
     }
 
@@ -146,7 +152,7 @@ public final class World
 
         if (countryList.isEmpty())
         {
-            throw new IllegalStateException("ERROR: No countries loaded. Check your data files.");
+            throw new IllegalStateException("ERROR: No countries loaded. Check data files.");
         }
 
         randomIndex = random.nextInt(countryList.size());

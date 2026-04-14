@@ -1,0 +1,30 @@
+SUSPECT|Logico The Great|Pondering a puzzle|185|Blue|true
+SUSPECT|Countess Crimson|Drinking tea|165|Green|true
+SUSPECT|Chancellor Chartreuse|Drafting a law|178|Brown|false
+SUSPECT|Professor Plum|Writing a manifesto|175|Hazel|false
+SUSPECT|General Garnet|Polishing medals|182|Blue|true
+SUSPECT|Dame Obsidian|Feeding the ravens|170|Green|true
+SUSPECT|Captain Cobalt|Swabbing the deck|180|Grey|true
+SUSPECT|Madame Mulberry|Watering orchids|160|Green|true
+SUSPECT|Dr. Orchid|Reading an autopsy|165|Hazel|false
+SUSPECT|Baron Brass|Counting coins|175|Brown|true
+SUSPECT|Lady Lapis|Painting a portrait|168|Blue|false
+SUSPECT|Sir Silver|Tuning a violin|182|Grey|true
+SUSPECT|Mayor Mustard|Giving a speech|170|Hazel|false
+SUSPECT|Duchess Diamond|Trying on rings|165|Blue|true
+SUSPECT|Viscount Viridian|Hunting foxes|188|Green|true
+SUSPECT|Earl Emerald|Sharpening a sword|180|Brown|false
+SUSPECT|Chef Cayenne|Baking a pie|175|Hazel|true
+SUSPECT|Nurse Nectar|Changing bandages|160|Blue|true
+SUSPECT|Judge Jade|Striking a gavel|172|Green|false
+SUSPECT|Pilot Platinum|Checking engines|178|Grey|true
+SUSPECT|Artist Auburn|Mixing paints|165|Brown|true
+SUSPECT|Sailor Sapphire|Tying knots|185|Blue|false
+SUSPECT|Warden White|Locking cells|190|Grey|true
+SUSPECT|Farmer Fuchsia|Planting seeds|170|Hazel|true
+SUSPECT|Librarian Lilac|Dusting tomes|160|Green|true
+SUSPECT|Priest Pewter|Lighting candles|175|Brown|false
+SUSPECT|Baker Bronze|Kneading dough|180|Blue|true
+SUSPECT|Tailor Teal|Sewing a hem|165|Green|true
+SUSPECT|Smith Scarlet|Forging iron|188|Hazel|false
+SUSPECT|Miner Mauve|Smelting ore|172|Grey|true

@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+.number-root {
+    -fx-background-color: #1E1E24;
+    -fx-font-family: 'Share Tech Mono', monospace;
+}
+
+.top-banner {
+    -fx-alignment: center;
+    -fx-padding: 20px;
+    -fx-spacing: 10px;
+    -fx-border-color: #424874;
+    -fx-border-width: 0 0 3px 0;
+    -fx-border-style: dashed;
+}
+
+.game-title {
+    -fx-text-fill: #A6B1E1;
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+}
+
+.number-label {
+    -fx-text-fill: #A6B1E1;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.game-grid {
+    -fx-hgap: 15px;
+    -fx-vgap: 15px;
+    -fx-padding: 40px;
+    -fx-alignment: center;
+}
+
+.grid-button {
+    -fx-background-color: #2D2D3A;
+    -fx-border-color: #A6B1E1;
+    -fx-border-width: 2px;
+    -fx-text-fill: #A6B1E1;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-min-width: 90px;
+    -fx-min-height: 70px;
+    -fx-cursor: hand;
+}
+
+.grid-button:hover {
+    -fx-background-color: #A6B1E1;
+    -fx-text-fill: #2D2D3A;
+}
+
+.grid-button:disabled {
+    -fx-opacity: 0.4;
+}
+
+.grid-button-lose {
+    -fx-background-color: #5A0000;
+    -fx-border-color: #FF4D4D;
+    -fx-border-width: 2px;
+}

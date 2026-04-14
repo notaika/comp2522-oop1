@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+.root-pane {
+    -fx-background-color: #1E1E24;
+    -fx-font-family: 'Share Tech Mono', monospace;
+}
+
+.scroll-pane {
+    -fx-background: #1E1E24;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.label {
+    -fx-text-fill: #A6B1E1;
+    -fx-font-size: 15px;
+}
+
+/* --- Layout Containers --- */
+.top-banner {
+    -fx-padding: 10px;
+    -fx-spacing: 10px;
+    -fx-alignment: center;
+}
+
+.bottom-panel {
+    -fx-padding: 10px;
+    -fx-spacing: 10px;
+    -fx-alignment: center;
+    -fx-border-color: #424874;
+    -fx-border-width: 2px;
+}
+
+/* New class to center the body and separate it from banner/footer */
+.main-content {
+    -fx-spacing: 10px;
+    -fx-padding: 10px;
+    -fx-alignment: center;
+}
+
+/* New class to keep the U-Shape rows perfectly centered */
+.content-row {
+    -fx-spacing: 10px;
+    -fx-alignment: center;
+}
+
+/* New class to add spacing between the hint buttons */
+.clues-title-bar {
+    -fx-spacing: 15px;
+    -fx-alignment: center-left;
+}
+
+.bordered-panel {
+    -fx-border-color: #424874;
+    -fx-border-width: 2px;
+    -fx-padding: 12px;
+    -fx-spacing: 8px;
+}
+
+.entity-row {
+    -fx-spacing: 5px;
+    -fx-alignment: center-left;
+}
+
+.logic-grid {
+    -fx-hgap: 5px;
+    -fx-vgap: 5px;
+    -fx-alignment: center;
+}
+
+/* --- Typography & Headings --- */
+.main-title {
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #A6B1E1;
+}
+
+.case-id-title {
+    -fx-font-size: 18px;
+    -fx-font-style: italic;
+    -fx-text-fill: #424874;
+}
+
+.banner-separator {
+    -fx-border-color: #424874;
+    -fx-border-width: 0 0 3px 0;
+    -fx-border-style: dashed;
+    -fx-translate-y: -5px;
+}
+
+.panel-heading {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-text-fill: #A6B1E1;
+}
+
+.aligned-box {
+    -fx-alignment: center;
+    -fx-spacing: 5px;
+}
+
+.clue-bullet {
+    -fx-font-size: 13px;
+}
+
+.entity-name {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #A6B1E1;
+}
+
+.entity-details {
+    -fx-font-size: 12px;
+    -fx-text-fill: #7882B4;
+}
+
+/* --- Buttons & Inputs --- */
+.button {
+    -fx-background-color: #2D2D3A;
+    -fx-text-fill: #A6B1E1;
+    -fx-border-color: #A6B1E1;
+    -fx-border-width: 1px;
+    -fx-cursor: hand;
+    -fx-font-family: 'Share Tech Mono', monospace;
+}
+
+.button:hover {
+    -fx-background-color: #A6B1E1;
+    -fx-text-fill: #2D2D3A;
+}
+
+.accuse-button {
+    -fx-background-color: #5A0000;
+    -fx-text-fill: #FF4D4D;
+    -fx-border-color: #FF4D4D;
+    -fx-border-width: 3px;
+    -fx-font-size: 20px;
+    -fx-font-weight: 900;
+    -fx-padding: 10px 30px;
+}
+
+.accuse-button:hover {
+    -fx-background-color: #FF4D4D;
+    -fx-text-fill: #5A0000;
+}
+
+/* --- Deduction Lines & Logic Grid --- */
+.deduction-title {
+    -fx-border-color: #A6B1E1;
+    -fx-border-width: 2px 0 0 0;
+    -fx-padding: 5px 0 0 0;
+    -fx-pref-width: 250px;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+}
+
+.grid-button {
+    -fx-min-width: 40px;
+    -fx-min-height: 40px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.grid-button-empty {
+    -fx-border-color: #424874;
+    -fx-border-width: 1px;
+}
+
+.grid-button-impossible {
+    -fx-text-fill: #FF3333;
+    -fx-border-color: #FF3333;
+    -fx-border-width: 2px;
+}
+
+.grid-button-confirmed {
+    -fx-text-fill: #33FF33;
+    -fx-border-color: #33FF33;
+    -fx-border-width: 2px;
+}

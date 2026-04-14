@@ -1,36 +1,46 @@
 package ca.bcit.comp2522.termproject.wordgame;
 
+import ca.bcit.comp2522.termproject.Game;
+
 import java.io.IOException;
-import java.util.Scanner;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
-import java.time.LocalDateTime;
+import java.util.Scanner;
 
 /**
  * Represents the WordGame trivia application.
  * Manages the gameplay loop, scoring, and high-score checking.
+ * Extends the abstract Game class.
  *
  * @author Aika Manalo - Set 2C
- * @version 1.0
+ * @version 3.0
  */
 public final class WordGame
+        extends Game
 {
     private static final int QUESTIONS_PER_GAME = 10;
-    private static final int MAX_ATTEMPTS = 2;
-    private static final int FIRST_ATTEMPT = 1;
-    
+    private static final int MAX_ATTEMPTS       = 2;
+    private static final int FIRST_ATTEMPT      = 1;
+    private static final int PLURAL_THRESHOLD   = 1;
+
     private static final int TYPE_CAPITAL_TO_COUNTRY = 0;
     private static final int TYPE_COUNTRY_TO_CAPITAL = 1;
-    private static final int TOTAL_QUESTION_TYPES = 3;
-    private static final int RANDOM_FACT_BOUND = 3;
-    
-    private static final String SCORE_FILENAME = "score.txt";
-    private static final String YES_INPUT = "Yes";
-    private static final String NO_INPUT = "No";
+    private static final int TOTAL_QUESTION_TYPES    = 3;
+    private static final int RANDOM_FACT_BOUND       = 3;
+
+    private static final double MINIMUM_SCORE_AVERAGE = 0.0;
+
+    private static final String SCORE_FILENAME                  = "score.txt";
+    private static final String YES_INPUT                       = "Yes";
+    private static final String NO_INPUT                        = "No";
+    private static final String DATE_TIME_SEPARATOR_ORIGINAL    = " ";
+    private static final String DATE_TIME_SEPARATOR_REPLACEMENT = " at ";
+    private static final String NO_SCORE                        = "";
 
     private final World   world;
     private final Scanner scanner;
-    private final Random random;
+    private final Random  random;
 
     private int totalGamesPlayed;
     private int totalFirstAttempts;
@@ -42,19 +52,22 @@ public final class WordGame
      */
     public WordGame()
     {
-        this.world = new World();
-        this.scanner = new Scanner(System.in);
-        this.random = new Random();
-        
-        this.totalGamesPlayed = 0;
-        this.totalFirstAttempts = 0;
+        super("Word Game: Geography Trivia");
+
+        this.world               = new World();
+        this.scanner             = new Scanner(System.in);
+        this.random              = new Random();
+        this.totalGamesPlayed    = 0;
+        this.totalFirstAttempts  = 0;
         this.totalSecondAttempts = 0;
-        this.totalIncorrect = 0;
+        this.totalIncorrect      = 0;
     }
 
     /**
      * Enters the main gameplay loop until the user chooses to quit.
+     * Blocks the terminal thread while playing.
      */
+    @Override
     public void play()
     {
         boolean playing;
@@ -70,7 +83,7 @@ public final class WordGame
     }
 
     /*
-     * Orchestrates exactly 10 questions for a single game session.
+     * Shuffles and generates questions for a single game session.
      */
     private void playSingleGame()
     {
@@ -82,31 +95,37 @@ public final class WordGame
             final int questionType;
 
             randomCountry = world.getRandomCountry();
-            questionType = random.nextInt(TOTAL_QUESTION_TYPES);
+            questionType  = random.nextInt(TOTAL_QUESTION_TYPES);
 
-            askQuestion(randomCountry, questionType);
+            askQuestion(randomCountry,
+                        questionType);
         }
 
         printSessionResults();
     }
 
     /*
-     * Manages the lifecycle of a single trivia question.
+     * Trivia game question loop logic.
+     * Generates the prompt and checks if user answer is correct.
      *
      * @param country the country data
      * @param type the random question variant
      */
-    private void askQuestion(final Country country, 
+    private void askQuestion(final Country country,
                              final int type)
     {
         final String prompt;
         final String correctAnswer;
+
         int attempts;
         boolean answeredCorrectly;
 
-        prompt = generatePrompt(country, type);
-        correctAnswer = determineCorrectAnswer(country, type);
-        attempts = 0;
+        prompt        = generatePrompt(country,
+                                       type);
+        correctAnswer = determineCorrectAnswer(country,
+                                               type);
+
+        attempts          = 0;
         answeredCorrectly = false;
 
         System.out.println(prompt);
@@ -114,16 +133,18 @@ public final class WordGame
         while (attempts < MAX_ATTEMPTS && !answeredCorrectly)
         {
             final String guess;
-            
+
             System.out.print("Your guess: ");
-            guess = scanner.nextLine().trim();
+            guess = scanner.nextLine()
+                           .trim();
+
             attempts++;
 
             if (guess.equalsIgnoreCase(correctAnswer))
             {
                 System.out.println("CORRECT");
                 answeredCorrectly = true;
-                
+
                 if (attempts == FIRST_ATTEMPT)
                 {
                     totalFirstAttempts++;
@@ -147,9 +168,13 @@ public final class WordGame
     }
 
     /*
-     * Builds the question text based on the random type.
+     * Builds the question text based on the randomly picked question type.
+     *
+     * @param country the country data
+     * @param type the question type
+     * @return the formulated question prompt
      */
-    private String generatePrompt(final Country country, 
+    private String generatePrompt(final Country country,
                                   final int type)
     {
         final String promptString;
@@ -165,8 +190,9 @@ public final class WordGame
         else
         {
             final int randomFactIndex;
+
             randomFactIndex = random.nextInt(RANDOM_FACT_BOUND);
-            promptString = "Fact: " + country.getFact(randomFactIndex) + "\nWhich country is being described?";
+            promptString    = "Fact: " + country.getFact(randomFactIndex) + "\nWhich country is being described?";
         }
 
         return promptString;
@@ -174,8 +200,12 @@ public final class WordGame
 
     /*
      * Extracts the specific answer needed for the question type.
+     *
+     * @param country the country data
+     * @param type the question type
+     * @return the correct answer string
      */
-    private String determineCorrectAnswer(final Country country, 
+    private String determineCorrectAnswer(final Country country,
                                           final int type)
     {
         if (type == TYPE_COUNTRY_TO_CAPITAL)
@@ -186,11 +216,23 @@ public final class WordGame
     }
 
     /*
-     * Outputs cumulative results after 10 questions.
+     * Outputs cumulative results after a Word Game session.
+     * Evaluates singular/plural grammar.
      */
     private void printSessionResults()
     {
-        System.out.println("- " + totalGamesPlayed + " word game(s) played");
+        final String gameWord;
+
+        if (totalGamesPlayed == PLURAL_THRESHOLD)
+        {
+            gameWord = "word game";
+        }
+        else
+        {
+            gameWord = "word games";
+        }
+
+        System.out.println("- " + totalGamesPlayed + " " + gameWord + " played");
         System.out.println("- " + totalFirstAttempts + " correct answers on the first attempt");
         System.out.println("- " + totalSecondAttempts + " correct answers on the second attempt");
         System.out.println("- " + totalIncorrect + " incorrect answers on two attempts each");
@@ -198,6 +240,8 @@ public final class WordGame
 
     /*
      * Forces user to provide a valid Yes/No response.
+     *
+     * @return true if playing again, false if quitting
      */
     private boolean promptPlayAgain()
     {
@@ -207,9 +251,10 @@ public final class WordGame
         while (!validResponse)
         {
             final String input;
-            
+
             System.out.println("Do you want to play again? (Yes/No)");
-            input = scanner.nextLine().trim();
+            input = scanner.nextLine()
+                           .trim();
 
             if (input.equalsIgnoreCase(YES_INPUT))
             {
@@ -235,39 +280,64 @@ public final class WordGame
         final Score currentScore;
         final List<Score> historicalScores;
         final double currentAverage;
-        boolean isHighScore;
 
-        currentScore = new Score(LocalDateTime.now(), totalGamesPlayed, totalFirstAttempts, totalSecondAttempts, totalIncorrect);
-        
+        currentScore = new Score(LocalDateTime.now(),
+                                 totalGamesPlayed,
+                                 totalFirstAttempts,
+                                 totalSecondAttempts,
+                                 totalIncorrect);
+
         try
         {
             historicalScores = Score.readScoresFromFile(SCORE_FILENAME);
-            currentAverage = (double) currentScore.getScore() / totalGamesPlayed;
-            isHighScore = true;
+            currentAverage   = (double) currentScore.getScore() / totalGamesPlayed;
 
-            for (final Score pastScore : historicalScores)
+            if (historicalScores.isEmpty())
             {
-                final double pastAverage;
-                pastAverage = (double) pastScore.getScore() / pastScore.getNumGamesPlayed();
+                System.out.println("CONGRATULATIONS! You are the new high score with an average of " +
+                                   String.format("%.2f",
+                                                 currentAverage) + " points per game!");
+            }
+            else
+            {
+                double highestPastAverage;
+                String highestPastDate;
 
-                if (pastAverage >= currentAverage)
+                highestPastAverage = MINIMUM_SCORE_AVERAGE;
+                highestPastDate    = NO_SCORE;
+
+                for (final Score pastScore : historicalScores)
                 {
-                    isHighScore = false;
-                    System.out.println("You did not beat the high score of " + 
-                                       String.format("%.2f", pastAverage) + 
-                                       " points per game from " + 
-                                       pastScore.getDateTimePlayedFormatted() + ".");
-                    break;
+                    final double pastAverage;
+                    pastAverage = (double) pastScore.getScore() / pastScore.getNumGamesPlayed();
+
+                    if (pastAverage > highestPastAverage)
+                    {
+                        highestPastAverage = pastAverage;
+                        highestPastDate    = pastScore.getDateTimePlayedFormatted()
+                                                      .replace(DATE_TIME_SEPARATOR_ORIGINAL,
+                                                               DATE_TIME_SEPARATOR_REPLACEMENT);
+                    }
+                }
+
+                if (currentAverage > highestPastAverage)
+                {
+                    System.out.println("CONGRATULATIONS! You are the new high score with an average of " +
+                                       String.format("%.2f",
+                                                     currentAverage) + " points per game; the previous record was " +
+                                       String.format("%.2f",
+                                                     highestPastAverage) + " points per game on " + highestPastDate);
+                }
+                else
+                {
+                    System.out.println("You did not beat the high score of " +
+                                       String.format("%.2f",
+                                                     highestPastAverage) + " points per game from " + highestPastDate);
                 }
             }
 
-            if (isHighScore && !historicalScores.isEmpty())
-            {
-                System.out.println("CONGRATULATIONS! You are the new high score with an average of " + 
-                                   String.format("%.2f", currentAverage) + " points per game!");
-            }
-
-            Score.appendScoreToFile(currentScore, SCORE_FILENAME);
+            Score.appendScoreToFile(currentScore,
+                                    SCORE_FILENAME);
         }
         catch (final IOException e)
         {

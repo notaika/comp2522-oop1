@@ -4,6 +4,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.random.RandomGenerator;
@@ -18,13 +19,31 @@ public class WordList
 {
     private static final Charset CHARSET = StandardCharsets.UTF_8;
 
+    private static final String DIR;
+    private static final String DIR_FILE;
+    private static final Path WORD_LIST_FILE_PATH;
+
     private final List<String>    words;
     private final RandomGenerator random;
 
-    public WordList(final Path path) throws IOException
+    // is this right?
+    static
+    {
+        DIR = "src/data";
+        DIR_FILE = "countries.txt";
+        WORD_LIST_FILE_PATH = Paths.get(DIR, DIR_FILE);
+    }
+
+    /**
+     * Constructs and initializes a list of words (countries) and a random generator.
+     *
+     * @param path path to the list of words to load
+     */
+    public WordList(final Path path)
     {
         this.words = new ArrayList<>();
         this.random    = RandomGenerator.getDefault();
+
         validatePath(path);
         loadWords(path);
     }
@@ -32,14 +51,14 @@ public class WordList
     /**
      * Validates that the file path containing the word list is not empty.
      *
-     * @param path path to check
-     * @throws IllegalArgumentException if path is empty
+     * @param pathToCheck path to check
+     * @throws IllegalArgumentException if path is invalid
      */
-    private static void validatePath(final Path path)
+    private static void validatePath(final Path pathToCheck)
     {
-        if (path == null)
+        if (Files.notExists(pathToCheck))
         {
-            throw new IllegalArgumentException("Invalid path.");
+            throw new IllegalArgumentException("ERROR: Invalid path.");
         }
     }
 
@@ -48,20 +67,25 @@ public class WordList
      * all to a list.
      *
      * @param path path to read from
-     * @throws IOException if there was an error in the stream
      */
-    private void loadWords(final Path path) throws IOException
+    private void loadWords(final Path path)
     {
-        try (BufferedReader reader = Files.newBufferedReader(path, CHARSET))
+        try (BufferedReader reader = Files.newBufferedReader(path,
+                                                             CHARSET))
         {
             String line;
             while ((line = reader.readLine()) != null)
             {
-                if (!line.trim().isEmpty())
+                if (!line.trim()
+                         .isEmpty())
                 {
                     this.words.add(line.trim());
                 }
             }
+        }
+        catch (final IOException e)
+        {
+            System.out.println("ERROR: Could not read file. " + e.getMessage());
         }
     }
 
@@ -94,44 +118,15 @@ public class WordList
      */
     public static void main(String[] args)
     {
-        Path path = Path.of("src", "data", "countries.txt");
+        final WordList list;
 
-        WordList list = null;
-        try
+        list = new WordList(WORD_LIST_FILE_PATH);
+
+        for (final String word : list.getWords())
         {
-             list = new WordList(path);
-        }
-        catch (final IOException e)
-        {
-            System.out.println("Unable to create WordList: " + e.getMessage());
+             System.out.println(word);
         }
 
-        if (list != null)
-        {
-            for (final String word : list.getWords())
-            {
-                // System.out.println(word);
-            }
-
-            System.out.println(list.getRandomWord());
-        }
+        System.out.println(list.getRandomWord());
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

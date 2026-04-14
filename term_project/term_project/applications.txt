@@ -1,0 +1,35 @@
+lesson 1:        private static final constants in class SingletonFilesGUI
+                 private static validation methods in class EntityFactory
+                 declare-then-initialize structure in class LogicGridBoard
+
+lesson 2:        inheritance (extends Entity) in classes Suspect, Weapon, and Location
+                 custom checked exception in class ContradictionException
+
+lesson 3:        abstract classes AbstractGamePanel and Entity
+                 polymorphism in Main (calling Game.play() on SingletonFiles)
+
+lesson 4:        interfaces in GridObserver
+                 Comparable implementation in class Entity
+
+lesson 5:        collections (List<Suspect>, etc.) in class CaseFile
+                 2D Arrays (Button[][]) in class LogicGridBoard
+
+lesson 6:        lambda expressions for button setOnAction in class SingletonFilesGUI
+                 functional interface (Predicate<T>) used in class SingletonFilesGUI
+
+lesson 7:        bounded generics in class CategoryPanel<T extends Entity>
+                 method references (Weapon::getMurderWeapon) in class SingletonFilesGUI
+
+lesson 8:        File I/O, Paths, and Files.newBufferedReader in class GameDataLoader
+                 try-with-resources and BufferedWriter in class SaveManager
+
+lesson 9:        streaming and filtering (.stream().filter().findFirst()) in class SingletonFilesGUI
+
+lesson 10:       JavaFX layout containers (BorderPane, VBox, HBox, GridPane) in class SingletonFilesGUI
+                 CSS styling separation via singletonfiles.css
+
+lesson 11:       unit testing and assertThrows in class EntityFactoryTest
+                 positive and negative testing in class PlayerTest
+
+lesson 12:       Singleton design pattern with Double-Checked Locking in class GameManager
+                 Observer design pattern in classes LogicGridBoard (Subject) and DeductionPanel (Observer)

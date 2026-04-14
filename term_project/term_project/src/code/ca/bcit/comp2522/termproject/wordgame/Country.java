@@ -4,51 +4,60 @@ package ca.bcit.comp2522.termproject.wordgame;
  * Represents a Country with its name, capital city, and interesting facts.
  *
  * @author Aika Manalo - Set 2C
- * @version 1.0
+ * @version 2.0
  */
 public final class Country
 {
     private static final int NUM_FACTS = 3;
 
-    private final String name;
-    private final String capitalCityName;
+    private final String   name;
+    private final String   capitalCityName;
     private final String[] facts;
 
     /**
      * Constructs and validates a Country object.
      *
-     * @param name            the name of the country
+     * @param name the name of the country
      * @param capitalCityName the name of the capital city
-     * @param facts           an array of interesting facts about the country
-     * @throws IllegalArgumentException if any parameter is null or invalid
+     * @param facts an array of interesting facts about the country
+     * @throws IllegalArgumentException if any parameter is invalid
      */
     public Country(final String name,
                    final String capitalCityName,
                    final String[] facts)
     {
-        validateString(name, "Country name");
-        validateString(capitalCityName, "Capital city name");
+        validateString(name,
+                       "Country name");
+        validateString(capitalCityName,
+                       "Capital city name");
         validateFacts(facts);
 
-        this.name = name;
+        this.name            = name;
         this.capitalCityName = capitalCityName;
-        this.facts = facts;
+        this.facts           = facts;
     }
 
     /*
      * Validates that a string is not null or blank.
+     *
+     * @param stringToValidate the string to check
+     * @param fieldName the name of the field for the error message
+     * @throws IllegalArgumentException if the value is invalid
      */
     private static void validateString(final String stringToValidate,
                                        final String fieldName)
     {
         if (stringToValidate == null || stringToValidate.isBlank())
         {
-            throw new IllegalArgumentException("ERROR: " + fieldName + " cannot be null or blank.");
+            throw new IllegalArgumentException("ERROR: " + fieldName + " is invalid.");
         }
     }
 
     /*
      * Validates that the facts array is not null and has the correct size.
+     *
+     * @param factsToValidate the array to check
+     * @throws IllegalArgumentException if the value is invalid
      */
     private static void validateFacts(final String[] factsToValidate)
     {
@@ -59,7 +68,8 @@ public final class Country
 
         for (final String fact : factsToValidate)
         {
-            validateString(fact, "Fact");
+            validateString(fact,
+                           "Fact");
         }
     }
 
@@ -86,7 +96,7 @@ public final class Country
     /**
      * Returns a specific fact about the country by index.
      *
-     * @param index the index of the fact (0 to 2)
+     * @param index the index of the fact
      * @return the fact at the specified index
      * @throws IllegalArgumentException if index is out of bounds
      */
