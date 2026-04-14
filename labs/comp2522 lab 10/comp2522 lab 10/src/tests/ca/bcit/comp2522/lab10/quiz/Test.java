@@ -8,13 +8,17 @@ public class Test
 {
     public static final int QUESTION_COUNT_OFFSET = 1;
 
+    public static final String DIR_SRC = "src";
+    public static final String DIR_RES = "res";
+    public static final String DIR_DATA = "data";
+    public static final String DIR_FILE = "quiz.txt";
+
     public static void main(String[] args)
     {
-        // 1. Create app instance
         final QuizApp app = new QuizApp();
         final Scanner scan = new Scanner(System.in);
 
-        final Path path = Path.of("src", "data", "quiz.txt");
+        final Path path = Path.of(DIR_SRC, DIR_RES, DIR_DATA, DIR_FILE);
 
         try
         {
@@ -28,11 +32,9 @@ public class Test
             return;
         }
 
-        // 2. Start the game
         app.startGame();
         System.out.println("Game started. Total question count this session: " + app.getCurrQuestionCount());
 
-        // 3. Game loop
         while (app.getCurrQuestionCount() < app.getQuestionsSeen()
                                                .size())
         {

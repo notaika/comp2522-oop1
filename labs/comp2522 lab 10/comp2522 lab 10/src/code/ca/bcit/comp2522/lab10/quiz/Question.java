@@ -1,29 +1,83 @@
 package ca.bcit.comp2522.lab10.quiz;
 
+/**
+ * Represents a quiz question and its correct answer.
+ *
+ * @author Aika Manalo - Set 2C
+ * @author Quinn Callander - Set 2C
+ * @version 1.1
+ */
 public class Question
 {
     private final String question;
-    private final String answer;
+    private final String correctAnswer;
 
-    public Question(String question,
-                    String answer)
+    /**
+     * Constructs a Question.
+     *
+     * @param question the question text
+     * @param correctAnswer the correct answer
+     */
+    public Question(final String question,
+                    final String correctAnswer)
     {
-        this.question = question;
-        this.answer   = answer;
+        validateString(question,
+                       "question input");
+        validateString(correctAnswer,
+                       "answer input");
+
+        this.question      = question.trim();
+        this.correctAnswer = correctAnswer.trim();
     }
 
+    /**
+     * Validates that the string passed is not null or blank.
+     *
+     * @param stringToCheck the string to check
+     * @param stringType the "type" (e.g. question or answer)
+     */
+    private void validateString(final String stringToCheck,
+                                final String stringType)
+    {
+        if (stringToCheck == null || stringToCheck.isBlank())
+        {
+            throw new IllegalArgumentException("ERROR: Invalid " + stringType);
+        }
+    }
+
+    /**
+     * Gets the question text.
+     *
+     * @return the question as a String
+     */
     public String getQuestion()
     {
         return question;
     }
 
-    public String getAnswer()
+    /**
+     * Gets the correct answer.
+     *
+     * @return the answer as a String
+     */
+    public String getCorrectAnswer()
     {
-        return answer;
+        return correctAnswer;
     }
 
-    public boolean isCorrect(final String answerToCheck)
+    /**
+     * Checks if the provided answer matches the correct response case-insensitively.
+     *
+     * @param userAnswer the answer provided by the user
+     * @return true if correct, false otherwise
+     */
+    public boolean isCorrect(final String userAnswer)
     {
-        return this.answer.equalsIgnoreCase(answerToCheck.trim());
+        if (userAnswer == null)
+        {
+            return false;
+        }
+
+        return correctAnswer.equalsIgnoreCase(userAnswer.trim());
     }
 }

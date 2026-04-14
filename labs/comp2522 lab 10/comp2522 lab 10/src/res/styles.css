@@ -1,18 +1,7 @@
-.vbox {
-    -fx-spacing: 15;
-    -fx-alignment: center;
-    -fx-padding: 30;
-    -fx-background-color: #f5f5f5;
-    -fx-border-color: #dddddd;
-    -fx-border-width: 2;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
-}
-
 .label {
     -fx-font-size: 16px;
-    -fx-text-fill: #333333;
-    -fx-font-weight: bold;
+    -fx-text-fill: #444;
+    -fx-padding: 10;
 }
 
 .text-field {
@@ -20,28 +9,23 @@
     -fx-prompt-text-fill: gray;
     -fx-border-color: #2196F3;
     -fx-border-radius: 5;
-    -fx-background-radius: 5;
-    -fx-padding: 8;
-    -fx-pref-width: 300px;
-    -fx-max-width: 300px;
+    -fx-padding: 5;
 }
 
 .button {
     -fx-font-size: 14px;
-    -fx-font-weight: bold;
     -fx-background-color: #4CAF50;
     -fx-text-fill: white;
     -fx-border-radius: 5;
-    -fx-background-radius: 5;
-    -fx-padding: 8 20;
-    -fx-cursor: hand;
+    -fx-padding: 5 10;
 }
 
-.button:hover {
-    -fx-background-color: #45a049;
-}
-
-.button:disabled {
-    -fx-background-color: #cccccc;
-    -fx-text-fill: #666666;
+.vbox {
+    -fx-spacing: 10;
+    -fx-alignment: center;
+    -fx-padding: 20;
+    -fx-background-color: #f5f5f5;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
 }
