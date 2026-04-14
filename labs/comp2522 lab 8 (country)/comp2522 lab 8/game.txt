@@ -2,9 +2,9 @@ CLI game that picks a random country name from a
 text file and has the player guess it
 
 Classes: 
-- WordList (load countries)
-- HighScoreService (read/write best)
-- LoggerService (open/write session log)
+- ca.bcit.comp2622.lab8.countrygame.WordList (load countries)
+- ca.bcit.comp2622.lab8.countrygame.HighScoreService (read/write best)
+- ca.bcit.comp2622.lab8.countrygame.LoggerService (open/write session log)
 - Game (loop and rules)
 
 After each guess:

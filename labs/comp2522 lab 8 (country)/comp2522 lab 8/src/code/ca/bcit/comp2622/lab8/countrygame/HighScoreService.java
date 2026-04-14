@@ -1,3 +1,5 @@
+package ca.bcit.comp2622.lab8.countrygame;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -8,97 +10,123 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- * A utility class that keeps track of the highest score.
+ * Represents a tracker that keeps track of the highest score.
  *
  * @author Aika Manalo
- * @version 1.0
+ * @version 2.0
  */
 public class HighScoreService
 {
-    private static final int NO_BEST = Integer.MAX_VALUE;
-    private static final Charset UTF8 = StandardCharsets.UTF_8;
+    public static final int NO_BEST = Integer.MAX_VALUE;
 
-    private static final String HIGH_SCORE_PREFIX = "COUNTRY=";
-    private static final String DIR;
+    private static final Charset CHARSET           = StandardCharsets.UTF_8;
+    private static final String  HIGH_SCORE_PREFIX = "COUNTRY=";
+    private static final int     SCORE_START_INDEX = 8;
+
+    private static final String DIR_SRC;
+    private static final String DIR_RES;
     private static final String DIR_FILE;
-    private static final Path HIGH_SCORE_FILE_PATH;
+    private static final Path   HIGH_SCORE_FILE_PATH;
 
     private int highestScore;
 
     static
     {
-        DIR = "src/data";
+        DIR_SRC  = "src";
+        DIR_RES  = "res";
         DIR_FILE = "highscore.txt";
-        HIGH_SCORE_FILE_PATH = Paths.get(DIR, DIR_FILE);
-    }
 
-    public HighScoreService(final Path path)
-    {
-        this.highestScore = NO_BEST;
-        readHighScore(path);
+        HIGH_SCORE_FILE_PATH = Paths.get(DIR_SRC,
+                                         DIR_RES,
+                                         DIR_FILE);
     }
 
     /**
-     * Validates that the file path containing the word list is not empty.
-     *
-     * @throws IllegalArgumentException if path is invalid
+     * Constructs and initializes the HighScoreService and loads the current best score.
      */
-    private static void validatePath()
+    public HighScoreService()
     {
-        if (Files.notExists(HIGH_SCORE_FILE_PATH))
-        {
-            throw new IllegalArgumentException("ERROR: Invalid path.");
-        }
+        this.highestScore = NO_BEST;
+        readHighScore();
     }
 
-    private void readHighScore(final Path path)
+    /**
+     * Returns the highest score currently saved.
+     *
+     * @return the highest score as an int
+     */
+    public int getHighScore()
     {
-        if (Files.notExists(path))
+        return highestScore;
+    }
+
+    /**
+     * Reads the high score from the text file.
+     * If missing, treats it as NO_BEST.
+     */
+    private void readHighScore()
+    {
+        if (Files.notExists(HIGH_SCORE_FILE_PATH))
         {
             return;
         }
 
-        try (BufferedReader reader = Files.newBufferedReader(path,
-                                                             UTF8))
+        try (final BufferedReader reader = Files.newBufferedReader(HIGH_SCORE_FILE_PATH,
+                                                                   CHARSET))
         {
-            final String line = reader.readLine();
+            final String firstLine;
+            firstLine = reader.readLine();
 
-            if (line != null && line.startsWith(HIGH_SCORE_PREFIX))
+            if (firstLine != null && firstLine.startsWith(HIGH_SCORE_PREFIX))
             {
-                final String parsedScore = line.substring(HIGH_SCORE_PREFIX.length())
-                                               .trim();
-                this.highestScore = Integer.parseInt(parsedScore);
+                final String scoreString;
+                scoreString = firstLine.substring(SCORE_START_INDEX)
+                                       .trim();
+
+                this.highestScore = Integer.parseInt(scoreString);
             }
         }
         catch (final IOException e)
         {
-            System.err.println("File error: " + e.getMessage());
-        }
-        catch (final NumberFormatException e)
-        {
-            System.err.println("Parsing error: " + e.getMessage());
+            // NO_BEST
         }
     }
 
-    public boolean overwriteFile(final Path path,
-                                 final int attempts)
+    /**
+     * Overwrites the high score file if the new attempts are lower than the saved score.
+     *
+     * @param attempts the number of attempts to win
+     */
+    public void saveHighScore(final int attempts)
     {
         if (attempts < highestScore)
         {
             highestScore = attempts;
-            writeHighScore(path);
-
-            return true;
+            writeHighScore();
         }
-        return false;
     }
 
-    private void writeHighScore(final Path path)
+    /**
+     * Writes the best score to the file.
+     */
+    private void writeHighScore()
     {
-        try (BufferedWriter writer = Files.newBufferedWriter(path,
-                                                             UTF8))
+        final Path directoryPath;
+        directoryPath = Paths.get(DIR_SRC,
+                                  DIR_RES);
+
+        try
         {
-            writer.write(HIGH_SCORE_PREFIX + highestScore);
+            if (Files.notExists(directoryPath))
+            {
+                Files.createDirectories(directoryPath);
+            }
+
+            try (final BufferedWriter writer = Files.newBufferedWriter(HIGH_SCORE_FILE_PATH,
+                                                                       CHARSET))
+            {
+                writer.write(HIGH_SCORE_PREFIX + highestScore);
+            }
         }
         catch (final IOException e)
         {
